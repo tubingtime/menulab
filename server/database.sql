@@ -1,6 +1,7 @@
 CREATE DATABASE jwttutorial;
 
---set extention by running: 'create extension if not exists "uuid-ossp";'
+-- Set extention to use uuid_generate_v4() in psql qhile connected to database:
+-- create extension if not exists "uuid-ossp";
 CREATE TABLE users(
     user_id uuid PRIMARY KEY DEFAULT
     uuid_generate_v4(),
@@ -9,5 +10,6 @@ CREATE TABLE users(
     user_password VARCHAR(255) NOT NULL
 );
 
---insert fake uesrs
-INSERT INTO users(user_name, user_email, user_password) VALUES('henry', 'henryly213@gmail.com', 'kthl8822');
+-- Insert fake users
+INSERT INTO users(user_name, user_email, user_password) 
+VALUES('henry', 'henryly213@gmail.com', 'kthl8822');
