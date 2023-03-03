@@ -27,4 +27,31 @@ router.get('/', authorization, async (req, res) => {
   }
 })
 
+/**
+ * Creates a Menu.
+ * 
+ * To try this in Postman:
+ * GET: http://localhost:5000/dashboard/menus
+ * Header:
+ *      key: token
+ *      value: the actual token
+ * Body:
+ *      {
+ *        "name": "The Whispers Saloon"
+ *      }
+ */
+router.post('/menus', authorization, async (req, res) => {
+  try {
+    //res.send('hello menus');
+    //res.json(user.rows[0]);
+    const { name } = req.body;
+    const newMenu = await pool.query("INSERT INTO menus(name, user_id) VALUES($1, $2)",
+      [name, req.user]);
+    res.json(newMenu.rows[0]);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json('Server error');
+  }
+})
+
 module.exports = router;

@@ -17,6 +17,8 @@ app.use("/auth", require("./routes/jwtAuth"));
 // Dashboard route.
 app.use("/dashboard", require("./routes/dashboard"));
 
+app.use("/menus", require("./routes/dashboard"));
+
 app.listen(process.env.nodePort, () => {
     console.log("server is running on port 5000");
 })
