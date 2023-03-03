@@ -15,6 +15,16 @@ const authorization = require('../middleware/authorization');
  * 
  * If the user exists, returns a 401 error.
  * If the function fails, returns a 500 error.
+ * 
+ * To try this in Postman:
+ * POST: http://localhost:5000/auth/register
+ * Body (raw, json):
+ * {
+ *      "name":"jacob",
+ *      "email":"twotwo@gmail.com",
+ *      "password":"kthl8822"
+ * } 
+ * Should provide a token.
  **/
 router.post("/register", validInfo, async (req, res) => {
     try {
@@ -56,6 +66,15 @@ router.post("/register", validInfo, async (req, res) => {
  * 
  * If the user is not valid, returns a 401 error.
  * If the function fails, returns a 500 error.
+ * 
+ * To try this in Postman:
+ * POST: http://localhost:5000/auth/login
+ * Body (raw, json):
+ * {
+ *      "email":"twotwo@gmail.com",
+ *      "password":"kthl8822"
+ * } 
+ * Should provide a token.
  **/
 router.post("/login", validInfo, async (req, res) => {
     try {
@@ -94,6 +113,14 @@ router.post("/login", validInfo, async (req, res) => {
  * Verify route - checks that a user is authorized. 
  * 
  * If the function fails, returns a 500 error.
+ * 
+ * To try this in Postman:
+ * GET: http://localhost:5000/auth/verify
+ * Header:
+ *      key: token
+ *      value: the actual token
+ * 
+ * Returns true or false.
  **/
 router.get("/verify", authorization, (req, res) => {
     try {

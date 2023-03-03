@@ -11,6 +11,7 @@ app.use(cors());
 // ROUTES //
 
 // Register and login routes.
+// This code means that when we use /auth we are going to hit the specified route.
 app.use("/auth", require("./routes/jwtAuth"));
 
 // Dashboard route.

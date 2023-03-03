@@ -2,6 +2,17 @@ const router = require("express").Router();
 const pool = require("../db");
 const authorization = require('../middleware/authorization');
 
+/**
+ * TODO: Add a description of what this actually does.
+ * 
+ * To try this in Postman:
+ * GET: http://localhost:5000/dashboard
+ * Header:
+ *      key: token
+ *      value: the actual token
+ * 
+ * Returns the username.
+ */
 router.get('/', authorization, async (req, res) => {
   try {
     // req.user has the payload.
