@@ -153,10 +153,10 @@ INSERT INTO menu_items(name, description, price)
 VALUES('Cardamom Tea', 
 'A black tea prepared in the Yemeni tradition.', 2.99);
 
--- Add a MenuItem to a Menu.
+-- Assign a MenuItem to a Menu.
 INSERT INTO menu_assignments(menu_id, menu_item_id) 
-VALUES((SELECT menu_id FROM menus WHERE name = 'High Tea Society'), 
-(SELECT menu_item_id FROM menu_items WHERE name = 'Lavendar Earl Grey Latte')); 
+VALUES((SELECT menu_id FROM menus WHERE menu_id = 'High Tea Society'), 
+(SELECT menu_item_id FROM menu_items WHERE menu_item_id = 'Lavendar Earl Grey Latte')); 
 
 INSERT INTO menu_assignments(menu_id, menu_item_id) 
 VALUES((SELECT menu_id FROM menus WHERE name = 'High Tea Society'), 

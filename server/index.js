@@ -20,5 +20,5 @@ app.use("/dashboard", require("./routes/dashboard"));
 app.use("/menus", require("./routes/dashboard"));
 
 app.listen(process.env.nodePort, () => {
-    console.log("server is running on port 5000");
+    console.log("server is running on port: " + process.env.nodePort);
 })
