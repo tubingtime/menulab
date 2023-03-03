@@ -54,4 +54,15 @@ router.post('/menus', authorization, async (req, res) => {
   }
 })
 
+router.delete("/menus/:menu_id", authorization, async(req, res) => {
+  try {
+    const { menu_id } = req.params;
+    const deleteMenu = await pool.query("DELETE FROM menus WHERE menu_id = $1", [menu_id]);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json('Server error');
+  }
+})
+
+
 module.exports = router;
