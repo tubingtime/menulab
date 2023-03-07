@@ -3,14 +3,23 @@
 # To run
 
 1. Go to ```menu-ab-api/server```.
-2. Install dependencies: ```npm i express cors pg jsonwebtoken bcrypt dotenv```. 
+2. Install dependencies: ```npm install``` OR ```npm i express cors pg jsonwebtoken bcrypt dotenv```. 
 3. Set up database in postgres using the schema in database.sql. 
-4. Launch postgres: ```psql - U postgres```.
 4. Run.
     - Option 1: Run ```node index.js```.
     - Option 2: Install nodemon ```npm install -g nodemon``` and then run nodemon ```nodemon```.
 
 <br />
+
+# To experiment as a test user
+Test User:
+- Name: ```test```
+- Email: ```test@email.com```
+- Password: ```test```
+- UUID: ```9aafde03-6b1b-44a7-aa41-55339f5a1d3b```
+
+1. Login with test credentials using Postman and get the user token (see jwtAuth.js for Login route).
+2. Test any of the routes by going to jwtAuth.js or dashboard.js.
 
 # Documentation
 
@@ -19,6 +28,7 @@ parts of the PERN stack including postgreSQL, Express, React, Node.js, npm, node
 - **jwt_summary.md** - Contains a summary about JWT tokens, authentication v. authorization,
 and an explanation of the routes and middleware.
 - **common_postgres.md** - Contains a list of common SQL and psql commands.
+- **git-worflow.md** - Describes how to work on the project. 
 
 <br />
 

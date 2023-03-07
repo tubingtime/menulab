@@ -3,7 +3,7 @@ const pool = require("../db");
 const authorization = require('../middleware/authorization');
 
 /**
- * TODO: Add a description of what this actually does.
+ * This checks the user authorization against the user table.
  * 
  * To try this in Postman:
  * GET: http://localhost:5000/dashboard
@@ -18,9 +18,7 @@ router.get('/', authorization, async (req, res) => {
     // req.user has the payload.
     // res.json(req.user); // Returns the uuid for the user.
     const user = await pool.query("SELECT user_name FROM users WHERE user_id = $1", [req.user]);
-
     res.json(user.rows[0]);
-
   } catch (err) {
     console.error(err.message);
     res.status(500).json('Server error');
@@ -31,7 +29,7 @@ router.get('/', authorization, async (req, res) => {
  * Creates a Menu.
  * 
  * To try this in Postman:
- * GET: http://localhost:5000/dashboard/menus
+ * POST: http://localhost:5000/dashboard/menus
  * Header:
  *      key: token
  *      value: the actual token
@@ -42,32 +40,50 @@ router.get('/', authorization, async (req, res) => {
  */
 router.post('/menus', authorization, async (req, res) => {
   try {
-    //res.send('hello menus');
-    //res.json(user.rows[0]);
     const { name } = req.body;
-    const newMenu = await pool.query("INSERT INTO menus(name, user_id) VALUES($1, $2)",
+    const addMenu = await pool.query("INSERT INTO menus(name, user_id) VALUES($1, $2)",
       [name, req.user]);
-    res.json(newMenu.rows[0]);
+    res.json("Menu created.");
   } catch (err) {
     console.error(err.message);
     res.status(500).json('Server error');
   }
 })
 
-router.delete("/menus/:menu_id", authorization, async(req, res) => {
+/**
+ * Delete a Menu.
+ * 
+ * To try this in Postman:
+ * DELETE: http://localhost:5000/dashboard/menus/:menu_id
+ * Header: 
+ *      key: token
+ *      value: the actual token
+ * Params:
+ *      replace menu_id with id we want to delete
+ */
+router.delete("/menus/:menu_id", authorization, async (req, res) => {
   try {
     const { menu_id } = req.params;
     const deleteMenu = await pool.query("DELETE FROM menus WHERE menu_id = $1", [menu_id]);
+    res.json("Menu deleted.");
   } catch (err) {
     console.error(err.message);
     res.status(500).json('Server error');
   }
 })
 
-/* Get all menus */
-router.get("/menus", authorization, async(req, res) =>{
+/**
+ * Get all Menus.
+ * 
+ * To try this in Postman: 
+ * GET: http://localhost:5000/dashboard/menus
+ * Header: 
+ *      key: token
+ *      value: the actual token
+ */
+router.get("/menus", authorization, async (req, res) => {
   try {
-    const menus = await pool.query("SELECT * FROM menus WHERE user_id = $1", [req.user]);
+    const getMenus = await pool.query("SELECT * FROM menus WHERE user_id = $1", [req.user]);
     res.json(menus.rows);
   } catch (err) {
     console.error(err.message);
@@ -75,15 +91,27 @@ router.get("/menus", authorization, async(req, res) =>{
   }
 })
 
-/* Add a new menu item */
-router.post("/item/", authorization, async(req, res) =>{
+/**
+ * Add a new MenuItem.
+ * 
+ * To try this in Postman:
+ * POST: http://localhost:5000/dashboard/menus/item
+ * Header:
+ *      key: token
+ *      value: the actual token
+ * Body:
+ *      "name": "",
+ *      "description": "", (<-- This field is optional)
+ *      "price": ""
+ */
+router.post("/item/", authorization, async (req, res) => {
   try {
     const name = req.body.name;
     const description = req.body.description;
     const price = req.body.price;
-    const menus = await pool.query("INSERT INTO menu_items(name, description, price) VALUES($1, $2, $3)",
+    const createMenuItem = await pool.query("INSERT INTO menu_items(name, description, price) VALUES($1, $2, $3)",
       [name, description, price]);
-    res.json("Menu item created");
+    res.json("MenuItem created.");
   } catch (err) {
     console.error(err.message);
     res.status(500).json('Server error');
@@ -92,48 +120,77 @@ router.post("/item/", authorization, async(req, res) =>{
 
 //TODO: Security: make sure users can only delete / assign their own items.
 
-/* Assign an item to a menu */
-router.post("/menus/item/:item_id", authorization, async(req, res) =>{
+/**
+ * Assign a MenuItem to a Menu.
+ * 
+ * To try this in Postman:
+ * POST: http://localhost:5000/dashboard/menus/item/:item_id
+ * Header:
+ *      key: token
+ *      value: the actual token
+ * Params: item_id
+ * Body:
+ *      "menu_id": ""
+ */
+router.post("/menus/item/:item_id", authorization, async (req, res) => {
   try {
     const menu_id = req.body.menu_id;
     const item_id = req.params.item_id;
-    const item_assignment = await pool.query(`INSERT INTO menu_assignments(menu_id, menu_item_id) 
+    const assignMenuItem = await pool.query(`INSERT INTO menu_assignments(menu_id, menu_item_id) 
     VALUES((SELECT menu_id FROM menus WHERE menu_id = $1), 
     (SELECT menu_item_id FROM menu_items WHERE menu_item_id = $2));`,
       [menu_id, item_id]);
-    res.json("Menu item assigned to");
+    res.json("MenuItem assigned.");
   } catch (err) {
     console.error(err.message);
     res.status(500).json('Server error');
   }
 })
 
-/* Unassign a item from a menu */
-router.delete("/menus/item/:item_id", authorization, async(req, res) =>{
+/**
+ * Unassign a item from a menu.
+ * 
+ * To try this in Postman:
+ * DELETE: http://localhost:5000/dashboard/menus/item/:item_id
+ * Header:
+ *      key: token
+ *      value: the actual token
+ * Params: item_id
+ * Body:
+ *      "menu_id": ""
+ */
+router.delete("/menus/item/:item_id", authorization, async (req, res) => {
   try {
     const item_id = req.params.item_id;
     const menu_id = req.body.menu_id;
     const menus = await pool.query("DELETE FROM menu_assignments WHERE menu_id = $1 AND menu_item_id = $2",
       [menu_id, item_id]);
-    res.json("Menu item assignment deleted");
+    res.json("MenuItem unassigned.");
   } catch (err) {
     console.error(err.message);
     res.status(500).json('Server error');
   }
 })
 
-/* Delete an item */
-router.delete("/item/:item_id", authorization, async(req, res) =>{
+/**
+ * Delete an item.
+ * 
+ * To try this in Postman:
+ * DELETE: http://localhost:5000/dashboard/item/:item_id
+ * Header:
+ *      key: token
+ *      value: the actual token
+ * Params: item_id
+ */
+router.delete("/item/:item_id", authorization, async (req, res) => {
   try {
     const item_id = req.params.item_id;
     const menus = await pool.query("DELETE FROM menu_items WHERE menu_item_id = $1", [item_id]);
-    res.json("Menu item deleted");
+    res.json("MenuItem deleted.");
   } catch (err) {
     console.error(err.message);
     res.status(500).json('Server error');
   }
 })
-
-
 
 module.exports = router;
