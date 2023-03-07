@@ -4,8 +4,19 @@
 
 1. Go to ```menu-ab-api/server```.
 2. Install dependencies: ```npm install``` OR ```npm i express cors pg jsonwebtoken bcrypt dotenv```. 
-3. Set up database in postgres using the schema in database.sql. 
-4. Run.
+3. Set up database in postgres using the schema in database.sql.
+4. Create a file called `.env` in ```menu-ab-api/server``` with the following content: 
+    ```
+    jwtSecret=YOUR_JWT_SECRET_HERE
+    user=postgres
+    password=YOUR_POSTGRES_PASSWORD_HERE
+    host=demo-db.cr37h0vny84t.us-east-2.rds.amazonaws.com
+    postgresPort=5432
+    database=initial_db
+    nodePort=5001
+    ```
+            
+6. Run.
     - Option 1: Run ```node index.js```.
     - Option 2: Install nodemon ```npm install -g nodemon``` and then run nodemon ```nodemon```.
 
