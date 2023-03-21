@@ -6,26 +6,6 @@ import './styles.css';
 const Menus = ({ setAuth }) => {
 
   const [name, setName] = useState("");
-  // const [menus, setMenus] = useState("");
-
-  // const getMenus = async () => {
-  //   try {
-  //     const response = await fetch("http://localhost:5000/dashboard/menus", {
-  //       method: "GET",
-  //       headers: { token: localStorage.token }
-  //     });
-
-  //     const jsonData = await response.json();
-  //     console.log(jsonData);
-  //     // setMenus(jsonData.getMenus);
-  //   } catch (err) {
-  //       console.error(err.message);
-  //   };
-  // }
-
-  // useEffect(() => {
-  //   getMenus();
-  // }, []);
 
   async function getName() {
     try {
@@ -59,9 +39,9 @@ const Menus = ({ setAuth }) => {
 
   const toggleNav = () => {
     setIsOpen(!isOpen);
-    
+
   };
-  
+
   useEffect(() => {
     setSidenavWidth(isOpen ? sidenavRef.current.offsetWidth : 200);
   }, []);
@@ -78,14 +58,14 @@ const Menus = ({ setAuth }) => {
       Converted NavBar Below to React
       https://www.codeply.com/p/RXiaRJEqWj */}
       <div>
-          <div id="mySidenav" ref={sidenavRef} className="sidenav" style={{width: `${sidenavWidth}px`}}>
-            <h1>Manage</h1>
-            <a href="menus">Menus</a>
-            <a href="menu-items">Menu Items</a>
-          </div>
+        <div id="mySidenav" ref={sidenavRef} className="sidenav" style={{ width: `${sidenavWidth}px` }}>
+          <h1>Manage</h1>
+          <a href="menus">Menus</a>
+          <a href="menu-items">Menu Items</a>
+        </div>
       </div>
 
-      <nav className="navbar navbar-light bg-light" style= {{ boxShadow: "0px 0px 8px #888888" }} >
+      <nav className="navbar navbar-light bg-light" style={{ boxShadow: "0px 0px 8px #888888" }} >
         <button className="navbar-toggler hamburger-button" type="button" aria-expanded="false" aria-label="Toggle navigation" onClick={toggleNav} style={{ zIndex: 2 }}>
           <div className={`animated-icon ${isOpen ? 'open' : ''}`}>
             <span></span>
