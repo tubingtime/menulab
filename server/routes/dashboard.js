@@ -83,8 +83,8 @@ router.delete("/menus/:menu_id", authorization, async (req, res) => {
  */
 router.get("/menus", authorization, async (req, res) => {
   try {
-    const getMenus = await pool.query("SELECT * FROM menus WHERE user_id = $1", [req.user]);
-    res.json(menus.rows);
+    const getMenus = await pool.query("SELECT * FROM menus WHERE user_id=$1", [req.user]);
+    res.json(getMenus.rows);
   } catch (err) {
     console.error(err.message);
     res.status(500).json('Server error');
