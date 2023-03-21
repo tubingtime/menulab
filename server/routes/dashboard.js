@@ -118,6 +118,7 @@ router.post("/item/", authorization, async (req, res) => {
   }
 })
 
+
 //TODO: Security: make sure users can only delete / assign their own items.
 
 /**
@@ -141,6 +142,28 @@ router.post("/menus/item/:item_id", authorization, async (req, res) => {
     (SELECT menu_item_id FROM menu_items WHERE menu_item_id = $2));`,
       [menu_id, item_id]);
     res.json("MenuItem assigned.");
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json('Server error');
+  }
+})
+
+
+/**
+ * Get all the MenuItems in a Menu.
+ * 
+ * To try this in Postman:
+ * POST: http://localhost:5000/dashboard/menus/:menu_id
+ * Header:
+ *      key: token
+ *      value: the actual token
+ * Params: menu_id
+ */
+router.get("/menus/:menu_id", authorization, async (req, res) => {
+  try {
+    const menu_id = req.params.menu_id;
+    const getMenuItems = await pool.query("SELECT * FROM menu_items");
+    res.json(getMenuItems.rows);
   } catch (err) {
     console.error(err.message);
     res.status(500).json('Server error');
