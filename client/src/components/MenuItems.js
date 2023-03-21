@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import $ from 'jquery';
 import './styles.css';
 
-const Dashboard = ({ setAuth }) => {
+const MenuItems = ({ setAuth }) => {
 
   const [name, setName] = useState("");
   // const [menus, setMenus] = useState("");
@@ -103,10 +103,10 @@ const Dashboard = ({ setAuth }) => {
 
       <br></br>
       <br></br>
-      <h1>welcome  { name }!</h1>
+      <h1>Menu Items:</h1>
 
     </Fragment>
   );
 };
 
-export default Dashboard;
+export default MenuItems;
