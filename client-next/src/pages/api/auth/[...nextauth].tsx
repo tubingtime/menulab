@@ -1,4 +1,4 @@
-import NextAuth from "next-auth"
+    import NextAuth, { getServerSession } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 
 // Next Auth Options, for documentation see: https://next-auth.js.org/configuration/options
@@ -41,13 +41,29 @@ export default NextAuth({
 
                 // If no error and we have user data, return it
                 if (response.ok && user?.token !== "undefined") {
-                    return user.token;
+                    console.log("API RESPONSE TOKEN:"+ user.token);
+                    user.accessToken = user.token;
+                    return user;
                 }
                 // Return null (aka false) if user data could not be retrieved
                 return null;
             }
         })
     ],
+    callbacks: {
+        session({ session, token, user }) {
+            console.log("SESSION ACCESS TOKEN BEFORE SET:" + session.user.accessToken);
+            session.user.accessToken = token.accessToken;
+            return session;
+        },
+        async jwt({ token, user}) {
+            if (user) {
+                console.log("JWT CALLBACK TOKEN:" + user.accessToken);
+                token.accessToken = user.accessToken;
+            }
+            return token;
+        }
+    },
     secret: process.env.NEXTAUTH_SECRET,
     session: {
         // Choose how you want to save the user session.
