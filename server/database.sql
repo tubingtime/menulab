@@ -20,8 +20,7 @@ CREATE TABLE menus (
 CREATE TABLE sections (
   section_id SERIAL PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
-  menu_id INTEGER REFERENCES menus(menu_id) ON DELETE CASCADE
-);
+  menu_id INTEGER REFERENCES menus(menu_id) ON DELETE CASCADE;
 
 CREATE TABLE menu_items (
   menu_item_id SERIAL PRIMARY KEY,
@@ -29,8 +28,8 @@ CREATE TABLE menu_items (
   description TEXT,
   price DECIMAL(8,2) NOT NULL,
   photo_reference TEXT
+  user_id uuid REFERENCES users(user_id) ON DELETE CASCADE
 );
-
 
 CREATE TABLE menu_assignments (
   menu_assignment_id SERIAL PRIMARY KEY,
