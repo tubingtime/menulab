@@ -1,6 +1,5 @@
 import React, { Fragment, useState, useEffect, useRef } from 'react';
 import { toast } from 'react-toastify';
-import $ from 'jquery';
 import './styles.css';
 
 const MenuItems = ({ setAuth }) => {
@@ -64,7 +63,7 @@ const MenuItems = ({ setAuth }) => {
 
     useEffect(() => {
         setSidenavWidth(isOpen ? sidenavRef.current.offsetWidth : 200);
-    }, []);
+    }, [isOpen]);
 
     useEffect(() => {
         sidenavRef.current.style.width = isOpen ? `${sidenavWidth}px` : '0';
