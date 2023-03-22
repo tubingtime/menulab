@@ -21,6 +21,7 @@ const Nav = ({ setAuth }) => {
     // the sideNav broke.
     useEffect(() => {
         setSidenavWidth(isOpen ? sidenavRef.current.offsetWidth : 200);
+        // eslint-disable-next-line
     }, []);
 
     useEffect(() => {
