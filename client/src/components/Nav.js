@@ -39,7 +39,7 @@ const Nav = ({ setAuth }) => {
                 <div id="mySidenav" ref={sidenavRef} className="sidenav" style={{ width: `${sidenavWidth}px` }}>
                     <h1>Manage</h1>
                     <a href="menus">Menus</a>
-                    <a href="menu-items">Menu Items</a>
+                    <a href="items">Items</a>
                 </div>
             </div>
 

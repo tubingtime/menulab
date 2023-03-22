@@ -9,7 +9,7 @@ import Dashboard from './components/Dashboard';
 import Register from './components/Register';
 import Login from './components/Login';
 import Menus from './components/Menus';
-import MenuItems from './components/MenuItems';
+import Items from './components/Items';
 
 toast.configure();
 
@@ -51,7 +51,7 @@ function App() {
                     <Route exact path="/login" render={props => !isAuthenticated ? (<Login {...props} setAuth={setAuth} />) : (<Redirect to="/dashboard" />)} />
                     <Route exact path="/register" render={props => !isAuthenticated ? (<Register {...props} setAuth={setAuth} />) : (<Redirect to="/login" />)} />
                     <Route exact path="/menus" render={props => isAuthenticated ? (<Menus {...props} setAuth={setAuth} />) : (<Redirect to="/menus" />)} />
-                    <Route exact path="/menu-items" render={props => isAuthenticated ? (<MenuItems {...props} setAuth={setAuth} />) : (<Redirect to="/menu-items" />)} />
+                    <Route exact path="/items" render={props => isAuthenticated ? (<Items {...props} setAuth={setAuth} />) : (<Redirect to="/items" />)} />
                     <Route exact path="/dashboard" render={props => isAuthenticated ? (<Dashboard {...props} setAuth={setAuth} />) : (<Redirect to="/login" />)} />
                 </Switch>
             </Router>
