@@ -96,10 +96,10 @@ router.get("/menus", authorization, async (req, res) => {
 })
 
 /**
- * Add a new MenuItem.
+ * Add a new Item.
  * 
  * To try this in Postman:
- * POST: http://localhost:5000/dashboard/menus/item
+ * POST: http://localhost:5000/dashboard/item
  * Header:
  *      key: token
  *      value: the actual token
@@ -114,9 +114,9 @@ router.post("/item", authorization, async (req, res) => {
         const description = req.body.description;
         const price = req.body.price;
         const createMenuItem = await pool.query(
-            "INSERT INTO menu_items(name, description, price) VALUES($1, $2, $3)",
-            [name, description, price]);
-        res.json("MenuItem created.");
+            "INSERT INTO items(name, description, price, user_id) VALUES($1, $2, $3, $4)",
+            [name, description, price, req.user]);
+        res.json("Item created.");
     } catch (err) {
         console.error(err.message);
         res.status(500).json('Server error');
@@ -127,7 +127,7 @@ router.post("/item", authorization, async (req, res) => {
 //TODO: Security: make sure users can only delete / assign their own items.
 
 /**
- * Assign a MenuItem to a Menu.
+ * Assign a Item to a Menu.
  * 
  * To try this in Postman:
  * POST: http://localhost:5000/dashboard/menus/item/:item_id
@@ -143,11 +143,11 @@ router.post("/menus/item/:item_id", authorization, async (req, res) => {
         const menu_id = req.body.menu_id;
         const item_id = req.params.item_id;
         const assignMenuItem = await pool.query(
-            "INSERT INTO menu_assignments(menu_id, menu_item_id) \
+            "INSERT INTO menu_assignments(menu_id, item_id) \
             VALUES((SELECT menu_id FROM menus WHERE menu_id = $1), \
-            (SELECT menu_item_id FROM menu_items WHERE menu_item_id = $2))",
+            (SELECT item_id FROM items WHERE item_id = $2))",
             [menu_id, item_id]);
-        res.json("MenuItem assigned.");
+        res.json("Item assigned.");
     } catch (err) {
         console.error(err.message);
         res.status(500).json('Server error');
@@ -166,17 +166,16 @@ router.post("/menus/item/:item_id", authorization, async (req, res) => {
  */
 router.get("/items", authorization, async (req, res) => {
     try {
-        const getMenuItems = await pool.query(
-            "SELECT * FROM menu_items WHERE user_id = $1",
+        const getItems = await pool.query(
+            "SELECT * FROM items WHERE user_id = $1",
             [req.user]);
-        res.json(getMenuItems.rows);
+        res.json(getItems.rows);
     } catch (err) {
         console.error(err.message);
         res.status(500).json('Server error');
     }
 })
 
-// TODO: Test further.
 /**
  * Get all the MenuItems in a SPECIFIC Menu.
  * 
@@ -187,15 +186,14 @@ router.get("/items", authorization, async (req, res) => {
  *      value: the actual token
  * Params: menu_id
  */
-/*
 router.get("/menus/:menu_id", authorization, async (req, res) => {
     try {
         const menu_id = req.params.menu_id;
         // TODO: Fix this so that it returns for a specific user and menu.
         const getMenuItems = await pool.query(
-            "SELECT menu_items.name, menu_items.description, menu_items.price \
-            FROM menu_items JOIN menu_assignments \
-            ON menu_items.menu_item_id = menu_assignments.menu_item_id \
+            "SELECT items.name, items.description, items.price \
+            FROM items JOIN menu_assignments \
+            ON items.item_id = menu_assignments.item_id \
             WHERE menu_assignments.menu_id =$1",
             [menu_id]
         );
@@ -205,9 +203,9 @@ router.get("/menus/:menu_id", authorization, async (req, res) => {
         res.status(500).json('Server error');
     }
 })
-*/
+
 /**
- * Unassign a item from a menu.
+ * Unassign an Item from a Menu.
  * 
  * To try this in Postman:
  * DELETE: http://localhost:5000/dashboard/menus/item/:item_id
@@ -223,9 +221,9 @@ router.delete("/menus/item/:item_id", authorization, async (req, res) => {
         const item_id = req.params.item_id;
         const menu_id = req.body.menu_id;
         const menus = await pool.query(
-            "DELETE FROM menu_assignments WHERE menu_id = $1 AND menu_item_id = $2",
+            "DELETE FROM menu_assignments WHERE menu_id = $1 AND item_id = $2",
             [menu_id, item_id]);
-        res.json("MenuItem unassigned.");
+        res.json("Item unassigned.");
     } catch (err) {
         console.error(err.message);
         res.status(500).json('Server error');
@@ -246,8 +244,8 @@ router.delete("/item/:item_id", authorization, async (req, res) => {
     try {
         const item_id = req.params.item_id;
         const menus = await pool.query(
-            "DELETE FROM menu_items WHERE menu_item_id = $1", [item_id]);
-        res.json("MenuItem deleted.");
+            "DELETE FROM items WHERE item_id = $1", [item_id]);
+        res.json("Item deleted.");
     } catch (err) {
         console.error(err.message);
         res.status(500).json('Server error');
