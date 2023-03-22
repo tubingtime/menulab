@@ -1,41 +1,42 @@
 "use client"
 import React, { Fragment, useState, useEffect } from 'react';
 import { useSession } from "next-auth/react"
-import { redirect } from "next/navigation"
 
 export default function Dashboard() {
 
   const [name, setName] = useState("default");
 
-  // //TODO update type def
-
+  
+  // TODO need to await session response OR use server sesh?
   const session = useSession();
   
   // If the token doesn't exist for some reason give it a default value of "null"
   console.log(session);
   const jwtToken = session.data?.user.accessToken || "null";
 
-async function getName() {
-    try {
-      console.log(jwtToken)
-      const response = await fetch("http://localhost:5001/dashboard/", {
-        method: "GET",
-        headers: { token: jwtToken }
-      });
-
-      const parseRes = await response.json();
-
-      setName(parseRes.user_name);
-
-    } catch (err) {
-      console.error(err);
-    }
-  }
-
-
+  
   useEffect(() => {
-    getName()
-  }, [])
+    async function getName() {
+      if (jwtToken === "null"){
+        return;
+      }
+      try {
+        const API_PORT = process.env.NEXT_PUBLIC_API_PORT;
+        const response = await fetch(`http://localhost:${API_PORT}/dashboard/`, {
+          method: "GET",
+          headers: { token: jwtToken }
+        });
+  
+        const parseRes = await response.json();
+  
+        setName(parseRes.user_name);
+  
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    getName();
+  }, [jwtToken])
 
 
   return (
