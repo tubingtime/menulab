@@ -6,7 +6,7 @@ import EditItem from "./EditItem";
 
 const Items = () => {
 
-    const [items, setItems] = useState("");
+    const [items, setItems] = useState([]);
 
     const getItems = async () => {
         try {
@@ -58,13 +58,13 @@ const Items = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {items && items.map((item) => (
-                                <tr key={item.id}>
+                            {items.map((item, i) => (
+                                <tr key={i}>
                                     <td>{item.name}</td>
                                     <td>{item.description}</td>
                                     <td>{item.price}</td>
                                     <td><EditItem item={item} /></td>
-                                    <td><button className="btn btn-danger" onClick={() => deleteItem(item.item_id)}>Delete</button></td>
+                                    {/*<td><button className="btn btn-danger" onClick={() => deleteItem(item.item_id)}>Delete</button></td>*/}
                                 </tr>
                             ))}
                         </tbody>
