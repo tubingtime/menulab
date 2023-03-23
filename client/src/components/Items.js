@@ -2,33 +2,33 @@ import React, { Fragment, useState, useEffect } from 'react';
 import Nav from './Nav';
 import './nav.css';
 
-const MenuItems = () => {
+const Items = () => {
 
-    const [menuItems, setMenuItems] = useState("");
+    const [items, setItems] = useState("");
 
-    const getMenuItems = async () => {
+    const getItems = async () => {
         try {
-            const response = await fetch("http://localhost:5000/dashboard/menus/:menu_id", {
+            const response = await fetch("http://localhost:5000/dashboard/items", {
                 method: "GET",
                 headers: { token: localStorage.token }
             });
 
             const jsonData = await response.json();
             console.log(jsonData);
-            setMenuItems(jsonData);
+            setItems(jsonData);
         } catch (err) {
             console.error(err.message);
         };
     }
 
     useEffect(() => {
-        getMenuItems();
+        getItems();
     }, []);
 
     return (
         <Fragment>
             <Nav />
-            <h1>Menu Items</h1>
+            <h1>Items</h1>
             <table className="table table-striped">
                 <thead>
                     <tr>
@@ -38,11 +38,11 @@ const MenuItems = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {menuItems && menuItems.map((menuItem) => (
-                        <tr key={menuItem.id}>
-                            <td>{menuItem.name}</td>
-                            <td>{menuItem.description}</td>
-                            <td>{menuItem.price}</td>
+                    {items && items.map((item) => (
+                        <tr key={item.id}>
+                            <td>{item.name}</td>
+                            <td>{item.description}</td>
+                            <td>{item.price}</td>
                         </tr>
                     ))}
                 </tbody>
@@ -51,4 +51,4 @@ const MenuItems = () => {
     );
 };
 
-export default MenuItems;
+export default Items;
