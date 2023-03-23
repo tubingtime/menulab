@@ -64,7 +64,7 @@ const Items = () => {
                                     <td>{item.description}</td>
                                     <td>{item.price}</td>
                                     <td><EditItem item={item} /></td>
-                                    {/*<td><button className="btn btn-danger" onClick={() => deleteItem(item.item_id)}>Delete</button></td>*/}
+                                    <td><button className="btn btn-danger" onClick={() => deleteItem(item.item_id)}>Delete</button></td>
                                 </tr>
                             ))}
                         </tbody>
