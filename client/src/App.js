@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import './App.css';
 
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 
