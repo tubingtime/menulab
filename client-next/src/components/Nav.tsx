@@ -38,8 +38,8 @@ const Nav = () => {
             <div>
                 <div id="mySidenav" ref={sidenavRef} className="sidenav" style={{ width: `${sidenavWidth}px` }}>
                     <h1>Manage</h1>
-                    <a href="menus">Menus</a>
-                    <a href="items">Items</a>
+                    <a href="../dashboard/menus">Menus</a>
+                    <a href="../dashboard/items">Items</a>
                 </div>
             </div>
 
