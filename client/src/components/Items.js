@@ -52,7 +52,6 @@ const Items = () => {
         try {
             console.log("onSubmit");
             const body = { name, description, price };
-            
             /* fetch() makes a GET request by default. */
             console.log(JSON.stringify(body));
             const response = await fetch("http://localhost:5000/dashboard/item", {
@@ -62,7 +61,7 @@ const Items = () => {
             });
             console.log(response);
 
-            //window.location = "/items";
+            window.location.reload();
         } catch (err) {
             console.error(err.message);
         }
