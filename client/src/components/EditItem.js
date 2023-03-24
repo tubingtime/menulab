@@ -13,7 +13,7 @@ const EditItem = ({ item }) => {
     const updateItem = async e => {
         e.preventDefault();
         try {
-            const body = { description };
+            const body = { name, description, price };
 
             const response = await fetch(
                 `http://localhost:5000/dashboard/item/${item.item_id}`,
@@ -25,7 +25,7 @@ const EditItem = ({ item }) => {
                 }
             );
 
-            window.location = "/";
+            window.location = "/items";
         } catch (err) {
             console.error(err.message);
         }
