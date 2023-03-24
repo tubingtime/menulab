@@ -1,6 +1,7 @@
 "use client"
 import React, { Fragment, useState, useEffect } from 'react';
-import { useSession } from "next-auth/react"
+import { useSession } from "next-auth/react";
+import Nav from "@/components/Nav";
 
 export default function Dashboard() {
 
@@ -11,7 +12,6 @@ export default function Dashboard() {
   const session = useSession();
   
   // If the token doesn't exist for some reason give it a default value of "null"
-  console.log(session);
   const jwtToken = session.data?.user.accessToken || "null";
 
   
@@ -41,9 +41,8 @@ export default function Dashboard() {
 
   return (
     <Fragment>
-      <h1>Dashboard - Welcome {name}</h1>
-      <a href="api/auth/signout">Logout</a>
-      
+      <Nav />
+      <h1>Dashboard - Welcome {name}</h1>      
     </Fragment>
   );
 };
