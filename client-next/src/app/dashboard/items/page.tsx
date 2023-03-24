@@ -1,12 +1,12 @@
+"use client"
+
 import React, { Fragment, useState, useEffect } from 'react';
-import Nav from './Nav';
-import './nav.css';
-import EditItem from "./EditItem";
+import Nav from '@/components/Nav';
+import EditItem from "@/components/EditItem";
 
 
 const Items = () => {
-
-    const [items, setItems] = useState([]);
+    const [items, setItems] = useState<any[]>([]);
 
     const getItems = async () => {
         try {
@@ -18,7 +18,7 @@ const Items = () => {
             const jsonData = await response.json();
             console.log(jsonData);
             setItems(jsonData);
-        } catch (err) {
+        } catch (err: any) {
             console.error(err.message);
         };
     }
@@ -32,7 +32,7 @@ const Items = () => {
 
             setItems(items.filter(item => item.item_id !== id));
 
-        } catch (err) {
+        } catch (err: any) {
             console.error(err.message);
         }
     };
@@ -52,6 +52,7 @@ const Items = () => {
         try {
             console.log("onSubmit");
             const body = { name, description, price };
+            
             /* fetch() makes a GET request by default. */
             console.log(JSON.stringify(body));
             const response = await fetch("http://localhost:5000/dashboard/item", {
@@ -61,8 +62,8 @@ const Items = () => {
             });
             console.log(response);
 
-            window.location.reload();
-        } catch (err) {
+            //window.location = "/items";
+        } catch (err: any) {
             console.error(err.message);
         }
     };
