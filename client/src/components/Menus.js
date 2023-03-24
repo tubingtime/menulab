@@ -1,9 +1,16 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import './nav.css';
 import Nav from './Nav.js';
+import ListItems from './ListItems.js';
+import { Link } from 'react-router-dom';
+// import { useSearchParams } from 'react-router-dom';
 
 const Menus = () => {
     const [menus, setMenus] = useState("");
+    // const [searchParams, setSearchParams] = useSearchParams();
+
+    // searchParams.get("menu_id");
+    // console.log(searchParams);
 
     const deleteMenu = async id => {
         try {
@@ -51,7 +58,7 @@ const Menus = () => {
             });
             console.log(response);
 
-            window.location = "/menus";
+            // window.location.reload();
         } catch (err) {
             console.error(err.message);
         }
@@ -93,7 +100,10 @@ const Menus = () => {
                             </div>
                             <div className="card-body">
                                 <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-                                    <a href="#" className="btn btn-outline-info">Edit</a>
+                                    {/* <button a href="/listitems" className="btn btn-primary" onClick={() => <ListItems id={menu.menu_id} /> }> */}
+                                    <Link to="/listitems" state={{data:menu.menu_id}} className="btn btn-primary">Show Menu</Link>
+
+                                    <a href={`/items?menu_id="${menu.menu_id}"`} className="btn btn-outline-info">Edit</a>
                                     <button className="btn btn-danger" onClick={() => deleteMenu(menu.menu_id)}>Delete</button>
                                 </div>
                             </div>
