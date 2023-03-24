@@ -19,8 +19,7 @@ const EditItem = ({ item }) => {
                 `http://localhost:5000/dashboard/item/${item.item_id}`,
                 {
                     method: "PUT",
-                    headers: { token: localStorage.token },
-                    headers: { "Content-Type": "application/json" },
+                    headers: { token: localStorage.token, "Content-Type": "application/json" },
                     body: JSON.stringify(body)
                 }
             );
