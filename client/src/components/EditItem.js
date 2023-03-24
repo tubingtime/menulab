@@ -66,8 +66,20 @@ const EditItem = ({ item }) => {
                             <input
                                 type="text"
                                 className="form-control"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                            />
+                            <input
+                                type="text"
+                                className="form-control"
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
+                            />
+                            <input
+                                type="text"
+                                className="form-control"
+                                value={price}
+                                onChange={(e) => setPrice(e.target.value)}
                             />
                         </div>
 

@@ -37,6 +37,38 @@ const Items = () => {
         }
     };
 
+    const [inputs, setInputs] = useState({
+        name: '',
+        description: '',
+        price: ''
+    });
+    const { name, description, price } = inputs;
+    const onChange = e => {
+        setInputs({ ...inputs, [e.target.name]: e.target.value })
+    };
+
+    const onSubmitForm2 = async (e) => {
+        e.preventDefault();
+        try {
+            console.log("onSubmit");
+            const body = { name, description, price };
+            /* fetch() makes a GET request by default. */
+            console.log(body);
+            const response = await fetch("http://localhost:5000/dashboard/item", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                headers: { token: localStorage.token },
+                body: JSON.stringify(body)
+            });
+
+            console.log(response);
+
+            //window.location = "/items";
+        } catch (err) {
+            console.error(err.message);
+        }
+    };
+
     useEffect(() => {
         getItems();
     }, []);
@@ -45,6 +77,40 @@ const Items = () => {
         <Fragment>
             <Nav />
             <h1>Items</h1>
+            <form className="mt-2" onSubmit={onSubmitForm2}>
+                <div className="row">
+                    <div className="col">
+                        <input
+                            type="text"
+                            name="name"
+                            placeholder="name"
+                            required
+                            className="form-control"
+                            value={name}
+                            onChange={e => onChange(e)}
+                        />
+                        <input
+                            type="text"
+                            name="description"
+                            placeholder="description"
+                            className="form-control"
+                            value={description}
+                            onChange={e => onChange(e)}
+                        />
+                        <input
+                            type="text"
+                            name="price"
+                            placeholder="price"
+                            className="form-control"
+                            value={price}
+                            onChange={e => onChange(e)}
+                        />
+                    </div>
+                    <div>
+                        <button className="btn btn-success">Add</button>
+                    </div>
+                </div>
+            </form>
             <div style={{ display: 'flex', justifyContent: 'center', backgroundColor: 'white', padding: '20px' }}>
                 <div style={{ maxWidth: '800px' }}>
                     <table className="table table-striped">
