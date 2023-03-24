@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react"
 
 export default function Dashboard() {
 
-  const [name, setName] = useState("default");
+  const [name, setName] = useState("");
 
   
   // TODO need to await session response OR use server sesh?

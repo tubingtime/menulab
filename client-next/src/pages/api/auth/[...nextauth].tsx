@@ -28,7 +28,8 @@ export default NextAuth({
                     email: credentials?.email,
                     password: credentials?.password
                 }
-                const response = await fetch("http://localhost:5001/auth/login", {
+                const API_PORT = process.env.NEXT_PUBLIC_API_PORT;
+                const response = await fetch(`http://localhost:${API_PORT}/auth/login`, {
                     method: 'POST',
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(body)
@@ -52,13 +53,11 @@ export default NextAuth({
     ],
     callbacks: {
         session({ session, token, user }) {
-            console.log("SESSION ACCESS TOKEN BEFORE SET:" + session.user.accessToken);
             session.user.accessToken = token.accessToken;
             return session;
         },
         async jwt({ token, user}) {
             if (user) {
-                console.log("JWT CALLBACK TOKEN:" + user.accessToken);
                 token.accessToken = user.accessToken;
             }
             return token;
