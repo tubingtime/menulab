@@ -52,15 +52,14 @@ const Items = () => {
         try {
             console.log("onSubmit");
             const body = { name, description, price };
+            
             /* fetch() makes a GET request by default. */
-            console.log(body);
+            console.log(JSON.stringify(body));
             const response = await fetch("http://localhost:5000/dashboard/item", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                headers: { token: localStorage.token },
+                headers: { "Content-Type": "application/json", token: localStorage.token },
                 body: JSON.stringify(body)
             });
-
             console.log(response);
 
             //window.location = "/items";
