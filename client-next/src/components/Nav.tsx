@@ -38,8 +38,8 @@ const Nav = () => {
             <div>
                 <div id="mySidenav" ref={sidenavRef} className="sidenav" style={{ width: `${sidenavWidth}px` }}>
                     <h1>Manage</h1>
-                    <a href="../dashboard/menus">Menus</a>
-                    <a href="../dashboard/items">Items</a>
+                    <a href="/dashboard/menus">Menus</a>
+                    <a href="/dashboard/items">Items</a>
                 </div>
             </div>
 
@@ -52,7 +52,7 @@ const Nav = () => {
                     </div>
                 </button>
                 <div className="mx-auto order-0">
-                    <a className="navbar-brand" href="dashboard">MenuLab</a>
+                    <a className="navbar-brand" href="/dashboard">MenuLab</a>
                 </div>
                 <form className="form-inline">
                     <button className="btn btn-primary" onClick={e => logout(e)}>Logout</button>
