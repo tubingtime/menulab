@@ -114,9 +114,9 @@ router.post("/item", authorization, async (req, res) => {
     const description = req.body.description;
     const price = req.body.price;
     const createMenuItem = await pool.query(
-      "INSERT INTO items(name, description, price, user_id) VALUES($1, $2, $3, $4)",
+      "INSERT INTO items(name, description, price, user_id) VALUES($1, $2, $3, $4) RETURNING item_id",
       [name, description, price, req.user]);
-    res.json("Item created.");
+    res.json(createMenuItem.rows);
   } catch (err) {
     console.error(err.message);
     res.status(500).json('Server error');
