@@ -53,7 +53,7 @@ const ListItems = () => {
             console.log("assignResponse:");
             console.log(assignResponse);
 
-            //window.location = "/items";
+            window.location.reload();
         } catch (err: any) {
             console.error(err.message);
         }
