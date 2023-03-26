@@ -48,6 +48,23 @@ export default function Dashboard() {
       <section>
         <h2>Welcome, {name}!</h2>
       </section>
-    </Fragment>
+      <section>
+        <div className="card-deck">
+          <div className="card border-primary mb-3 w-25">
+            <div className="card-header">Menus</div>
+            <div className="card-body">
+              <h2 className="card-text">25</h2>
+            </div>
+          </div>
+          <div className="card border-primary mb-3 w-25">
+            <div className="card-header">Items</div>
+            <div className="card-body">
+              <h2 className="card-text">25</h2>
+            </div>
+          </div>
+        </div>
+
+      </section >
+    </Fragment >
   );
 };
