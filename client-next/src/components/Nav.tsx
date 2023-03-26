@@ -46,8 +46,9 @@ const Nav = () => {
                 <div id="mySidenav" ref={sidenavRef} className="sidenav" style={{ width: `${sidenavWidth}px` }}>
                     <section>
                         <h1 className={silkscreen.className}>MenuLab</h1>
-                        <a href="/dashboard/menus">Menus</a>
-                        <a href="/dashboard/items">Items</a>
+                        <Link href="/dashboard">Dashboard</Link>
+                        <Link href="/dashboard/menus">Menus</Link>
+                        <Link href="/dashboard/items">Items</Link>
                     </section>
                 </div>
             </div>
