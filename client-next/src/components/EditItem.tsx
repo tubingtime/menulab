@@ -50,7 +50,7 @@ const EditItem = ({ item }) => {
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h4 className="modal-title">Edit Todo</h4>
+                            <h4 className="modal-title">Edit Item</h4>
                             <button
                                 type="button"
                                 className="close"
@@ -62,30 +62,41 @@ const EditItem = ({ item }) => {
                         </div>
 
                         <div className="modal-body">
-                            <input
-                                type="text"
-                                className="form-control"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                            />
-                            <input
-                                type="text"
-                                className="form-control"
-                                value={description}
-                                onChange={(e) => setDescription(e.target.value)}
-                            />
-                            <input
-                                type="text"
-                                className="form-control"
-                                value={price}
-                                onChange={(e) => setPrice(e.target.value)}
-                            />
+                            <div className="row">
+
+                                <div className="col">
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
+                                    />
+                                </div>
+                                <div className="col">
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={price}
+                                        onChange={(e) => setPrice(e.target.value)}
+                                    />
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col">
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={description}
+                                        onChange={(e) => setDescription(e.target.value)}
+                                    />
+                                </div>
+                            </div>
                         </div>
 
                         <div className="modal-footer">
                             <button
                                 type="button"
-                                className="btn btn-warning"
+                                className="btn btn-outline-info"
                                 data-bs-dismiss="modal"
                                 onClick={(e) => updateItem(e)}
                             >
@@ -93,7 +104,7 @@ const EditItem = ({ item }) => {
                             </button>
                             <button
                                 type="button"
-                                className="btn btn-danger"
+                                className="btn btn-outline-danger"
                                 data-bs-dismiss="modal"
                                 onClick={() => setDescription(item.description)}
                             >
