@@ -52,7 +52,7 @@ const Items = () => {
         try {
             console.log("onSubmit");
             const body = { name, description, price };
-            
+
             /* fetch() makes a GET request by default. */
             console.log(JSON.stringify(body));
             const response = await fetch("http://localhost:5000/dashboard/item", {
@@ -75,43 +75,49 @@ const Items = () => {
     return (
         <Fragment>
             <Nav />
-            <h1>Items</h1>
-            <form className="mt-2" onSubmit={onSubmitForm2}>
-                <div className="row">
-                    <div className="col">
-                        <input
-                            type="text"
-                            name="name"
-                            placeholder="name"
-                            required
-                            className="form-control"
-                            value={name}
-                            onChange={e => onChange(e)}
-                        />
-                        <input
-                            type="text"
-                            name="description"
-                            placeholder="description"
-                            className="form-control"
-                            value={description}
-                            onChange={e => onChange(e)}
-                        />
-                        <input
-                            type="text"
-                            name="price"
-                            placeholder="price"
-                            className="form-control"
-                            value={price}
-                            onChange={e => onChange(e)}
-                        />
+            <section>
+                <h1>Add an Item</h1>
+                <form className="mt-2" onSubmit={onSubmitForm2}>
+                    <div className="row">
+                        <div className="col">
+                            <label>Name</label>
+                            <input
+                                type="text"
+                                name="name"
+                                placeholder="Enter item name."
+                                required
+                                className="form-control"
+                                value={name}
+                                onChange={e => onChange(e)}
+                            />
+                            <label>Description</label>
+                            <input
+                                type="text"
+                                name="price"
+                                placeholder="Optional: Add an item description."
+                                className="form-control"
+                                value={description}
+                                onChange={e => onChange(e)}
+                            />
+                            <label>Price</label>
+                            <input
+                                type="text"
+                                name="price"
+                                placeholder="Enter item price."
+                                className="form-control"
+                                value={price}
+                                onChange={e => onChange(e)}
+                            />
+                        </div>
+                        <div>
+                            <button className="btn btn-success">Add</button>
+                        </div>
                     </div>
-                    <div>
-                        <button className="btn btn-success">Add</button>
-                    </div>
-                </div>
-            </form>
-            <div style={{ display: 'flex', justifyContent: 'center', backgroundColor: 'white', padding: '20px' }}>
-                <div style={{ maxWidth: '800px' }}>
+                </form>
+            </section>
+            <section>
+                <h1>Items</h1>
+                <div style={{ display: 'flex', justifyContent: 'center', backgroundColor: 'white' }}>
                     <table className="table table-striped">
                         <thead>
                             <tr>
@@ -135,8 +141,7 @@ const Items = () => {
                         </tbody>
                     </table>
                 </div>
-            </div>
-
+            </section>
         </Fragment>
     );
 };

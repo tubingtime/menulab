@@ -9,7 +9,7 @@ import EditItem from "@/components/EditItem";
 const ListItems = () => {
     const searchParams = useSearchParams();
     const menu_id = searchParams?.get('menu_id');
-    console.log("menuID:"+menu_id);
+    console.log("menuID:" + menu_id);
     const [items, setItems] = useState<any[]>([]);
 
     const [inputs, setInputs] = useState({
@@ -27,7 +27,7 @@ const ListItems = () => {
         try {
             console.log("onSubmit");
             const add_body = { name, description, price };
-            
+
             /* fetch() makes a GET request by default. */
             console.log(JSON.stringify(add_body));
 
@@ -41,7 +41,7 @@ const ListItems = () => {
             console.log("addResponse:");
             const item_id = await addResponse.json();
             console.log(item_id[0].item_id);
-            
+
             const assign_body = { menu_id };
             // Assign item to menu
             const assignResponse = await fetch(`http://localhost:5000/dashboard/menus/item/${item_id[0].item_id}`, {

@@ -28,7 +28,7 @@ const Menus = () => {
             console.error(err.message);
         }
     };
-    
+
 
     const [name, setName] = useState("");
 
@@ -56,14 +56,14 @@ const Menus = () => {
     useEffect(() => {
         const getMenus = async () => {
             try {
-                if (jwtToken === "null"){
+                if (jwtToken === "null") {
                     return;
                 }
                 const response = await fetch("http://localhost:5000/dashboard/menus", {
                     method: "GET",
                     headers: { token: jwtToken }
                 });
-    
+
                 const jsonData = await response.json();
                 setMenus(jsonData);
                 console.log(jsonData);
@@ -78,49 +78,53 @@ const Menus = () => {
     return (
         <Fragment>
             <Nav />
-            <h1>Menus</h1>
-            <form className="mt-2" onSubmit={onSubmitForm}>
-                <div className="row">
-                    <div className="col">
-                        <input
-                            type="text"
-                            name="name"
-                            placeholder="name"
-                            required
-                            className="form-control"
-                            value={name}
-                            onChange={e => setName(e.target.value)}
-                        />
+            <section>
+                <h1>Menus</h1>
+                <form className="mt-2" onSubmit={onSubmitForm}>
+                    <div className="row">
+                        <div className="col">
+                            <input
+                                type="text"
+                                name="name"
+                                placeholder="name"
+                                required
+                                className="form-control"
+                                value={name}
+                                onChange={e => setName(e.target.value)}
+                            />
+                        </div>
+                        <div>
+                            <button className="btn btn-success">Add</button>
+                        </div>
                     </div>
-                    <div>
-                        <button className="btn btn-success">Add</button>
-                    </div>
-                </div>
-            </form>
-            <div className="row row-cols-1 row-cols-md-2 g-4">
-                {menus && menus.map((menu, i) => (
-                    <div className="column" key={i}>
-                        <div className="card" style={{ margin: '20px' }}>
-                            <div className="card-header" style={{ textAlign: 'center' }}>
-                                {menu.name}
-                            </div>
-                            <div className="card-body">
-                                <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-                                    {/* <button a href="/listitems" className="btn btn-primary" onClick={() => <ListItems id={menu.menu_id} /> }> */}
-                                    <Link href={{
-                                        pathname: "../dashboard/menus/listitems",
-                                        query: {
-                                            menu_id: menu.menu_id
-                                        }
-                                    }} className="btn btn-primary">Show Menu</Link>
-                                <a href={`/items?menu_id="${menu.menu_id}"`} className="btn btn-outline-info">Edit</a>
-                                    <button className="btn btn-danger" onClick={() => deleteMenu(menu.menu_id)}>Delete</button>
+                </form>
+            </section>
+            <section>
+                <div className="row row-cols-1 row-cols-md-2 g-4">
+                    {menus && menus.map((menu, i) => (
+                        <div className="column" key={i}>
+                            <div className="card" >
+                                <div className="card-header" style={{ textAlign: 'center' }}>
+                                    {menu.name}
+                                </div>
+                                <div className="card-body">
+                                    <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+                                        {/* <button a href="/listitems" className="btn btn-primary" onClick={() => <ListItems id={menu.menu_id} /> }> */}
+                                        <Link href={{
+                                            pathname: "../dashboard/menus/listitems",
+                                            query: {
+                                                menu_id: menu.menu_id
+                                            }
+                                        }} className="btn btn-primary">Show Menu</Link>
+                                        <a href={`/items?menu_id="${menu.menu_id}"`} className="btn btn-outline-info">Edit</a>
+                                        <button className="btn btn-danger" onClick={() => deleteMenu(menu.menu_id)}>Delete</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                ))}
-            </div>
+                    ))}
+                </div>
+            </section>
         </Fragment >
     );
 }
