@@ -80,6 +80,9 @@ const Menus = () => {
             <Nav />
             <section>
                 <h1>Menus</h1>
+            </section>
+            <section>
+                <h2>Add a Menu</h2>
                 <form className="mt-2" onSubmit={onSubmitForm}>
                     <div className="row">
                         <div className="col">

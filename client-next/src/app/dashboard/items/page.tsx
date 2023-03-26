@@ -76,7 +76,10 @@ const Items = () => {
         <Fragment>
             <Nav />
             <section>
-                <h1>Add an Item</h1>
+                <h1>Items</h1>
+            </section>
+            <section>
+                <h2>Add an Item</h2>
                 <form className="mt-2" onSubmit={onSubmitForm2}>
                     <div className="row">
                         <div className="col">
@@ -124,7 +127,7 @@ const Items = () => {
                 </form>
             </section>
             <section>
-                <h1>Items</h1>
+                <h2>Items</h2>
                 <div style={{ display: 'flex', justifyContent: 'center', backgroundColor: 'white' }}>
                     <table className="table table-striped">
                         <thead>

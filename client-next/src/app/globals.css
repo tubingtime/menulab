@@ -9,12 +9,17 @@ body {
 }
 
 h1 {
-  text-align: center;
+  color: #0275d8;
+  text-align: left;
+}
+
+h2 {
+  text-align: left;
 }
 
 section {
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 20px;
+  padding-bottom: 20px;
   padding-left: 5%;
   padding-right: 5%;
 }
