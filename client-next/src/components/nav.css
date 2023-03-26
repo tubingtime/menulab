@@ -138,14 +138,6 @@
     left: 8px;
 }
 
-button {
-    border: none !important;
-}
-
-button:focus {
-    outline: none;
-}
-
 .center {
     left: 50%;
     -webkit-transform: translateX(-50%);
