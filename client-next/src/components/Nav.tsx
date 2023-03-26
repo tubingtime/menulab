@@ -18,13 +18,13 @@ const Nav = () => {
     // TODO: Fix warning related to this. When I passed isOpen to dependency array, 
     // the sideNav broke.
     useEffect(() => {
-        if (sidenavRef.current){
+        if (sidenavRef.current) {
             setSidenavWidth(isOpen ? sidenavRef.current.offsetWidth : 200);
         }
     }, []);
 
     useEffect(() => {
-        if (sidenavRef.current){
+        if (sidenavRef.current) {
             sidenavRef.current.style.width = isOpen ? `${sidenavWidth}px` : '0';
         }
     }, [isOpen, sidenavWidth]);
@@ -37,9 +37,11 @@ const Nav = () => {
       https://www.codeply.com/p/RXiaRJEqWj */}
             <div>
                 <div id="mySidenav" ref={sidenavRef} className="sidenav" style={{ width: `${sidenavWidth}px` }}>
-                    <h1>Manage</h1>
-                    <a href="/dashboard/menus">Menus</a>
-                    <a href="/dashboard/items">Items</a>
+                    <section>
+                        <h1>Manage</h1>
+                        <a href="/dashboard/menus">Menus</a>
+                        <a href="/dashboard/items">Items</a>
+                    </section>
                 </div>
             </div>
 

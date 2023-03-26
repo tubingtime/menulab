@@ -57,18 +57,33 @@ input[type=text]:focus {
   box-shadow: 0px 0px 8px #888888;
 }
 
+.sidenav section {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 30px;
+  padding-right: 10px;
+}
+
+.sidenav h1 {
+  font-size: 30px;
+  color: #818181;
+  text-align: left;
+}
+
 .sidenav a {
-  padding: 8px 8px 8px 16px;
+  text-align: left;
   text-decoration: none;
   font-size: 25px;
-  color: #818181;
+  line-height: 1.8;
+  color: #0275d8;
+  transition: 0.2s;
   display: block;
-  transition: 0.3s;
 }
 
 .sidenav a:hover {
-  color: #f1f1f1;
+  color: #5bc0de;
 }
+
 
 .sidenav .closebtn {
   position: absolute;
@@ -187,7 +202,8 @@ input[type=text]:focus {
 }
 
 .navbar-light .navbar-brand {
-  color: blue;
+  color: #0275d8;
+  font-size: 25px;
   font-weight: 600;
   display: inline-block;
   width: 100%;
