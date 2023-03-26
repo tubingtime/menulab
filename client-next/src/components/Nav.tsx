@@ -2,6 +2,8 @@ import React, { Fragment, useState, useEffect, useRef } from 'react';
 //import { toast } from 'react-toastify';
 import { signOut } from 'next-auth/react';
 import './nav.css';
+import Link from 'next/link';
+
 import { Silkscreen } from 'next/font/google'
 const silkscreen = Silkscreen({
     weight: ['400'],
@@ -59,9 +61,11 @@ const Nav = () => {
                     </div>
                 </button>
                 <div className="mx-auto order-0">
-                    <div className={silkscreen.className}>
-                        <a className="navbar-brand" href="/dashboard">MenuLab</a>
-                    </div>
+                    <Link className="navbar-brand" href="/dashboard">
+                        <div className={silkscreen.className}>
+                            MenuLab
+                        </div>
+                    </Link>
                 </div>
                 <form className="form-inline">
                     <button className="btn btn-primary" onClick={e => logout(e)}>Logout</button>
