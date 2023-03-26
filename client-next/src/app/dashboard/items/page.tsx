@@ -90,15 +90,9 @@ const Items = () => {
                                 value={name}
                                 onChange={e => onChange(e)}
                             />
-                            <label>Description</label>
-                            <input
-                                type="text"
-                                name="price"
-                                placeholder="Optional: Add an item description."
-                                className="form-control"
-                                value={description}
-                                onChange={e => onChange(e)}
-                            />
+                        </div>
+
+                        <div className="col">
                             <label>Price</label>
                             <input
                                 type="text"
@@ -109,9 +103,23 @@ const Items = () => {
                                 onChange={e => onChange(e)}
                             />
                         </div>
-                        <div>
-                            <button className="btn btn-success">Add</button>
+                    </div>
+
+                    <div className="row">
+                        <div className="col">
+                            <label>Description</label>
+                            <input
+                                type="text"
+                                name="description"
+                                placeholder="Optional: Add an item description."
+                                className="form-control"
+                                value={description}
+                                onChange={e => onChange(e)}
+                            />
                         </div>
+                    </div>
+                    <div>
+                        <button className="btn btn-success">Add</button>
                     </div>
                 </form>
             </section>
@@ -142,7 +150,7 @@ const Items = () => {
                     </table>
                 </div>
             </section>
-        </Fragment>
+        </Fragment >
     );
 };
 

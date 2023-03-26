@@ -39,7 +39,7 @@ const EditItem = ({ item }) => {
                 data-bs-toggle="modal"
                 data-bs-target={`#id${item.item_id}`}
             >
-                edit
+                Edit
             </button>
 
             <div
