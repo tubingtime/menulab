@@ -96,43 +96,63 @@ const ListItems = () => {
     return (
         <Fragment>
             <Nav />
-            <h1>Items</h1>
-            <form className="mt-2" onSubmit={addItem}>
-                <div className="row">
-                    <div className="col">
-                        <input
-                            type="text"
-                            name="name"
-                            placeholder="name"
-                            required
-                            className="form-control"
-                            value={name}
-                            onChange={e => onChange(e)}
-                        />
-                        <input
-                            type="text"
-                            name="description"
-                            placeholder="description"
-                            className="form-control"
-                            value={description}
-                            onChange={e => onChange(e)}
-                        />
-                        <input
-                            type="text"
-                            name="price"
-                            placeholder="price"
-                            className="form-control"
-                            value={price}
-                            onChange={e => onChange(e)}
-                        />
+            <section>
+                <h1>Items</h1>
+            </section>
+            <section>
+                <h2>Add an Item</h2>
+                <form className="mt-2" onSubmit={addItem}>
+                    <div className="row">
+
+                        <div className="col">
+
+                            <label>Name</label>
+                            <input
+                                type="text"
+                                name="name"
+                                placeholder="Enter item name."
+                                required
+                                className="form-control"
+                                value={name}
+                                onChange={e => onChange(e)}
+                            />
+                        </div>
+
+                        <div className="col">
+                            <label>Price</label>
+                            <input
+                                type="text"
+                                name="price"
+                                placeholder="Enter item price."
+                                className="form-control"
+                                value={price}
+                                onChange={e => onChange(e)}
+                            />
+                        </div>
+
+                        <div className="row">
+                            <div className="col">
+                                <label>Description</label>
+                                <input
+                                    type="text"
+                                    name="description"
+                                    placeholder="Optional: Add an item description."
+                                    className="form-control"
+                                    value={description}
+                                    onChange={e => onChange(e)}
+                                />
+                            </div>
+                        </div>
+                        <div>
+                            <button className="btn btn-primary">Add</button>
+                        </div>
                     </div>
-                    <div>
-                        <button className="btn btn-success">Add</button>
-                    </div>
-                </div>
-            </form>
-            <div style={{ display: 'flex', justifyContent: 'center', backgroundColor: 'white', padding: '20px' }}>
-                <div style={{ maxWidth: '800px' }}>
+                </form>
+            </section>
+
+            <section>
+                <h2>Items</h2>
+                <div style={{ display: 'flex', justifyContent: 'center', backgroundColor: 'white' }}>
                     <table className="table table-striped">
                         <thead>
                             <tr>
@@ -150,13 +170,13 @@ const ListItems = () => {
                                     <td>{item.description}</td>
                                     <td>{item.price}</td>
                                     <td><EditItem item={item} /></td>
-                                    <td><button className="btn btn-danger" onClick={() => deleteItem(item.item_id)}>Delete</button></td>
+                                    <td><button className="btn btn-outline-danger btn-sm" onClick={() => deleteItem(item.item_id)}>Delete</button></td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </section>
         </Fragment>
     );
 };
