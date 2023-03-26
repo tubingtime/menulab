@@ -82,6 +82,7 @@ const Items = () => {
                 <h2>Add an Item</h2>
                 <form className="mt-2" onSubmit={onSubmitForm2}>
                     <div className="row">
+
                         <div className="col">
                             <label>Name</label>
                             <input

@@ -7,17 +7,17 @@ export default function Dashboard() {
 
   const [name, setName] = useState("");
 
-  
+
   // TODO need to await session response OR use server sesh?
   const session = useSession();
-  
+
   // If the token doesn't exist for some reason give it a default value of "null"
   const jwtToken = session.data?.user.accessToken || "null";
 
-  
+
   useEffect(() => {
     async function getName() {
-      if (jwtToken === "null"){
+      if (jwtToken === "null") {
         return;
       }
       try {
@@ -26,11 +26,11 @@ export default function Dashboard() {
           method: "GET",
           headers: { token: jwtToken }
         });
-  
+
         const parseRes = await response.json();
-  
+
         setName(parseRes.user_name);
-  
+
       } catch (err) {
         console.error(err);
       }
@@ -42,7 +42,12 @@ export default function Dashboard() {
   return (
     <Fragment>
       <Nav />
-      <h1>Dashboard - Welcome {name}</h1>      
+      <section>
+        <h1>Dashboard </h1>
+      </section>
+      <section>
+        <h2>Welcome, {name}!</h2>
+      </section>
     </Fragment>
   );
 };
