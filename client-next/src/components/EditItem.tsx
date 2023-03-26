@@ -35,7 +35,7 @@ const EditItem = ({ item }) => {
         <Fragment>
             <button
                 type="button"
-                className="btn btn-outline-primary btn-sm"
+                className="btn btn-outline-info btn-sm"
                 data-bs-toggle="modal"
                 data-bs-target={`#id${item.item_id}`}
             >

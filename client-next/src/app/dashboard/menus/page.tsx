@@ -81,15 +81,17 @@ const Menus = () => {
             <section>
                 <h1>Menus</h1>
             </section>
+
             <section>
                 <h2>Add a Menu</h2>
                 <form className="mt-2" onSubmit={onSubmitForm}>
                     <div className="row">
                         <div className="col">
+                            <label>Name</label>
                             <input
                                 type="text"
                                 name="name"
-                                placeholder="name"
+                                placeholder="Enter a menu name."
                                 required
                                 className="form-control"
                                 value={name}
@@ -97,12 +99,14 @@ const Menus = () => {
                             />
                         </div>
                         <div>
-                            <button className="btn btn-success">Add</button>
+                            <button className="btn btn-primary">Add</button>
                         </div>
                     </div>
                 </form>
             </section>
+
             <section>
+                <h2>Menus</h2>
                 <div className="row row-cols-1 row-cols-md-2 g-4">
                     {menus && menus.map((menu, i) => (
                         <div className="column" key={i}>
@@ -118,9 +122,9 @@ const Menus = () => {
                                             query: {
                                                 menu_id: menu.menu_id
                                             }
-                                        }} className="btn btn-primary">Show Menu</Link>
-                                        <a href={`/items?menu_id="${menu.menu_id}"`} className="btn btn-outline-info">Edit</a>
-                                        <button className="btn btn-danger" onClick={() => deleteMenu(menu.menu_id)}>Delete</button>
+                                        }} className="btn btn-outline-primary btn-sm">...</Link>
+                                        <a href={`/items?menu_id="${menu.menu_id}"`} className="btn btn-outline-info btn-sm">Edit</a>
+                                        <button className="btn btn-outline-danger btn-sm" onClick={() => deleteMenu(menu.menu_id)}>Delete</button>
                                     </div>
                                 </div>
                             </div>
