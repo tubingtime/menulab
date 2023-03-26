@@ -119,7 +119,7 @@ const Items = () => {
                         </div>
                     </div>
                     <div>
-                        <button className="btn btn-success">Add</button>
+                        <button className="btn btn-primary">Add</button>
                     </div>
                 </form>
             </section>
@@ -143,7 +143,7 @@ const Items = () => {
                                     <td>{item.description}</td>
                                     <td>{item.price}</td>
                                     <td><EditItem item={item} /></td>
-                                    <td><button className="btn btn-danger" onClick={() => deleteItem(item.item_id)}>Delete</button></td>
+                                    <td><button className="btn btn-outline-danger btn-sm" onClick={() => deleteItem(item.item_id)}>Delete</button></td>
                                 </tr>
                             ))}
                         </tbody>
