@@ -20,7 +20,7 @@
 }
 
 .sidenav h1 {
-    font-size: 30px;
+    font-size: 25px;
     color: #818181;
     text-align: left;
 }
@@ -28,7 +28,7 @@
 .sidenav a {
     text-align: left;
     text-decoration: none;
-    font-size: 25px;
+    font-size: 18px;
     line-height: 1.8;
     color: #0275d8;
     transition: 0.2s;
