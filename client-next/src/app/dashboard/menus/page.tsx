@@ -4,6 +4,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import Nav from '@/components/Nav';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
+import EditMenuName from '@/components/EditMenuName';
 
 const Menus = () => {
     const [menus, setMenus] = useState<any[]>([]);
@@ -123,7 +124,8 @@ const Menus = () => {
                                                 menu_id: menu.menu_id
                                             }
                                         }} className="btn btn-outline-primary btn-sm">...</Link>
-                                        <Link href={`/items?menu_id="${menu.menu_id}"`} className="btn btn-outline-info btn-sm">Edit</Link>
+                                        {/*<Link href={`/items?menu_id="${menu.menu_id}"`} className="btn btn-outline-info btn-sm">Edit</Link>*/}
+                                        <EditMenuName menu={menu} />
                                         <button className="btn btn-outline-danger btn-sm" onClick={() => deleteMenu(menu.menu_id)}>Delete</button>
                                     </div>
                                 </div>
