@@ -17,7 +17,7 @@ function Home(props) {
                     <div className="collapse navbar-collapse" id="navbarNav">
                         <ul className="navbar-nav ml-auto">
                             <li className="nav-item">
-                                <Link href="api/auth/signin" className="btn btn-primary">Login</Link>
+                                <Link href="api/auth/signin?callbackUrl=%2Fdashboard" className="btn btn-primary">Login</Link>
                             </li>
                         </ul>
                     </div>
