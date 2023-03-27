@@ -43,7 +43,7 @@ export default function Dashboard() {
     <Fragment>
       <Nav />
       <section>
-        <h1>Dashboard </h1>
+        <h1>Dashboard</h1>
       </section>
       <section>
         <h2>Welcome, {name}!</h2>

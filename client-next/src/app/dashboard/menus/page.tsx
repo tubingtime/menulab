@@ -123,7 +123,7 @@ const Menus = () => {
                                                 menu_id: menu.menu_id
                                             }
                                         }} className="btn btn-outline-primary btn-sm">...</Link>
-                                        <a href={`/items?menu_id="${menu.menu_id}"`} className="btn btn-outline-info btn-sm">Edit</a>
+                                        <Link href={`/items?menu_id="${menu.menu_id}"`} className="btn btn-outline-info btn-sm">Edit</Link>
                                         <button className="btn btn-outline-danger btn-sm" onClick={() => deleteMenu(menu.menu_id)}>Delete</button>
                                     </div>
                                 </div>
