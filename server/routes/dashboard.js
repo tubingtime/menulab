@@ -293,4 +293,36 @@ router.put("/item/:item_id", async (req, res) => {
   }
 });
 
+/**
+ * Edit an Menu Name.
+ * 
+ * To try this in Postman:
+ * PUT: http://localhost:5000/dashboard/menu/:menu_id
+ * Header:
+ *      key: token
+ *      value: the actual token
+ * 
+ * 
+ * Params: menu_id
+ */
+router.put("/menu/:menu_id", async (req, res) => {
+  try {
+    const menu_id = req.params.menu_id;
+
+    let menu_name = req.body.name;
+
+    const menu = await pool.query("SELECT * FROM menus WHERE menu_id=$1", [menu_id]);
+
+    if (menu_name == null) {
+      menu_name = menu.rows[0].name;
+    }
+
+    const updateMenu = await pool.query("UPDATE menus SET name=$1 WHERE menu_id=$2",
+      [menu_name, menu_id]);
+
+    res.json("Menu name was updated!");
+  } catch (err) {
+    console.error(err.message);
+  }
+});
 module.exports = router;
