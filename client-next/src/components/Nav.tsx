@@ -12,7 +12,6 @@ const silkscreen = Silkscreen({
 
 const Nav = () => {
     const logout = (e) => {
-        e.preventDefault(); // why do we need this?
         signOut();
     }
     const [isOpen, setIsOpen] = useState(false);
