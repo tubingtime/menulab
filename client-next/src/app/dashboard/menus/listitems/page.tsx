@@ -68,7 +68,10 @@ const ListItems = () => {
 
             const jsonData = await response.json();
             console.log(response);
-            setItems(jsonData);
+            // Sort the array by the 'name' field in ascending order
+            const sortedData = jsonData.sort((a, b) => a.name.localeCompare(b.name));
+
+            setItems(sortedData);
         } catch (err: any) {
             console.error(err.message);
         };

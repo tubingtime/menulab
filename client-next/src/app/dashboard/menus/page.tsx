@@ -65,8 +65,11 @@ const Menus = () => {
                 });
 
                 const jsonData = await response.json();
-                setMenus(jsonData);
                 console.log(jsonData);
+
+                // Sort the array by the 'name' field in ascending order
+                const sortedData = jsonData.sort((a, b) => a.name.localeCompare(b.name));
+                setMenus(sortedData);
             } catch (err: any) {
                 console.error(err.message);
             };
