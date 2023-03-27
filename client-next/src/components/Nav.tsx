@@ -4,7 +4,7 @@ import { signOut } from 'next-auth/react';
 import './nav.css';
 import Link from 'next/link';
 
-import { Silkscreen } from 'next/font/google'
+import { Righteous, Silkscreen } from 'next/font/google'
 const silkscreen = Silkscreen({
     weight: ['400'],
     subsets: ['latin']
@@ -53,7 +53,7 @@ const Nav = () => {
             </div>
 
             <nav className="navbar navbar-light bg-light" style={{ boxShadow: "0px 0px 8px #888888" }} >
-                <button className="navbar-toggler hamburger-button" type="button" aria-expanded="false" aria-label="Toggle navigation" onClick={toggleNav} style={{ zIndex: 2 }}>
+                <button className="navbar-toggler hamburger-button" type="button" aria-expanded="false" aria-label="Toggle navigation" onClick={toggleNav} style={{ zIndex: 2, margin: "0 15px" }}>
                     <div className={`animated-icon ${isOpen ? 'open' : ''}`}>
                         <span></span>
                         <span></span>
@@ -67,7 +67,7 @@ const Nav = () => {
                         </div>
                     </Link>
                 </div>
-                <form className="form-inline">
+                <form className="form-inline" style={{ margin: "0 15px" }}>
                     <button className="btn btn-primary" onClick={e => logout(e)}>Logout</button>
                 </form>
             </nav>
