@@ -65,7 +65,7 @@ const Items = () => {
             });
             console.log(response);
 
-            //window.location = "/items";
+            window.location = "/dashboard/items";
         } catch (err: any) {
             console.error(err.message);
         }
