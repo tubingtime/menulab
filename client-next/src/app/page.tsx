@@ -20,6 +20,9 @@ function Home(props) {
                                 <Link href="api/auth/signin?callbackUrl=%2Fdashboard" className="btn btn-primary">Login</Link>
                             </li>
                         </ul>
+                        <div className="nav-item ms-auto">
+                            <Link href="api/auth/signin?callbackUrl=%2Fdashboard" className="btn btn-primary">Register</Link>
+                        </div>
                     </div>
                 </div>
             </nav>

@@ -13,4 +13,6 @@ npm run dev
 
 ### Helpful links
 
+[NextJS 13 Docs](https://beta.nextjs.org/docs/api-reference/use-router) (NextJS 12 docs is outdated)
+
 [NextJS 13 Notetaking app](https://github.com/shadcn/taxonomy)
