@@ -43,7 +43,7 @@ const Menus = () => {
             console.log(JSON.stringify(body));
             const response = await fetch("http://localhost:5000/dashboard/menus", {
                 method: "POST",
-                headers: { "Content-Type": "application/json", token: localStorage.token },
+                headers: { "Content-Type": "application/json", token: jwtToken },
                 body: JSON.stringify(body)
             });
             console.log(response);

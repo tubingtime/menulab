@@ -20,6 +20,7 @@ export default function Dashboard() {
       if (jwtToken === "null") {
         return;
       }
+      localStorage.token = jwtToken; // TODO: delete once Issue #30 is fixed
       try {
         const API_PORT = process.env.NEXT_PUBLIC_API_PORT;
         const response = await fetch(`http://localhost:${API_PORT}/dashboard/`, {
