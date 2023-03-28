@@ -9,19 +9,19 @@ import "./home.css";
 import Link from 'next/link'
 import HomeNav from '@/components/HomeNav';
 
-function Home(props) {
+function Home() {
     return (
-
-        <div id="app-container" className="home">
+        <div>
             <HomeNav />
-            <section>
-                <h1 className="home-title">
-                    <span className={silkscreen.className}>MenuLab</span>
-                </h1>
-            </section>
+            <div id="app-container" className="home">
+                <section>
+                    <h1 className="home-title">
+                        <span className={silkscreen.className}>MenuLab</span>
+                    </h1>
+                </section>
 
+            </div>
         </div>
-
     );
 }
 

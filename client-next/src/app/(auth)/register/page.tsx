@@ -40,7 +40,7 @@ const Register = () => {
 
             if (parseRes.token) {
                 toast.success("Registered successfully!");
-                router.push("/login");
+                router.push("/api/auth/signin");
             } else {
                 toast.error(parseRes);
             }

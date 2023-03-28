@@ -31,8 +31,10 @@ const Login = () => {
             redirect: false,
             callbackUrl: searchParams?.get("from") || "/dashboard",
         })
+        console.log("RESULT:")
+        console.log(signInResult);
         if (!signInResult?.ok) {
-            return toast.error("Sign in request failed.");
+            toast.error("Sign in request failed.");
         }
     }
 
@@ -40,6 +42,7 @@ const Login = () => {
         <Fragment>
             <HomeNav />
             <h1 className="text-center my-5">Login</h1>
+            <ToastContainer />
             <div className="w-25 mx-auto">
                 <form onSubmit={onSubmitForm}>
                     <input
@@ -61,7 +64,6 @@ const Login = () => {
                     <button className="btn btn-success btn-block">Submit</button>
                 </form>
             </div>
-            <ToastContainer />
         </Fragment>
     );
 };
