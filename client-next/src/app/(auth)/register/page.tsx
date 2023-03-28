@@ -4,6 +4,7 @@ import Link from "next/link";
 import React, { Fragment, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useRouter } from "next/navigation"
+import HomeNav from "@/components/HomeNav";
 
 
 const Register = () => {
@@ -53,35 +54,37 @@ const Register = () => {
 
     return (
         <Fragment>
+            <HomeNav />
             <h1 className="text-center my-5">Register</h1>
-            <form onSubmit={onSubmitForm}>
-                <input
-                    type="text"
-                    name="name"
-                    placeholder="Enter your name"
-                    className="form-control my-3"
-                    value={name}
-                    onChange={e => onChange(e)}
-                />
-                <input
-                    type="email"
-                    name="email"
-                    placeholder="Enter your email"
-                    className="form-control my-3"
-                    value={email}
-                    onChange={e => onChange(e)}
-                />
-                <input
-                    type="password"
-                    name="password"
-                    placeholder="Enter your password"
-                    className="form-control my-3"
-                    value={password}
-                    onChange={e => onChange(e)}
-                />
-                <button className="btn btn-success btn-block">Submit</button>
-            </form>
-            <Link href="/login">Login</Link>
+            <div className="w-25 mx-auto">
+                <form onSubmit={onSubmitForm}>
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="Enter your name"
+                        className="form-control my-3"
+                        value={name}
+                        onChange={e => onChange(e)}
+                    />
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        className="form-control my-3"
+                        value={email}
+                        onChange={e => onChange(e)}
+                    />
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        className="form-control my-3"
+                        value={password}
+                        onChange={e => onChange(e)}
+                    />
+                    <button className="btn btn-success btn-block">Submit</button>
+                </form>
+            </div>
         </Fragment>
     );
 };

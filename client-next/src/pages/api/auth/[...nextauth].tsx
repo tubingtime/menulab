@@ -3,6 +3,9 @@ import CredentialsProvider from "next-auth/providers/credentials"
 
 // Next Auth Options, for documentation see: https://next-auth.js.org/configuration/options
 export default NextAuth({
+    pages: {
+        signIn: "/login"
+    },
     providers: [
         CredentialsProvider({
             // The name to display on the sign in form (e.g. 'Sign in with...')
@@ -42,7 +45,6 @@ export default NextAuth({
 
                 // If no error and we have user data, return it
                 if (response.ok && user?.token !== "undefined") {
-                    console.log("API RESPONSE TOKEN:"+ user.token);
                     user.accessToken = user.token;
                     return user;
                 }

@@ -1,15 +1,16 @@
 "use client"
 
-import Link from "next/link";
 import React, { Fragment, useState } from 'react';
-import { toast } from 'react-toastify';
-import { useRouter } from "next/navigation"
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useRouter, useSearchParams } from "next/navigation"
 import { signIn } from "next-auth/react";
+import HomeNav from "@/components/HomeNav"
 
 
-
-const Login = ({ setAuth }) => {
-
+const Login = () => {
+    
+    const searchParams = useSearchParams()
 
     const [inputs, setInputs] = useState({
         email: "",
@@ -24,35 +25,43 @@ const Login = ({ setAuth }) => {
 
     const onSubmitForm = async (e) => {
         e.preventDefault();
-        const signInResult = await signIn("email", {
+        const signInResult = await signIn("credentials", {
             email: inputs.email.toLowerCase(),
+            password: inputs.password,
             redirect: false,
             callbackUrl: searchParams?.get("from") || "/dashboard",
         })
+        if (!signInResult?.ok) {
+            return toast.error("Sign in request failed.");
+        }
     }
 
     return (
         <Fragment>
+            <HomeNav />
             <h1 className="text-center my-5">Login</h1>
-            <form onSubmit={onSubmitForm}>
-                <input
-                    type="email"
-                    name="email"
-                    placeholder="Enter your email"
-                    className="form-control my-3"
-                    value={email}
-                    onChange={e => onChange(e)}
-                />
-                <input
-                    type="password"
-                    name="password"
-                    placeholder="Enter your password"
-                    className="form-control my-3"
-                    value={password}
-                    onChange={e => onChange(e)}
-                />
-                <button className="btn btn-success btn-block">Submit</button>
-            </form>
+            <div className="w-25 mx-auto">
+                <form onSubmit={onSubmitForm}>
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        className="form-control my-3"
+                        value={email}
+                        onChange={e => onChange(e)}
+                    />
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        className="form-control my-3"
+                        value={password}
+                        onChange={e => onChange(e)}
+                    />
+                    <button className="btn btn-success btn-block">Submit</button>
+                </form>
+            </div>
+            <ToastContainer />
         </Fragment>
     );
 };
