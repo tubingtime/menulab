@@ -17,8 +17,8 @@ export default NextAuth({
             // e.g. domain, username, password, 2FA token, etc.
             // You can pass any HTML attribute to the <input> tag through the object.
             credentials: {
-                email: { label: "username", type: "email", placeholder: "cool@swag.com" },
-                password: { label: "password", type: "password" }
+                email: { label: "Email", type: "email", placeholder: "cool@swag.com" },
+                password: { label: "Password", type: "password" }
             },
             async authorize(credentials, req) {
                 console.log("HERE!");
