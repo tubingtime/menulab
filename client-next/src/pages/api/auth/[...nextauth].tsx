@@ -21,7 +21,6 @@ export default NextAuth({
                 password: { label: "Password", type: "password" }
             },
             async authorize(credentials, req) {
-                console.log("HERE!");
                 // You need to provide your own logic here that takes the credentials
                 // submitted and returns either a object representing a user or value
                 // that is false/null if the credentials are invalid.
@@ -33,21 +32,26 @@ export default NextAuth({
                     password: credentials?.password
                 }
                 const API_PORT = process.env.NEXT_PUBLIC_API_PORT;
-                const response = await fetch(`http://localhost:${API_PORT}/auth/login`, {
-                    method: 'POST',
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(body)
-                })
-                if (response.status === 404){
-                    console.log("ERROR: API Login Route Not found")
-                    return false;
-                }
-                const user = await response.json();
+                try {
+                    const response = await fetch(`http://localhost:${API_PORT}/auth/login`, {
+                        method: 'POST',
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(body)
+                        
+                    });
 
-                // If no error and we have user data, return it
-                if (response.ok && user?.token !== "undefined") {
-                    user.accessToken = user.token;
-                    return user;
+                    if (response.status === 404){
+                        console.log("ERROR: API Login Route Not found")
+                        return false;
+                    }
+                    const user = await response.json();
+                    // If no error and we have user data, return it
+                    if (response.ok && user?.token !== "undefined") {
+                        user.accessToken = user.token;
+                        return user;
+                    }
+                } catch (err) {
+                    console.log(err);
                 }
                 // Return null (aka false) if user data could not be retrieved
                 return null;
@@ -76,7 +80,7 @@ export default NextAuth({
         // which is used to look up the session in the database.
         strategy: "jwt"
     },
-    debug: true,
+    debug: false,
     theme: {
         colorScheme: "auto", // "auto" | "dark" | "light"
         //brandColor: "", // Hex color code
