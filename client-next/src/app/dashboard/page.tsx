@@ -1,22 +1,18 @@
 "use client"
 import React, { Fragment, useState, useEffect } from 'react';
-import { useSession } from "next-auth/react";
+import { getSession } from "next-auth/react";
 import Nav from "@/components/Nav";
 
 export default function Dashboard() {
 
   const [name, setName] = useState("");
 
-
-  // TODO need to await session response OR use server sesh?
-  const session = useSession();
-
-  // If the token doesn't exist for some reason give it a default value of "null"
-  const jwtToken = session.data?.user.accessToken || "null";
-
-
   useEffect(() => {
+    
     async function getName() {
+      const session = await getSession();
+      const jwtToken = session?.user.accessToken || "null";
+      console.log(session?.user.name + "jwtToken:" + jwtToken);
       if (jwtToken === "null") {
         return;
       }
@@ -37,7 +33,7 @@ export default function Dashboard() {
       }
     }
     getName();
-  }, [jwtToken])
+  }, [])
 
 
   return (

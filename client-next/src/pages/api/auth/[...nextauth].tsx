@@ -59,7 +59,7 @@ export default NextAuth({
         })
     ],
     callbacks: {
-        session({ session, token, user }) {
+        session({ session, token }) {
             session.user.accessToken = token.accessToken;
             return session;
         },

@@ -1,7 +1,7 @@
 "use client"
 import './globals.css'
 import 'bootstrap/dist/css/bootstrap.css'
-import { SessionProvider } from "next-auth/react"
+import { getSession, SessionProvider } from "next-auth/react"
 
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
