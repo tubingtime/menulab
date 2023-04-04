@@ -4,6 +4,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import Nav from '@/components/Nav';
 import { useSearchParams } from 'next/navigation'
 import EditItem from "@/components/EditItem";
+import { useSession } from "next-auth/react";
 
 
 const ListItems = () => {
@@ -96,6 +97,68 @@ const ListItems = () => {
         getItems(menu_id);
     }, []);
 
+
+
+
+    /* GET ALL THE SECTIONS TO ASSIGN TO */
+    const [sections, setSections] = useState<any[]>([]);
+
+    const session = useSession();
+    // If the token doesn't exist for some reason give it a default value of "null"
+    const jwtToken = session.data?.user.accessToken || "null";
+
+    useEffect(() => {
+        const getSections = async () => {
+            try {
+                if (jwtToken === "null") {
+                    return;
+                }
+                const response = await fetch(`http://localhost:5000/dashboard/sections/${menu_id}`, {
+                    method: "GET",
+                    headers: { token: jwtToken }
+                });
+
+                const jsonData = await response.json();
+                console.log(jsonData);
+
+                // Sort the array by the 'name' field in ascending order
+                const sortedData = jsonData.sort((a, b) => a.name.localeCompare(b.name));
+                setSections(sortedData);
+            } catch (err: any) {
+                console.error(err.message);
+            };
+        }
+        getSections();
+    }, [jwtToken]);
+
+    /* ASSIGN ITEM TO SECTION */
+    const [selectedSectionId, setSelectedSectionId] = useState(null);
+
+    const handleSectionClick = async (item, section) => {
+        try {
+            console.log(`Name: ${item.name}, Description: ${item.description}, Price: ${item.price}, Item ID: ${item.item_id}, Section ID: ${section.section_id}`);
+            const add_body = {
+                name: item.name,
+                description: item.description,
+                price: item.price,
+            };
+
+            /* fetch() makes a GET request by default. */
+            console.log(JSON.stringify(add_body));
+
+            const assign_body = { section_id: section.section_id };
+            // Assign item to section
+            const assignResponse = await fetch(`http://localhost:5000/dashboard/section/item/${item.item_id}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json", token: localStorage.token },
+                body: JSON.stringify(assign_body)
+            });
+
+        } catch (err: any) {
+            console.error(err.message);
+        }
+    };
+
     return (
         <Fragment>
             <Nav />
@@ -173,6 +236,27 @@ const ListItems = () => {
                                     <td>{item.description}</td>
                                     <td>{item.price}</td>
                                     <td><EditItem item={item} /></td>
+                                    <td>
+                                        <div className="btn-group">
+                                            <button
+                                                type="button"
+                                                className="btn btn-outline-info dropdown-toggle btn-sm"
+                                                data-bs-toggle="dropdown"
+                                                aria-expanded="false"
+                                            >
+                                                Assign To...
+                                            </button>
+                                            <ul className="dropdown-menu">
+                                                {sections.map((section) => (
+                                                    <li key={section.id}>
+                                                        <a className="dropdown-item" href="#" onClick={() => handleSectionClick(item, section)}>
+                                                            {section.name}
+                                                        </a>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    </td>
                                     <td><button className="btn btn-outline-danger btn-sm" onClick={() => deleteItem(item.item_id)}>Delete</button></td>
                                 </tr>
                             ))}
