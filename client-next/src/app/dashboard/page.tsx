@@ -1,6 +1,6 @@
 "use client"
 import React, { Fragment, useState, useEffect } from 'react';
-import { getSession } from "next-auth/react";
+import { getUserToken } from "@/lib/SessionManagement"
 import Nav from "@/components/Nav";
 
 export default function Dashboard() {
@@ -10,13 +10,7 @@ export default function Dashboard() {
   useEffect(() => {
     
     async function getName() {
-      const session = await getSession();
-      const jwtToken = session?.user.accessToken || "null";
-      console.log(session?.user.name + "jwtToken:" + jwtToken);
-      if (jwtToken === "null") {
-        return;
-      }
-      localStorage.token = jwtToken; // TODO: delete once Issue #30 is fixed
+      const jwtToken = await getUserToken();
       try {
         const API_PORT = process.env.NEXT_PUBLIC_API_PORT;
         const response = await fetch(`http://localhost:${API_PORT}/dashboard/`, {
@@ -65,3 +59,5 @@ export default function Dashboard() {
     </Fragment >
   );
 };
+
+Dashboard.session = "asd"

@@ -3,20 +3,15 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import Nav from '@/components/Nav';
 import Link from 'next/link';
-import { useSession } from 'next-auth/react';
+import { getUserToken } from '@/lib/SessionManagement';
 import EditMenuName from '@/components/EditMenuName';
 
 const Menus = () => {
     const [menus, setMenus] = useState<any[]>([]);
-    // const [searchParams, setSearchParams] = useSearchParams();
 
-    // searchParams.get("menu_id");
-    // console.log(searchParams);
-    const session = useSession();
-    // If the token doesn't exist for some reason give it a default value of "null"
-    const jwtToken = session.data?.user.accessToken || "null";
 
     const deleteMenu = async id => {
+        const jwtToken = await getUserToken();
         try {
             const deleteItem = await fetch(`http://localhost:5000/dashboard/menus/${id}`, {
                 method: "DELETE",
@@ -35,6 +30,7 @@ const Menus = () => {
 
     const onSubmitForm = async (e) => {
         e.preventDefault();
+        const jwtToken = await getUserToken();
         try {
             console.log("onSubmit");
             const body = { name };
@@ -47,36 +43,33 @@ const Menus = () => {
                 body: JSON.stringify(body)
             });
             console.log(response);
-
-            window.location.reload();
+            
+            getMenus();
         } catch (err: any) {
             console.error(err.message);
         }
     };
+    const getMenus = async () => {
+        const jwtToken = await getUserToken();
+        try {
+            if (jwtToken === "null") {
+                return;
+            }
+            const response = await fetch("http://localhost:5000/dashboard/menus", {
+                method: "GET",
+                headers: { token: jwtToken }
+            });
 
-    useEffect(() => {
-        const getMenus = async () => {
-            try {
-                if (jwtToken === "null") {
-                    return;
-                }
-                const response = await fetch("http://localhost:5000/dashboard/menus", {
-                    method: "GET",
-                    headers: { token: jwtToken }
-                });
+            const jsonData = await response.json();
+            console.log(jsonData);
 
-                const jsonData = await response.json();
-                console.log(jsonData);
-
-                // Sort the array by the 'name' field in ascending order
-                const sortedData = jsonData.sort((a, b) => a.name.localeCompare(b.name));
-                setMenus(sortedData);
-            } catch (err: any) {
-                console.error(err.message);
-            };
-        }
-        getMenus();
-    }, [jwtToken]);
+            // Sort the array by the 'name' field in ascending order
+            const sortedData = jsonData.sort((a, b) => a.name.localeCompare(b.name));
+            setMenus(sortedData);
+        } catch (err: any) {
+            console.error(err.message);
+        };
+    }
 
     // Buttons do not have any functionality yet.
     return (
