@@ -325,4 +325,171 @@ router.put("/menu/:menu_id", async (req, res) => {
     console.error(err.message);
   }
 });
+
+/**
+ * Creates a Menu Section
+ * 
+ * To try this in Postman:
+ * POST: http://localhost:5000/dashboard/section/:menu_id
+ * Header:
+ *      key: token
+ *      value: the actual token
+ * Body:
+ *      {
+ *        "name": "The Whispers Saloon"
+ *      }
+ */
+ router.post('/section/:menu_id', authorization, async (req, res) => {
+  try {
+    const { name } = req.body;
+    const { menu_id } = req.params;
+    const addSection = await pool.query(
+      "INSERT INTO sections(name, menu_id) VALUES($1, $2)",
+      [name, menu_id]);
+    res.json("Section created.");
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json('Server error');
+  }
+})
+
+/**
+ * Edit a Section Name.
+ * 
+ * To try this in Postman:
+ * PUT: http://localhost:5000/dashboard/section/:section_id
+ * Header:
+ *      key: token
+ *      value: the actual token
+ * 
+ * 
+ * Params: section_id
+ */
+ router.put("/section/:section_id", async (req, res) => {
+  try {
+    const section_id = req.params.section_id;
+
+    let section_name = req.body.name;
+
+    const section = await pool.query("SELECT * FROM sections WHERE section_id=$1", [section_id]);
+
+    if (section_name == null) {
+      section_name = section.rows[0].name;
+    }
+
+    const updateSection = await pool.query("UPDATE sections SET name=$1 WHERE section_id=$2",
+      [section_name, section_id]);
+
+    res.json("Section name was updated!");
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
+/**
+ * Delete a Section.
+ * 
+ * To try this in Postman:
+ * DELETE: http://localhost:5000/dashboard/section/:menu_id
+ * Header: 
+ *      key: token
+ *      value: the actual token
+ * Params:
+ *      replace menu_id with id we want to delete
+ */
+ router.delete("/section/:section_id", authorization, async (req, res) => {
+  try {
+    const { section_id } = req.params;
+    const deleteSection = await pool.query(
+      "DELETE FROM sections WHERE section_id = $1", [section_id]);
+    res.json("Section deleted.");
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json('Server error');
+  }
+})
+
+/**
+ * Get all Sections associated with menu.
+ * 
+ * To try this in Postman: 
+ * GET: http://localhost:5000/dashboard/sections/:menu_id
+ * Header: 
+ *      key: token
+ *      value: the actual token
+ */
+ router.get("/sections/:menu_id", authorization, async (req, res) => {
+  try {
+    const menu_id = req.params.menu_id;
+    const getSections = await pool.query(
+      "SELECT * FROM sections WHERE menu_id=$1", [menu_id]);
+    res.json(getSections.rows);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json('Server error');
+  }
+})
+
+/**
+ * Assign a Item to a Section.
+ * 
+ * To try this in Postman:
+ * POST: http://localhost:5000/dashboard/section/item/:item_id
+ * Header:
+ *      key: token
+ *      value: the actual token
+ * Params: item_id
+ * Body:
+ *      "section_id": ""
+ */
+ router.post("/section/item/:item_id", authorization, async (req, res) => {
+  try {
+    const section_id = req.body.section_id;
+    const item_id = req.params.item_id;
+    const assignMenuItem = await pool.query(
+      "INSERT INTO section_assignments(section_id, item_id) \
+            VALUES((SELECT section_id FROM sections WHERE section_id = $1), \
+            (SELECT item_id FROM items WHERE item_id = $2))",
+      [section_id, item_id]);
+    res.json("Item assigned to section.");
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json('Server error');
+  }
+})
+
+/**
+ * Get all the MenuItems in a SPECIFIC Menu in a SPECIFIC section.
+ * 
+ * To try this in Postman:
+ * GET: http://localhost:5000/dashboard/section/:section_id
+ * Header:
+ *      key: token
+ *      value: the actual token
+ * Params: section_id
+ */
+ router.get("/section/:section_id", authorization, async (req, res) => {
+  try {
+    const section_id = req.params.section_id;
+    const getSectionItems = await pool.query(
+      "SELECT items.name, items.description, items.price, items.item_id \
+            FROM items JOIN section_assignments \
+            ON items.item_id = section_assignments.item_id \
+            WHERE section_assignments.section_id =$1",
+      [section_id]
+    );
+    res.json(getSectionItems.rows);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json('Server error');
+  }
+})
+
+
+
+
+
+
 module.exports = router;
+
+
