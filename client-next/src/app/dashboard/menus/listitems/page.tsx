@@ -159,6 +159,29 @@ const ListItems = () => {
         }
     };
 
+    /* GET ALL SECTION ITEMS */
+    const [sectionItems, setSectionItems] = useState<any[]>([]);
+
+    const getSectionItems = async () => {
+        try {
+            const response = await fetch(`http://localhost:5000/dashboard/section/${section_id}`, {
+                method: "GET",
+                headers: { token: localStorage.token }
+            });
+
+            const jsonData = await response.json();
+            console.log(response);
+            // Sort the array by the 'name' field in ascending order
+            const sortedData = jsonData.sort((a, b) => a.name.localeCompare(b.name));
+
+            setSectionItems(sortedData);
+        } catch (err: any) {
+            console.error(err.message);
+        };
+    }
+
+
+
     return (
         <Fragment>
             <Nav />
@@ -218,6 +241,64 @@ const ListItems = () => {
 
             <section>
                 <h2>Items</h2>
+
+                <div>
+                    {sections.map((section) => (
+                        <div key={section.id}>
+                            <h2>{section.name}</h2>
+                            {section.items && section.items.length > 0 ? (
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Price</th>
+                                            <th>Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {sectionItems.map((item) => (
+                                            <tr key={item.id}>
+                                                <td>{item.name}</td>
+                                                <td>{item.description}</td>
+                                                <td>{item.price}</td>
+                                                <td><EditItem item={item} /></td>
+                                                <td>
+                                                    <div className="btn-group">
+                                                        <button
+                                                            type="button"
+                                                            className="btn btn-outline-info dropdown-toggle btn-sm"
+                                                            data-bs-toggle="dropdown"
+                                                            aria-expanded="false"
+                                                        >
+                                                            Assign To...
+                                                        </button>
+                                                        <ul className="dropdown-menu">
+                                                            {sections.map((section) => (
+                                                                <li key={section.id}>
+                                                                    <a className="dropdown-item" href="#" onClick={() => handleSectionClick(item, section)}>
+                                                                        {section.name}
+                                                                    </a>
+                                                                </li>
+                                                            ))}
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                                <td><button className="btn btn-outline-danger btn-sm" onClick={() => deleteItem(item.item_id)}>Delete</button></td>
+                                            </tr>
+                                        ))}
+
+                                    </tbody>
+                                </table>
+                            ) : (
+                                <p>No items in this section</p>
+                            )}
+                        </div>
+                    ))}
+                </div>
+
+
+
+
                 <div style={{ display: 'flex', justifyContent: 'center', backgroundColor: 'white' }}>
                     <table className="table table-striped">
                         <thead>
