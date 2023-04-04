@@ -10,8 +10,11 @@ import { useSession } from "next-auth/react";
 const ListItems = () => {
     const searchParams = useSearchParams();
     const menu_id = searchParams?.get('menu_id');
+    
     console.log("menuID:" + menu_id);
     const [items, setItems] = useState<any[]>([]);
+
+    const [menuName, setMenuName] = useState("");
 
     const [inputs, setInputs] = useState({
         name: '',
@@ -108,6 +111,31 @@ const ListItems = () => {
     const jwtToken = session.data?.user.accessToken || "null";
 
     useEffect(() => {
+        const getMenuName = async () => {
+            try {
+                if (jwtToken === "null" || menu_id === null) {
+                    return;
+                }
+                const response = await fetch(`http://localhost:5000/dashboard/menu/${menu_id}`, {
+                    method: "GET",
+                    headers: { token: jwtToken }
+                });
+
+                const jsonData = await response.json();
+
+                // Sort the array by the 'name' field in ascending order
+                setMenuName(jsonData);
+                console.log("menu name data " + jsonData);
+                console.log(jsonData);
+
+            } catch (err: any) {
+                console.error(err.message);
+            };
+        }
+        getMenuName();
+    }, [jwtToken]);
+
+    useEffect(() => {
         const getSections = async () => {
             try {
                 if (jwtToken === "null") {
@@ -130,6 +158,8 @@ const ListItems = () => {
         }
         getSections();
     }, [jwtToken]);
+
+    
 
     /* ASSIGN ITEM TO SECTION */
     const [selectedSectionId, setSelectedSectionId] = useState(null);
@@ -164,6 +194,7 @@ const ListItems = () => {
             <Nav />
             <section>
                 <h1>Items</h1>
+                <h2>{menuName}</h2>
             </section>
             <section>
                 <h2>Add an Item</h2>
