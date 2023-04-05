@@ -5,6 +5,7 @@ import Nav from '@/components/Nav';
 import { useSearchParams } from 'next/navigation'
 import EditItem from "@/components/EditItem";
 import { useToken } from '@/lib/SessionManagement';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 
 const ListItems = () => {

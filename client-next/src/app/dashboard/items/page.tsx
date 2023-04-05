@@ -4,6 +4,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import Nav from '@/components/Nav';
 import EditItem from "@/components/EditItem";
 import { useToken } from '@/lib/SessionManagement';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 
 const Items = () => {
@@ -86,9 +87,6 @@ const Items = () => {
     useEffect(() => {
         const getMenus = async () => {
             try {
-                if (jwtToken === "null") {
-                    return;
-                }
                 const response = await fetch("http://localhost:5000/dashboard/menus", {
                     method: "GET",
                     headers: { token: jwtToken }
@@ -105,7 +103,7 @@ const Items = () => {
             };
         }
         getMenus();
-    }, [jwtToken]);
+    }, []);
 
     /* ASSIGN ITEM TO MENU */
     const [selectedMenuId, setSelectedMenuId] = useState(null);
@@ -223,7 +221,7 @@ const Items = () => {
                                             </button>
                                             <ul className="dropdown-menu">
                                                 {menus.map((menu) => (
-                                                    <li key={menu.id}>
+                                                    <li key={menu.menu_id}>
                                                         <a className="dropdown-item" href="#" onClick={() => handleMenuClick(item, menu)}>
                                                             {menu.name}
                                                         </a>
