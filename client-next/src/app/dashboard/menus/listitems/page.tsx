@@ -190,26 +190,26 @@ const ListItems = () => {
         }
     };
 
-    /* GET ALL SECTION ITEMS */
-    const [sectionItems, setSectionItems] = useState<any[]>([]);
+    // /* GET ALL SECTION ITEMS */
+    // const [sectionItems, setSectionItems] = useState<any[]>([]);
 
-    const getSectionItems = async () => {
-        try {
-            const response = await fetch(`http://localhost:5000/dashboard/section/${section_id}`, {
-                method: "GET",
-                headers: { token: localStorage.token }
-            });
+    // const getSectionItems = async () => {
+    //     try {
+    //         const response = await fetch(`http://localhost:5000/dashboard/section/${section_id}`, {
+    //             method: "GET",
+    //             headers: { token: localStorage.token }
+    //         });
 
-            const jsonData = await response.json();
-            console.log(response);
-            // Sort the array by the 'name' field in ascending order
-            const sortedData = jsonData.sort((a, b) => a.name.localeCompare(b.name));
+    //         const jsonData = await response.json();
+    //         console.log(response);
+    //         // Sort the array by the 'name' field in ascending order
+    //         const sortedData = jsonData.sort((a, b) => a.name.localeCompare(b.name));
 
-            setSectionItems(sortedData);
-        } catch (err: any) {
-            console.error(err.message);
-        };
-    }
+    //         setSectionItems(sortedData);
+    //     } catch (err: any) {
+    //         console.error(err.message);
+    //     };
+    // }
 
 
 
