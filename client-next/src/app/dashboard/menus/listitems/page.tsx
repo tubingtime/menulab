@@ -13,8 +13,9 @@ const ListItems = () => {
 
     const searchParams = useSearchParams();
     const menu_id = searchParams?.get('menu_id');
-
     const [items, setItems] = useState<any[]>([]);
+
+    const [menuName, setMenuName] = useState("");
 
     const [inputs, setInputs] = useState({
         name: '',
@@ -102,11 +103,121 @@ const ListItems = () => {
         getItems(menu_id);
     }, []);
 
+
+
+
+    /* GET ALL THE SECTIONS TO ASSIGN TO */
+    const [sections, setSections] = useState<any[]>([]);
+
+
+    useEffect(() => {
+        const getMenuName = async () => {
+            try {
+                if (jwtToken === "null" || menu_id === null) {
+                    return;
+                }
+                const response = await fetch(`http://localhost:5000/dashboard/menu/${menu_id}`, {
+                    method: "GET",
+                    headers: { token: jwtToken }
+                });
+
+                const jsonData = await response.json();
+
+                // Sort the array by the 'name' field in ascending order
+                setMenuName(jsonData);
+                console.log("menu name data " + jsonData);
+                console.log(jsonData);
+
+            } catch (err: any) {
+                console.error(err.message);
+            };
+        }
+        getMenuName();
+    }, [jwtToken]);
+
+    useEffect(() => {
+        const getSections = async () => {
+            try {
+                if (jwtToken === "null") {
+                    return;
+                }
+                const response = await fetch(`http://localhost:5000/dashboard/sections/${menu_id}`, {
+                    method: "GET",
+                    headers: { token: jwtToken }
+                });
+
+                const jsonData = await response.json();
+                console.log(jsonData);
+
+                // Sort the array by the 'name' field in ascending order
+                const sortedData = jsonData.sort((a, b) => a.name.localeCompare(b.name));
+                setSections(sortedData);
+            } catch (err: any) {
+                console.error(err.message);
+            };
+        }
+        getSections();
+    }, [jwtToken]);
+
+    
+
+    /* ASSIGN ITEM TO SECTION */
+    const [selectedSectionId, setSelectedSectionId] = useState(null);
+
+    const handleSectionClick = async (item, section) => {
+        try {
+            console.log(`Name: ${item.name}, Description: ${item.description}, Price: ${item.price}, Item ID: ${item.item_id}, Section ID: ${section.section_id}`);
+            const add_body = {
+                name: item.name,
+                description: item.description,
+                price: item.price,
+            };
+
+            /* fetch() makes a GET request by default. */
+            console.log(JSON.stringify(add_body));
+
+            const assign_body = { section_id: section.section_id };
+            // Assign item to section
+            const assignResponse = await fetch(`http://localhost:5000/dashboard/section/item/${item.item_id}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json", token: localStorage.token },
+                body: JSON.stringify(assign_body)
+            });
+
+        } catch (err: any) {
+            console.error(err.message);
+        }
+    };
+
+    /* GET ALL SECTION ITEMS */
+    const [sectionItems, setSectionItems] = useState<any[]>([]);
+
+    const getSectionItems = async () => {
+        try {
+            const response = await fetch(`http://localhost:5000/dashboard/section/${section_id}`, {
+                method: "GET",
+                headers: { token: localStorage.token }
+            });
+
+            const jsonData = await response.json();
+            console.log(response);
+            // Sort the array by the 'name' field in ascending order
+            const sortedData = jsonData.sort((a, b) => a.name.localeCompare(b.name));
+
+            setSectionItems(sortedData);
+        } catch (err: any) {
+            console.error(err.message);
+        };
+    }
+
+
+
     return (
         <Fragment>
             <Nav />
             <section>
                 <h1>Items</h1>
+                <h2>{menuName}</h2>
             </section>
             <section>
                 <h2>Add an Item</h2>
@@ -161,6 +272,64 @@ const ListItems = () => {
 
             <section>
                 <h2>Items</h2>
+
+                <div>
+                    {sections.map((section) => (
+                        <div key={section.id}>
+                            <h2>{section.name}</h2>
+                            {section.items && section.items.length > 0 ? (
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Price</th>
+                                            <th>Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {sectionItems.map((item) => (
+                                            <tr key={item.id}>
+                                                <td>{item.name}</td>
+                                                <td>{item.description}</td>
+                                                <td>{item.price}</td>
+                                                <td><EditItem item={item} /></td>
+                                                <td>
+                                                    <div className="btn-group">
+                                                        <button
+                                                            type="button"
+                                                            className="btn btn-outline-info dropdown-toggle btn-sm"
+                                                            data-bs-toggle="dropdown"
+                                                            aria-expanded="false"
+                                                        >
+                                                            Assign To...
+                                                        </button>
+                                                        <ul className="dropdown-menu">
+                                                            {sections.map((section) => (
+                                                                <li key={section.id}>
+                                                                    <a className="dropdown-item" href="#" onClick={() => handleSectionClick(item, section)}>
+                                                                        {section.name}
+                                                                    </a>
+                                                                </li>
+                                                            ))}
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                                <td><button className="btn btn-outline-danger btn-sm" onClick={() => deleteItem(item.item_id)}>Delete</button></td>
+                                            </tr>
+                                        ))}
+
+                                    </tbody>
+                                </table>
+                            ) : (
+                                <p>No items in this section</p>
+                            )}
+                        </div>
+                    ))}
+                </div>
+
+
+
+
                 <div style={{ display: 'flex', justifyContent: 'center', backgroundColor: 'white' }}>
                     <table className="table table-striped">
                         <thead>
@@ -179,6 +348,27 @@ const ListItems = () => {
                                     <td>{item.description}</td>
                                     <td>{item.price}</td>
                                     <td><EditItem item={item} /></td>
+                                    <td>
+                                        <div className="btn-group">
+                                            <button
+                                                type="button"
+                                                className="btn btn-outline-info dropdown-toggle btn-sm"
+                                                data-bs-toggle="dropdown"
+                                                aria-expanded="false"
+                                            >
+                                                Assign To...
+                                            </button>
+                                            <ul className="dropdown-menu">
+                                                {sections.map((section) => (
+                                                    <li key={section.id}>
+                                                        <a className="dropdown-item" href="#" onClick={() => handleSectionClick(item, section)}>
+                                                            {section.name}
+                                                        </a>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    </td>
                                     <td><button className="btn btn-outline-danger btn-sm" onClick={() => deleteItem(item.item_id)}>Delete</button></td>
                                 </tr>
                             ))}
