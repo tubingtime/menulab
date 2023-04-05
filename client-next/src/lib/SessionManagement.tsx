@@ -1,10 +1,12 @@
-import { getSession } from "next-auth/react"
+import { useSession } from "next-auth/react"
 
-export async function getUserToken() {
-    const session = await getSession();
-    const jwtToken = session?.user.accessToken || "";
+export function useToken() {
+    const session = useSession();
+
+    const jwtToken = session.data?.user.accessToken;
     if (!jwtToken) {
-        console.error("Session token is null!");
+        console.error("jwtToken is null!");
+        return "null";
     }
-    return jwtToken;
+    return (jwtToken || "null");
 }

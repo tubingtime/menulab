@@ -4,12 +4,16 @@ import React, { Fragment, useState, useEffect } from 'react';
 import Nav from '@/components/Nav';
 import { useSearchParams } from 'next/navigation'
 import EditItem from "@/components/EditItem";
+import { useToken } from '@/lib/SessionManagement';
 
 
 const ListItems = () => {
+
+    const jwtToken = useToken();
+
     const searchParams = useSearchParams();
     const menu_id = searchParams?.get('menu_id');
-    console.log("menuID:" + menu_id);
+
     const [items, setItems] = useState<any[]>([]);
 
     const [inputs, setInputs] = useState({
@@ -21,6 +25,8 @@ const ListItems = () => {
     const onChange = e => {
         setInputs({ ...inputs, [e.target.name]: e.target.value })
     };
+
+    
 
     const addItem = async (e) => {
         e.preventDefault();
@@ -34,7 +40,7 @@ const ListItems = () => {
             // Add item to items table
             const addResponse = await fetch("http://localhost:5000/dashboard/item", {
                 method: "POST",
-                headers: { "Content-Type": "application/json", token: localStorage.token },
+                headers: { "Content-Type": "application/json", token: jwtToken },
                 body: JSON.stringify(add_body)
             });
 
@@ -46,7 +52,7 @@ const ListItems = () => {
             // Assign item to menu
             const assignResponse = await fetch(`http://localhost:5000/dashboard/menus/item/${item_id[0].item_id}`, {
                 method: "POST",
-                headers: { "Content-Type": "application/json", token: localStorage.token },
+                headers: { "Content-Type": "application/json", token: jwtToken },
                 body: JSON.stringify(assign_body)
             });
 
@@ -63,7 +69,7 @@ const ListItems = () => {
         try {
             const response = await fetch(`http://localhost:5000/dashboard/menus/${menu_id}`, {
                 method: "GET",
-                headers: { token: localStorage.token }
+                headers: { token: jwtToken }
             });
 
             const jsonData = await response.json();
@@ -81,7 +87,7 @@ const ListItems = () => {
         try {
             const response = await fetch(`http://localhost:5000/dashboard/item/${item_id}`, {
                 method: "DELETE",
-                headers: { token: localStorage.token }
+                headers: { token: jwtToken }
             });
             console.log(response);
 

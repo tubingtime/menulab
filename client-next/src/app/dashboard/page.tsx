@@ -1,16 +1,16 @@
 "use client"
 import React, { Fragment, useState, useEffect } from 'react';
-import { getUserToken } from "@/lib/SessionManagement"
 import Nav from "@/components/Nav";
+import { useToken } from '@/lib/SessionManagement';
 
 export default function Dashboard() {
+  const jwtToken = useToken();
 
   const [name, setName] = useState("");
 
   useEffect(() => {
     
     async function getName() {
-      const jwtToken = await getUserToken();
       try {
         const API_PORT = process.env.NEXT_PUBLIC_API_PORT;
         const response = await fetch(`http://localhost:${API_PORT}/dashboard/`, {

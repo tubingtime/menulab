@@ -3,15 +3,15 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import Nav from '@/components/Nav';
 import Link from 'next/link';
-import { getUserToken } from '@/lib/SessionManagement';
+import { useToken } from '@/lib/SessionManagement';
 import EditMenuName from '@/components/EditMenuName';
 
 const Menus = () => {
     const [menus, setMenus] = useState<any[]>([]);
 
+    const jwtToken = useToken();
 
     const deleteMenu = async id => {
-        const jwtToken = await getUserToken();
         try {
             const deleteItem = await fetch(`http://localhost:5000/dashboard/menus/${id}`, {
                 method: "DELETE",
@@ -30,7 +30,6 @@ const Menus = () => {
 
     const onSubmitForm = async (e) => {
         e.preventDefault();
-        const jwtToken = await getUserToken();
         try {
             console.log("onSubmit");
             const body = { name };
@@ -50,11 +49,7 @@ const Menus = () => {
         }
     };
     const getMenus = async () => {
-        const jwtToken = await getUserToken();
         try {
-            if (jwtToken === "null") {
-                return;
-            }
             const response = await fetch("http://localhost:5000/dashboard/menus", {
                 method: "GET",
                 headers: { token: jwtToken }
@@ -70,6 +65,9 @@ const Menus = () => {
             console.error(err.message);
         };
     }
+    useEffect(() => {
+        getMenus();
+    }, [])
 
     // Buttons do not have any functionality yet.
     return (

@@ -3,16 +3,20 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import Nav from '@/components/Nav';
 import EditItem from "@/components/EditItem";
+import { useToken } from '@/lib/SessionManagement';
 
 
 const Items = () => {
+
+    const jwtToken = useToken();
+
     const [items, setItems] = useState<any[]>([]);
 
     const getItems = async () => {
         try {
             const response = await fetch("http://localhost:5000/dashboard/items", {
                 method: "GET",
-                headers: { token: localStorage.token }
+                headers: { token: jwtToken }
             });
 
             const jsonData = await response.json();
@@ -30,7 +34,7 @@ const Items = () => {
         try {
             const deleteItem = await fetch(`http://localhost:5000/dashboard/item/${id}`, {
                 method: "DELETE",
-                headers: { token: localStorage.token }
+                headers: { token: jwtToken }
             });
 
             setItems(items.filter(item => item.item_id !== id));
@@ -60,7 +64,7 @@ const Items = () => {
             console.log(JSON.stringify(body));
             const response = await fetch("http://localhost:5000/dashboard/item", {
                 method: "POST",
-                headers: { "Content-Type": "application/json", token: localStorage.token },
+                headers: { "Content-Type": "application/json", token: jwtToken },
                 body: JSON.stringify(body)
             });
             console.log(response);
