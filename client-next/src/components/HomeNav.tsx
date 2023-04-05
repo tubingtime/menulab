@@ -9,7 +9,7 @@ export default function HomeNav() {
             <div className="collapse navbar-collapse" id="navbarNav">
                 <ul className="navbar-nav ml-auto">
                     <li className="nav-item">
-                        <Link href="/api/auth/signin?callbackUrl=%2Fdashboard" className="btn btn-primary">Login</Link>
+                        <Link href="/login" className="btn btn-primary">Login</Link>
                     </li>
                 </ul>
                 <div className="nav-item ms-auto">

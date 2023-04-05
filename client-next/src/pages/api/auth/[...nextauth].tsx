@@ -3,15 +3,15 @@ import CredentialsProvider from "next-auth/providers/credentials"
 
 // Next Auth Options, for documentation see: https://next-auth.js.org/configuration/options
 export default NextAuth({
-    // pages: {
-    //     signIn: "/login"
-    // },
+    pages: {
+        signIn: "/login"
+    },
     providers: [
         CredentialsProvider({
             // The name to display on the sign in form (e.g. 'Sign in with...')
             name: "credentials",
             type: "credentials",
-            id: "1",
+            id: "credentials",
             // The credentials is used to generate a suitable form on the sign in page.
             // You can specify whatever fields you are expecting to be submitted.
             // e.g. domain, username, password, 2FA token, etc.
@@ -39,11 +39,6 @@ export default NextAuth({
                         body: JSON.stringify(body)
                         
                     });
-
-                    if (response.status === 404){
-                        console.log("ERROR: API Login Route Not found")
-                        return false;
-                    }
                     const user = await response.json();
                     // If no error and we have user data, return it
                     if (response.ok && user?.token !== "undefined") {
@@ -51,7 +46,7 @@ export default NextAuth({
                         return user;
                     }
                 } catch (err) {
-                    console.log(err);
+                    console.error(err);
                 }
                 // Return null (aka false) if user data could not be retrieved
                 return null;
