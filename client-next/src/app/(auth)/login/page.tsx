@@ -1,7 +1,6 @@
 "use client"
 
 import React, { Fragment, useState } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter, useSearchParams } from "next/navigation"
 import { signIn } from "next-auth/react";
@@ -9,13 +8,17 @@ import HomeNav from "@/components/HomeNav"
 
 
 const Login = () => {
-    
-    const searchParams = useSearchParams()
+
+    const searchParams = useSearchParams();
+    const router = useRouter();
 
     const [inputs, setInputs] = useState({
         email: "",
         password: ""
     });
+
+    const [authError, setAuthError] = useState("");
+
 
     const { email, password } = inputs;
 
@@ -23,18 +26,20 @@ const Login = () => {
         setInputs({ ...inputs, [e.target.name]: e.target.value });
     }
 
-    const onSubmitForm = async (e) => {
+    const onSubmitLoginForm = async (e) => {
         e.preventDefault();
+        setAuthError("");
         const signInResult = await signIn("credentials", {
+            redirect: false,
             email: inputs.email.toLowerCase(),
             password: inputs.password,
-            redirect: false,
-            callbackUrl: searchParams?.get("from") || "/dashboard",
         })
-        console.log("RESULT:")
-        console.log(signInResult);
         if (!signInResult?.ok) {
-            toast.error("Sign in request failed.");
+            setAuthError("An error ocurred while signing in. Please try again.");
+        }
+        else {
+            const callbackUrl = (searchParams?.get("from") || "/dashboard");
+            router.push(callbackUrl);
         }
     }
 
@@ -42,9 +47,9 @@ const Login = () => {
         <Fragment>
             <HomeNav />
             <h1 className="text-center my-5">Login</h1>
-            <ToastContainer />
+            <h3 className="text-center my-2 text-danger">{authError}</h3>
             <div className="w-25 mx-auto">
-                <form onSubmit={onSubmitForm}>
+                <form onSubmit={onSubmitLoginForm}>
                     <input
                         type="email"
                         name="email"

@@ -1,7 +1,9 @@
 import React, { Fragment, useState } from "react";
+import { useToken } from "@/lib/SessionManagement";
 
 const EditItem = ({ item }) => {
     window.bootstrap = require('bootstrap/js/dist/modal');
+    const jwtToken = useToken();
 
     const [description, setDescription] = useState(item.description);
     const [name, setName] = useState(item.name);
@@ -16,7 +18,7 @@ const EditItem = ({ item }) => {
                 `http://localhost:5000/dashboard/item/${item.item_id}`,
                 {
                     method: "PUT",
-                    headers: { token: localStorage.token, "Content-Type": "application/json" },
+                    headers: { token: jwtToken, "Content-Type": "application/json" },
                     body: JSON.stringify(body)
                 }
             );

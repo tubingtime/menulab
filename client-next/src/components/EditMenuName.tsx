@@ -1,6 +1,10 @@
 import React, { Fragment, useState } from "react";
+import { useToken } from "@/lib/SessionManagement";
+
 const EditMenuName = ({ menu }) => {
     window.bootstrap = require('bootstrap/js/dist/modal');
+
+    const jwtToken = useToken();
 
     const [name, setName] = useState(menu.name);
 
@@ -13,7 +17,7 @@ const EditMenuName = ({ menu }) => {
                 `http://localhost:5000/dashboard/menu/${menu.menu_id}`,
                 {
                     method: "PUT",
-                    headers: { token: localStorage.token, "Content-Type": "application/json" },
+                    headers: { token: jwtToken, "Content-Type": "application/json" },
                     body: JSON.stringify(body)
                 }
             );

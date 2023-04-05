@@ -4,14 +4,16 @@ import React, { Fragment, useState, useEffect } from 'react';
 import Nav from '@/components/Nav';
 import { useSearchParams } from 'next/navigation'
 import EditItem from "@/components/EditItem";
-import { useSession } from "next-auth/react";
+import { useToken } from '@/lib/SessionManagement';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 
 const ListItems = () => {
+
+    const jwtToken = useToken();
+
     const searchParams = useSearchParams();
     const menu_id = searchParams?.get('menu_id');
-    
-    console.log("menuID:" + menu_id);
     const [items, setItems] = useState<any[]>([]);
 
     const [menuName, setMenuName] = useState("");
@@ -26,6 +28,8 @@ const ListItems = () => {
         setInputs({ ...inputs, [e.target.name]: e.target.value })
     };
 
+    
+
     const addItem = async (e) => {
         e.preventDefault();
         try {
@@ -38,7 +42,7 @@ const ListItems = () => {
             // Add item to items table
             const addResponse = await fetch("http://localhost:5000/dashboard/item", {
                 method: "POST",
-                headers: { "Content-Type": "application/json", token: localStorage.token },
+                headers: { "Content-Type": "application/json", token: jwtToken },
                 body: JSON.stringify(add_body)
             });
 
@@ -50,7 +54,7 @@ const ListItems = () => {
             // Assign item to menu
             const assignResponse = await fetch(`http://localhost:5000/dashboard/menus/item/${item_id[0].item_id}`, {
                 method: "POST",
-                headers: { "Content-Type": "application/json", token: localStorage.token },
+                headers: { "Content-Type": "application/json", token: jwtToken },
                 body: JSON.stringify(assign_body)
             });
 
@@ -67,7 +71,7 @@ const ListItems = () => {
         try {
             const response = await fetch(`http://localhost:5000/dashboard/menus/${menu_id}`, {
                 method: "GET",
-                headers: { token: localStorage.token }
+                headers: { token: jwtToken }
             });
 
             const jsonData = await response.json();
@@ -85,7 +89,7 @@ const ListItems = () => {
         try {
             const response = await fetch(`http://localhost:5000/dashboard/item/${item_id}`, {
                 method: "DELETE",
-                headers: { token: localStorage.token }
+                headers: { token: jwtToken }
             });
             console.log(response);
 
@@ -106,14 +110,11 @@ const ListItems = () => {
     /* GET ALL THE SECTIONS TO ASSIGN TO */
     const [sections, setSections] = useState<any[]>([]);
 
-    const session = useSession();
-    // If the token doesn't exist for some reason give it a default value of "null"
-    const jwtToken = session.data?.user.accessToken || "null";
 
     useEffect(() => {
         const getMenuName = async () => {
             try {
-                if (jwtToken === "null" || menu_id === null) {
+                if (menu_id === null) {
                     return;
                 }
                 const response = await fetch(`http://localhost:5000/dashboard/menu/${menu_id}`, {
@@ -133,14 +134,11 @@ const ListItems = () => {
             };
         }
         getMenuName();
-    }, [jwtToken]);
+    }, []);
 
     useEffect(() => {
         const getSections = async () => {
             try {
-                if (jwtToken === "null") {
-                    return;
-                }
                 const response = await fetch(`http://localhost:5000/dashboard/sections/${menu_id}`, {
                     method: "GET",
                     headers: { token: jwtToken }
@@ -157,7 +155,7 @@ const ListItems = () => {
             };
         }
         getSections();
-    }, [jwtToken]);
+    }, []);
 
     
 
@@ -189,26 +187,26 @@ const ListItems = () => {
         }
     };
 
-    /* GET ALL SECTION ITEMS */
-    const [sectionItems, setSectionItems] = useState<any[]>([]);
+    // /* GET ALL SECTION ITEMS */
+    // const [sectionItems, setSectionItems] = useState<any[]>([]);
 
-    const getSectionItems = async () => {
-        try {
-            const response = await fetch(`http://localhost:5000/dashboard/section/${section_id}`, {
-                method: "GET",
-                headers: { token: localStorage.token }
-            });
+    // const getSectionItems = async () => {
+    //     try {
+    //         const response = await fetch(`http://localhost:5000/dashboard/section/${section_id}`, {
+    //             method: "GET",
+    //             headers: { token: localStorage.token }
+    //         });
 
-            const jsonData = await response.json();
-            console.log(response);
-            // Sort the array by the 'name' field in ascending order
-            const sortedData = jsonData.sort((a, b) => a.name.localeCompare(b.name));
+    //         const jsonData = await response.json();
+    //         console.log(response);
+    //         // Sort the array by the 'name' field in ascending order
+    //         const sortedData = jsonData.sort((a, b) => a.name.localeCompare(b.name));
 
-            setSectionItems(sortedData);
-        } catch (err: any) {
-            console.error(err.message);
-        };
-    }
+    //         setSectionItems(sortedData);
+    //     } catch (err: any) {
+    //         console.error(err.message);
+    //     };
+    // }
 
 
 

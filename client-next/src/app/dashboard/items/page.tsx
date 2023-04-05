@@ -3,17 +3,21 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import Nav from '@/components/Nav';
 import EditItem from "@/components/EditItem";
-import { useSession } from 'next-auth/react';
+import { useToken } from '@/lib/SessionManagement';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 
 const Items = () => {
+
+    const jwtToken = useToken();
+
     const [items, setItems] = useState<any[]>([]);
 
     const getItems = async () => {
         try {
             const response = await fetch("http://localhost:5000/dashboard/items", {
                 method: "GET",
-                headers: { token: localStorage.token }
+                headers: { token: jwtToken }
             });
 
             const jsonData = await response.json();
@@ -31,7 +35,7 @@ const Items = () => {
         try {
             const deleteItem = await fetch(`http://localhost:5000/dashboard/item/${id}`, {
                 method: "DELETE",
-                headers: { token: localStorage.token }
+                headers: { token: jwtToken }
             });
 
             setItems(items.filter(item => item.item_id !== id));
@@ -61,7 +65,7 @@ const Items = () => {
             console.log(JSON.stringify(body));
             const response = await fetch("http://localhost:5000/dashboard/item", {
                 method: "POST",
-                headers: { "Content-Type": "application/json", token: localStorage.token },
+                headers: { "Content-Type": "application/json", token: jwtToken },
                 body: JSON.stringify(body)
             });
             console.log(response);
@@ -80,16 +84,9 @@ const Items = () => {
     /* GET ALL THE MENUS TO ASSIGN TO */
     const [menus, setMenus] = useState<any[]>([]);
 
-    const session = useSession();
-    // If the token doesn't exist for some reason give it a default value of "null"
-    const jwtToken = session.data?.user.accessToken || "null";
-
     useEffect(() => {
         const getMenus = async () => {
             try {
-                if (jwtToken === "null") {
-                    return;
-                }
                 const response = await fetch("http://localhost:5000/dashboard/menus", {
                     method: "GET",
                     headers: { token: jwtToken }
@@ -106,7 +103,7 @@ const Items = () => {
             };
         }
         getMenus();
-    }, [jwtToken]);
+    }, []);
 
     /* ASSIGN ITEM TO MENU */
     const [selectedMenuId, setSelectedMenuId] = useState(null);
@@ -224,7 +221,7 @@ const Items = () => {
                                             </button>
                                             <ul className="dropdown-menu">
                                                 {menus.map((menu) => (
-                                                    <li key={menu.id}>
+                                                    <li key={menu.menu_id}>
                                                         <a className="dropdown-item" href="#" onClick={() => handleMenuClick(item, menu)}>
                                                             {menu.name}
                                                         </a>
