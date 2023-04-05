@@ -114,7 +114,7 @@ const ListItems = () => {
     useEffect(() => {
         const getMenuName = async () => {
             try {
-                if (jwtToken === "null" || menu_id === null) {
+                if (menu_id === null) {
                     return;
                 }
                 const response = await fetch(`http://localhost:5000/dashboard/menu/${menu_id}`, {
@@ -134,14 +134,11 @@ const ListItems = () => {
             };
         }
         getMenuName();
-    }, [jwtToken]);
+    }, []);
 
     useEffect(() => {
         const getSections = async () => {
             try {
-                if (jwtToken === "null") {
-                    return;
-                }
                 const response = await fetch(`http://localhost:5000/dashboard/sections/${menu_id}`, {
                     method: "GET",
                     headers: { token: jwtToken }
@@ -158,7 +155,7 @@ const ListItems = () => {
             };
         }
         getSections();
-    }, [jwtToken]);
+    }, []);
 
     
 
