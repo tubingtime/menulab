@@ -1,7 +1,6 @@
 "use client"
 
 import React, { Fragment, useState } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter, useSearchParams } from "next/navigation"
 import { signIn } from "next-auth/react";
@@ -9,7 +8,7 @@ import HomeNav from "@/components/HomeNav"
 
 
 const Login = () => {
-    
+
     const searchParams = useSearchParams();
 
     const [inputs, setInputs] = useState({
@@ -36,8 +35,6 @@ const Login = () => {
             email: inputs.email.toLowerCase(),
             password: inputs.password,
         })
-        console.log("Sign in Result:");
-        console.log(signInResult);
         if (!signInResult?.ok) {
             setAuthResult("An error ocurred while signing in. Please try again.");
         }
@@ -52,7 +49,6 @@ const Login = () => {
             <HomeNav />
             <h1 className="text-center my-5">Login</h1>
             <h3 className="text-center my-2 text-danger">{authResult}</h3>
-            <ToastContainer />
             <div className="w-25 mx-auto">
                 <form onSubmit={onSubmitForm}>
                     <input
