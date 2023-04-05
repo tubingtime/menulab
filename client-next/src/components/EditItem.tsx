@@ -1,15 +1,12 @@
 import React, { Fragment, useState } from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import $ from 'jquery';
-//import Popper from 'popper.js';
-import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 const EditItem = ({ item }) => {
+    window.bootstrap = require('bootstrap/js/dist/modal');
 
     const [description, setDescription] = useState(item.description);
     const [name, setName] = useState(item.name);
     const [price, setPrice] = useState(item.price);
-
+    
     const updateItem = async e => {
         e.preventDefault();
         try {
@@ -30,7 +27,6 @@ const EditItem = ({ item }) => {
         }
     }
 
-
     return (
         <Fragment>
             <button
@@ -41,7 +37,6 @@ const EditItem = ({ item }) => {
             >
                 Edit
             </button>
-
             <div
                 className="modal"
                 id={`id${item.item_id}`}
