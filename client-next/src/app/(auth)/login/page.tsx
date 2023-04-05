@@ -10,15 +10,14 @@ import HomeNav from "@/components/HomeNav"
 const Login = () => {
 
     const searchParams = useSearchParams();
+    const router = useRouter();
 
     const [inputs, setInputs] = useState({
         email: "",
         password: ""
     });
 
-    const [authResult, setAuthResult] = useState("");
-
-    const router = useRouter();
+    const [authError, setAuthError] = useState("");
 
 
     const { email, password } = inputs;
@@ -27,16 +26,16 @@ const Login = () => {
         setInputs({ ...inputs, [e.target.name]: e.target.value });
     }
 
-    const onSubmitForm = async (e) => {
+    const onSubmitLoginForm = async (e) => {
         e.preventDefault();
-        setAuthResult("");
+        setAuthError("");
         const signInResult = await signIn("credentials", {
             redirect: false,
             email: inputs.email.toLowerCase(),
             password: inputs.password,
         })
         if (!signInResult?.ok) {
-            setAuthResult("An error ocurred while signing in. Please try again.");
+            setAuthError("An error ocurred while signing in. Please try again.");
         }
         else {
             const callbackUrl = (searchParams?.get("from") || "/dashboard");
@@ -48,9 +47,9 @@ const Login = () => {
         <Fragment>
             <HomeNav />
             <h1 className="text-center my-5">Login</h1>
-            <h3 className="text-center my-2 text-danger">{authResult}</h3>
+            <h3 className="text-center my-2 text-danger">{authError}</h3>
             <div className="w-25 mx-auto">
-                <form onSubmit={onSubmitForm}>
+                <form onSubmit={onSubmitLoginForm}>
                     <input
                         type="email"
                         name="email"
