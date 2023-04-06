@@ -2,9 +2,9 @@
 
 import React, { Fragment, useState, useEffect } from 'react';
 import Nav from '@/components/Nav';
-import EditItem from "@/components/EditItem";
 import { useToken } from '@/lib/SessionManagement';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
+import DisplayItems from '@/components/DisplayItems';
 
 
 const Items = () => {
@@ -31,20 +31,6 @@ const Items = () => {
         };
     }
 
-    const deleteItem = async id => {
-        try {
-            const deleteItem = await fetch(`http://localhost:5000/dashboard/item/${id}`, {
-                method: "DELETE",
-                headers: { token: jwtToken }
-            });
-
-            setItems(items.filter(item => item.item_id !== id));
-
-        } catch (err: any) {
-            console.error(err.message);
-        }
-    };
-
     const [inputs, setInputs] = useState({
         name: '',
         description: '',
@@ -69,7 +55,6 @@ const Items = () => {
                 body: JSON.stringify(body)
             });
             console.log(response);
-
             window.location.reload();
         } catch (err: any) {
             console.error(err.message);
@@ -104,34 +89,6 @@ const Items = () => {
         }
         getMenus();
     }, []);
-
-    /* ASSIGN ITEM TO MENU */
-    const [selectedMenuId, setSelectedMenuId] = useState(null);
-
-    const handleMenuClick = async (item, menu) => {
-        try {
-            console.log(`Name: ${item.name}, Description: ${item.description}, Price: ${item.price}, Item ID: ${item.item_id}, Menu ID: ${menu.menu_id}`);
-            const add_body = {
-                name: item.name,
-                description: item.description,
-                price: item.price,
-            };
-
-            /* fetch() makes a GET request by default. */
-            console.log(JSON.stringify(add_body));
-
-            const assign_body = { menu_id: menu.menu_id };
-            // Assign item to menu
-            const assignResponse = await fetch(`http://localhost:5000/dashboard/menus/item/${item.item_id}`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json", token: localStorage.token },
-                body: JSON.stringify(assign_body)
-            });
-
-        } catch (err: any) {
-            console.error(err.message);
-        }
-    };
 
 
     return (
@@ -191,51 +148,7 @@ const Items = () => {
             </section>
             <section>
                 <h2>Items</h2>
-                <div style={{ display: 'flex', justifyContent: 'center', backgroundColor: 'white' }}>
-                    <table className="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Description</th>
-                                <th>Price</th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {items.map((item, i) => (
-                                <tr key={i}>
-                                    <td>{item.name}</td>
-                                    <td>{item.description}</td>
-                                    <td>{item.price}</td>
-                                    <td><EditItem item={item} /></td>
-                                    <td>
-                                        <div className="btn-group">
-                                            <button
-                                                type="button"
-                                                className="btn btn-outline-info dropdown-toggle btn-sm"
-                                                data-bs-toggle="dropdown"
-                                                aria-expanded="false"
-                                            >
-                                                Assign To...
-                                            </button>
-                                            <ul className="dropdown-menu">
-                                                {menus.map((menu) => (
-                                                    <li key={menu.menu_id}>
-                                                        <a className="dropdown-item" href="#" onClick={() => handleMenuClick(item, menu)}>
-                                                            {menu.name}
-                                                        </a>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
-                                    </td>
-                                    <td><button className="btn btn-outline-danger btn-sm" onClick={() => deleteItem(item.item_id)}>Delete</button></td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+                <DisplayItems items={items} menus={menus} />
             </section>
         </Fragment >
     );
