@@ -3,6 +3,7 @@ import { useToken } from "@/lib/SessionManagement";
 
 const EditItem = ({ item }) => {
     window.bootstrap = require('bootstrap/js/dist/modal');
+    
     const jwtToken = useToken();
 
     const [description, setDescription] = useState(item.description);

@@ -4,8 +4,6 @@ import React, { Fragment, useState, useEffect } from 'react';
 import Nav from '@/components/Nav';
 import EditItem from "@/components/EditItem";
 import { useToken } from '@/lib/SessionManagement';
-import 'bootstrap/dist/js/bootstrap.bundle.min';
-
 
 const Items = () => {
 
