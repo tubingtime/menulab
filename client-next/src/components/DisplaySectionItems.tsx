@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from "react";
 import { useToken } from "@/lib/SessionManagement";
 import EditItem from "@/components/EditItem";
 
-const DisplaySectionItems = ({ section_id }) => {
+const DisplaySectionItems = ({ section_id, sections}) => {
 
     const jwtToken = useToken();
 
@@ -25,6 +25,33 @@ const DisplaySectionItems = ({ section_id }) => {
             console.error(err.message);
         };
     }
+
+    const handleSectionClick = async (item, section) => {
+        try {
+            console.log(`Name: ${item.name}, Description: ${item.description}, Price: ${item.price}, Item ID: ${item.item_id}, Section ID: ${section.section_id}`);
+            const add_body = {
+                name: item.name,
+                description: item.description,
+                price: item.price,
+            };
+
+            /* fetch() makes a GET request by default. */
+            console.log(JSON.stringify(add_body));
+
+            const assign_body = { section_id: section.section_id };
+            // Assign item to section
+            const assignResponse = await fetch(`http://localhost:5000/dashboard/section/item/${item.item_id}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json", token: localStorage.token },
+                body: JSON.stringify(assign_body)
+            });
+            window.location.reload();
+
+        } catch (err: any) {
+            console.error(err.message);
+        }
+    };
+
 
     useEffect(() => {
         getSectionItems();
@@ -77,6 +104,15 @@ const DisplaySectionItems = ({ section_id }) => {
                                             >
                                                 Assign To...
                                             </button>
+                                            <ul className="dropdown-menu">
+                                            {sections.map((section, i) => (
+                                                <li key={i}>
+                                                    <a className="dropdown-item" onClick={() => handleSectionClick(item, section)}>
+                                                        {section.name}
+                                                    </a>
+                                                </li>
+                                            ))}
+                                        </ul>
                                         </div>
                                     </td>
                                     <td><button className="btn btn-outline-danger btn-sm" onClick={() => deleteItem(item.item_id)}>Delete</button></td>

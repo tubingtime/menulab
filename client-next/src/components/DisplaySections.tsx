@@ -62,7 +62,7 @@ const DisplaySections = ({ menu_id }) => {
                 {sections.map((section, i) => (
                     <div key={i}>
                         <h2>{section.name}</h2>
-                        <DisplaySectionItems section_id={section.section_id} />
+                        <DisplaySectionItems section_id={section.section_id} sections={sections} />
                     </div>
                 ))}
             </div>
