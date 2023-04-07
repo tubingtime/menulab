@@ -4,7 +4,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import Nav from '@/components/Nav';
 import { useToken } from '@/lib/SessionManagement';
 import DisplayItems from '@/components/DisplayItems';
-import AddItem from '@/components/AddItem2';
+import AddItem from '@/components/AddItem';
 
 
 const Items = () => {

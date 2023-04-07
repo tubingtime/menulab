@@ -5,7 +5,7 @@ import Nav from '@/components/Nav';
 import { useSearchParams } from 'next/navigation'
 import { useToken } from '@/lib/SessionManagement';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
-import AddItem from '@/components/AddItem2';
+import AddItem from '@/components/AddItem';
 import DisplayMenuItems from '@/components/DisplayMenuItems';
 import DisplaySections from '@/components/DisplaySections';
 

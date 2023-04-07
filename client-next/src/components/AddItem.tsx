@@ -1,93 +1,73 @@
-import React, { Fragment, useState } from "react";
 import { useToken } from "@/lib/SessionManagement";
-import 'bootstrap/dist/js/bootstrap.bundle.min';
 
-const AddItem = () => {
-
+// Either do <AddItem /> OR
+// <AddItem menuId={menuId} />
+const AddItem = (props?: { menu_id?: any }) => {
     const jwtToken = useToken();
 
-    const [inputs, setInputs] = useState({
-        name: '',
-        description: '',
-        price: ''
-    });
-
-    const { name, description, price } = inputs;
-
-    const onChange = e => {
-        setInputs({ ...inputs, [e.target.name]: e.target.value })
-    };
-
-    const onSubmitForm = async (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
-        try {
-            console.log("onSubmit");
-            const body = { name, description, price };
+        const formData = new FormData(e.target);
+        console.log(JSON.stringify(Object.fromEntries(formData.entries())));
 
-            /* fetch() makes a GET request by default. */
-            console.log(JSON.stringify(body));
-            const response = await fetch("http://localhost:5000/dashboard/item", {
+        try {
+            // Do POST Request
+            const addItem = await fetch("http://localhost:5000/dashboard/item", {
                 method: "POST",
                 headers: { "Content-Type": "application/json", token: jwtToken },
-                body: JSON.stringify(body)
+                body: JSON.stringify(Object.fromEntries(formData.entries()))
             });
-            console.log(response);
-            window.location.reload();
+            const results: { item_id: number }[] = await addItem.json();
+            console.log("item_id", results[0].item_id);
+            const item_id = results[0].item_id;
+
+            if (props?.menu_id) {
+                // Assign (do second POST request).
+                const assignItem = await fetch(`http://localhost:5000/dashboard/menus/item/${item_id}`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json", token: jwtToken },
+                    body: JSON.stringify({ menu_id: props.menu_id })
+                });
+                console.log(assignItem);
+            }
+
         } catch (err: any) {
             console.error(err.message);
         }
+        window.location.reload();
     };
 
     return (
-        <Fragment>
-            <form className="mt-2" onSubmit={onSubmitForm}>
+        <>
+            <form className="mt-2" onSubmit={onSubmit}>
                 <div className="row">
-
-                    <div className="col">
-                        <label>Name</label>
-                        <input
-                            type="text"
-                            name="name"
-                            placeholder="Enter item name."
-                            required
-                            className="form-control"
-                            value={name}
-                            onChange={e => onChange(e)}
-                        />
-                    </div>
-
-                    <div className="col">
-                        <label>Price</label>
-                        <input
-                            type="text"
-                            name="price"
-                            placeholder="Enter item price."
-                            className="form-control"
-                            value={price}
-                            onChange={e => onChange(e)}
-                        />
-                    </div>
+                    <Field name="name" />
+                    <Field name="price" />
                 </div>
-
                 <div className="row">
-                    <div className="col">
-                        <label>Description</label>
-                        <input
-                            type="text"
-                            name="description"
-                            placeholder="Optional: Add an item description."
-                            className="form-control"
-                            value={description}
-                            onChange={e => onChange(e)}
-                        />
-                    </div>
+                    <Field name="description" />
                 </div>
                 <div>
                     <button className="btn btn-primary">Add</button>
                 </div>
             </form>
-        </Fragment>
-    )
-}
+        </>
+    );
+};
+
+const Field = <T extends string | number>(props: { name: string }) => {
+    return (
+        <>
+            <div className="col">
+                <input
+                    type="text"
+                    name={props.name}
+                    placeholder={`Enter item ${props.name}.`}
+                    className="form-control"
+                />
+            </div>
+        </>
+    );
+};
 
 export default AddItem;
