@@ -327,6 +327,32 @@ router.put("/menu/:menu_id", async (req, res) => {
 });
 
 /**
+ * Get a Menu Name from a menu_id.
+ * 
+ * To try this in Postman:
+ * PUT: http://localhost:5000/dashboard/menu/:menu_id
+ * Header:
+ *      key: token
+ *      value: the actual token
+ * 
+ * 
+ * Params: menu_id
+ */
+router.get("/menu/:menu_id", async (req, res) => {
+  try {
+    const menu_id = req.params.menu_id;
+
+    const menu = await pool.query("SELECT * FROM menus WHERE menu_id=$1", [menu_id]);
+
+    const menu_name =  menu.rows[0].name;
+    res.json(menu_name);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
+
+/**
  * Creates a Menu Section
  * 
  * To try this in Postman:
@@ -468,7 +494,7 @@ router.put("/menu/:menu_id", async (req, res) => {
  *      value: the actual token
  * Params: section_id
  */
- router.get("/section/:section_id", authorization, async (req, res) => {
+router.get("/section/:section_id", authorization, async (req, res) => {
   try {
     const section_id = req.params.section_id;
     const getSectionItems = await pool.query(
