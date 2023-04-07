@@ -338,7 +338,7 @@ router.put("/menu/:menu_id", async (req, res) => {
  * 
  * Params: menu_id
  */
-router.get("/menu/:menu_id", async (req, res) => {
+router.get("/menus/name/:menu_id", async (req, res) => {
   try {
     const menu_id = req.params.menu_id;
 
