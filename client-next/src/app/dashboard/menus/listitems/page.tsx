@@ -28,7 +28,7 @@ const ListItems = () => {
         setInputs({ ...inputs, [e.target.name]: e.target.value })
     };
 
-    
+
 
     const addItem = async (e) => {
         e.preventDefault();
@@ -157,7 +157,7 @@ const ListItems = () => {
         getSections();
     }, []);
 
-    
+
 
     /* ASSIGN ITEM TO SECTION */
     const [selectedSectionId, setSelectedSectionId] = useState(null);
@@ -285,7 +285,7 @@ const ListItems = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {sectionItems.map((item) => (
+                                        {/*sectionItems.map((item) => (
                                             <tr key={item.id}>
                                                 <td>{item.name}</td>
                                                 <td>{item.description}</td>
@@ -314,7 +314,7 @@ const ListItems = () => {
                                                 </td>
                                                 <td><button className="btn btn-outline-danger btn-sm" onClick={() => deleteItem(item.item_id)}>Delete</button></td>
                                             </tr>
-                                        ))}
+                                                            ))*/}
 
                                     </tbody>
                                 </table>
