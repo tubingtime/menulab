@@ -1,6 +1,5 @@
 import React, { Fragment, useState } from "react";
 import { useToken } from "@/lib/SessionManagement";
-import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 const AddItem = () => {
 
