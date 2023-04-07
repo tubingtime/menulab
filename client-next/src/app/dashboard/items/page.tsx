@@ -5,6 +5,7 @@ import Nav from '@/components/Nav';
 import { useToken } from '@/lib/SessionManagement';
 import DisplayItems from '@/components/DisplayItems';
 import AddItem from '@/components/AddItem';
+import "bootstrap/js/dist/dropdown"
 
 
 const Items = () => {
