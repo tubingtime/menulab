@@ -111,14 +111,12 @@ const Menus = () => {
                                 </div>
                                 <div className="card-body">
                                     <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-                                        {/* <button a href="/listitems" className="btn btn-primary" onClick={() => <ListItems id={menu.menu_id} /> }> */}
                                         <Link href={{
-                                            pathname: "../dashboard/menus/listitems",
+                                            pathname: "../dashboard/menus/editor",
                                             query: {
                                                 menu_id: menu.menu_id
                                             }
                                         }} className="btn btn-outline-primary btn-sm">...</Link>
-                                        {/*<Link href={`/items?menu_id="${menu.menu_id}"`} className="btn btn-outline-info btn-sm">Edit</Link>*/}
                                         <EditMenuName menu={menu} />
                                         <button className="btn btn-outline-danger btn-sm" onClick={() => deleteMenu(menu.menu_id)}>Delete</button>
                                     </div>

@@ -27,7 +27,6 @@ const ListItems = () => {
             });
 
             const jsonData = await response.json();
-            console.log(response);
             // Sort the array by the 'name' field in ascending order
             const sortedData = jsonData.sort((a, b) => a.name.localeCompare(b.name));
 
@@ -36,16 +35,32 @@ const ListItems = () => {
             console.error(err.message);
         };
     }
+    
+    async function getMenuName(menu_id) {
+        try {
+            const response = await fetch(`http://localhost:5000/dashboard/menus/name/${menu_id}`, {
+                method: "GET",
+                headers: { token: jwtToken }
+            });
+
+            const jsonData = await response.json();
+
+            setMenuName(jsonData);
+        } catch (err: any) {
+            console.error(err.message);
+        };
+    }
+
     useEffect(() => {
         getItems(menu_id);
+        getMenuName(menu_id);
     }, []);
 
     return (
         <Fragment>
             <Nav />
             <section>
-                <h1>Items</h1>
-                <h2>{menuName}</h2>
+                <h1>{menuName}</h1>
             </section>
             <section>
                 <AddItem menu_id={menu_id} />
@@ -56,6 +71,7 @@ const ListItems = () => {
                 <DisplaySections menu_id={menu_id} />
             </section>
             <section>
+                <h2>Items</h2>
                 <DisplayMenuItems items={items} />
             </section>
         </Fragment>

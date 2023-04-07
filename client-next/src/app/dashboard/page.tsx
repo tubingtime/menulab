@@ -8,24 +8,24 @@ export default function Dashboard() {
 
   const [name, setName] = useState("");
 
-  useEffect(() => {
-    
-    async function getName() {
-      try {
-        const API_PORT = process.env.NEXT_PUBLIC_API_PORT;
-        const response = await fetch(`http://localhost:${API_PORT}/dashboard/`, {
-          method: "GET",
-          headers: { token: jwtToken }
-        });
+  async function getName() {
+    try {
+      const API_PORT = process.env.NEXT_PUBLIC_API_PORT;
+      const response = await fetch(`http://localhost:${API_PORT}/dashboard/`, {
+        method: "GET",
+        headers: { token: jwtToken }
+      });
 
-        const parseRes = await response.json();
+      const parseRes = await response.json();
 
-        setName(parseRes.user_name);
+      setName(parseRes.user_name);
 
-      } catch (err) {
-        console.error(err);
-      }
+    } catch (err) {
+      console.error(err);
     }
+  }
+
+  useEffect(() => {
     getName();
   }, [])
 

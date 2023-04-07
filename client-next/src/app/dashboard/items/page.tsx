@@ -31,35 +31,32 @@ const Items = () => {
         };
     }
 
+    async function getMenus() {
+        try {
+            const response = await fetch("http://localhost:5000/dashboard/menus", {
+                method: "GET",
+                headers: { token: jwtToken }
+            });
+
+            const jsonData = await response.json();
+            console.log(jsonData);
+
+            // Sort the array by the 'name' field in ascending order
+            const sortedData = jsonData.sort((a, b) => a.name.localeCompare(b.name));
+            setMenus(sortedData);
+        } catch (err: any) {
+            console.error(err.message);
+        };
+    }
+
     useEffect(() => {
+        getMenus();
         getItems();
     }, []);
 
 
     /* GET ALL THE MENUS TO ASSIGN TO */
     const [menus, setMenus] = useState<any[]>([]);
-
-    useEffect(() => {
-        const getMenus = async () => {
-            try {
-                const response = await fetch("http://localhost:5000/dashboard/menus", {
-                    method: "GET",
-                    headers: { token: jwtToken }
-                });
-
-                const jsonData = await response.json();
-                console.log(jsonData);
-
-                // Sort the array by the 'name' field in ascending order
-                const sortedData = jsonData.sort((a, b) => a.name.localeCompare(b.name));
-                setMenus(sortedData);
-            } catch (err: any) {
-                console.error(err.message);
-            };
-        }
-        getMenus();
-    }, []);
-
 
     return (
         <Fragment>
