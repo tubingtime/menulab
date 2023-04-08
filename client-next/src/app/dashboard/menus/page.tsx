@@ -1,3 +1,6 @@
+
+ 
+
 "use client"
 
 import React, { Fragment, useState, useEffect } from 'react';
@@ -5,6 +8,7 @@ import Nav from '@/components/Nav';
 import Link from 'next/link';
 import { useToken } from '@/lib/SessionManagement';
 import EditMenuName from '@/components/EditMenuName';
+import AddMenu from '@/components/AddMenu';
 
 const Menus = () => {
     const [menus, setMenus] = useState<any[]>([]);
@@ -78,26 +82,7 @@ const Menus = () => {
             </section>
 
             <section>
-                <h2>Add a Menu</h2>
-                <form className="mt-2" onSubmit={onSubmitForm}>
-                    <div className="row">
-                        <div className="col">
-                            <label>Name</label>
-                            <input
-                                type="text"
-                                name="name"
-                                placeholder="Enter a menu name."
-                                required
-                                className="form-control"
-                                value={name}
-                                onChange={e => setName(e.target.value)}
-                            />
-                        </div>
-                        <div>
-                            <button className="btn btn-primary">Add</button>
-                        </div>
-                    </div>
-                </form>
+                <AddMenu/>
             </section>
 
             <section>
