@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { useToken } from "@/lib/SessionManagement";
 import DisplaySectionItems from "./DisplaySectionItems";
+import AddSection from "./AddSection";
 
 
 const DisplaySections = ({ menu_id }) => {
@@ -55,9 +56,27 @@ const DisplaySections = ({ menu_id }) => {
         }
     };
 
+    async function handleAddSection(formData: FormData){
+        const sectionName = formData.get("name")?.toString() || "null";
+        const jsonBody = { name: sectionName }
+        try {
+            const addSectionResponse = await fetch(`http://localhost:5000/dashboard/section/${menu_id}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json", token: jwtToken },
+                body: JSON.stringify(jsonBody)
+            })
+            setSections([...sections, {name: sectionName}])
+        } catch (err: any){
+            console.error(err.message);
+        }
+    }
+
 
     return (
         <Fragment>
+            <div className="mb-5">
+                <AddSection handleAddSection={handleAddSection} />
+            </div>
             <div>
                 {sections.map((section, i) => (
                     <div key={i}>

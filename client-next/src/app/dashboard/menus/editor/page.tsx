@@ -5,6 +5,7 @@ import Nav from '@/components/Nav';
 import { useSearchParams } from 'next/navigation'
 import { useToken } from '@/lib/SessionManagement';
 import AddItem from '@/components/AddItem';
+import AddSection from '@/components/AddSection'
 import DisplayMenuItems from '@/components/DisplayMenuItems';
 import DisplaySections from '@/components/DisplaySections';
 import "bootstrap/js/dist/dropdown"
@@ -68,6 +69,7 @@ const ListItems = () => {
             <section>
                 {/* For each Section */}
                 {/* Display Section Name */}
+
                 <DisplaySections menu_id={menu_id} />
             </section>
             <section>
