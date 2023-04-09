@@ -65,7 +65,10 @@ const DisplaySections = ({ menu_id }) => {
                 headers: { "Content-Type": "application/json", token: jwtToken },
                 body: JSON.stringify(jsonBody)
             })
-            setSections([...sections, {name: sectionName}])
+            if (!addSectionResponse.ok) 
+                throw new Error(addSectionResponse.statusText);
+            else
+                setSections([...sections, {name: sectionName}])
         } catch (err: any){
             console.error(err.message);
         }
