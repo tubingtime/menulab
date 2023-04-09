@@ -68,7 +68,7 @@ const DisplaySections = ({ menu_id }) => {
             if (!addSectionResponse.ok) 
                 throw new Error(addSectionResponse.statusText);
             else
-                setSections([...sections, {name: sectionName}])
+                setSections([{name: sectionName}, ...sections])
         } catch (err: any){
             console.error(err.message);
         }
