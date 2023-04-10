@@ -8,7 +8,7 @@ import HomeNav from "@/components/HomeNav"
 
 
 const Login = () => {
-
+    const [authError, setAuthError] = useState("");
     const searchParams = useSearchParams();
     const router = useRouter();
 
@@ -16,10 +16,6 @@ const Login = () => {
         email: "",
         password: ""
     });
-
-    const [authError, setAuthError] = useState("");
-
-
     const { email, password } = inputs;
 
     const onChange = e => {
