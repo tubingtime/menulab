@@ -3,9 +3,7 @@ import { useToken } from "@/lib/SessionManagement";
 
 const EditMenuName = ({ menu }) => {
     window.bootstrap = require('bootstrap/js/dist/modal');
-
     const jwtToken = useToken();
-
     const [name, setName] = useState(menu.name);
 
     const updateName = async e => {

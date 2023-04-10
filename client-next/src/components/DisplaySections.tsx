@@ -3,7 +3,6 @@ import { useToken } from "@/lib/SessionManagement";
 import DisplaySectionItems from "./DisplaySectionItems";
 import AddSection from "./AddSection";
 
-
 const DisplaySections = ({ menu_id }) => {
     const jwtToken = useToken();
     const [sections, setSections] = useState<any[]>([]);
@@ -15,9 +14,6 @@ const DisplaySections = ({ menu_id }) => {
             });
 
             const jsonData = await response.json();
-            console.log(jsonData);
-
-            // Sort the array by the 'name' field in ascending order
             const sortedData = jsonData.sort((a, b) => a.name.localeCompare(b.name));
             setSections(sortedData);
         } catch (err: any) {
@@ -28,27 +24,21 @@ const DisplaySections = ({ menu_id }) => {
         getSections()
     }, []);
 
-    /* ASSIGN ITEM TO SECTION */
     const [selectedSectionId, setSelectedSectionId] = useState(null);
 
     const handleSectionClick = async (item, section) => {
         try {
-            console.log(`Name: ${item.name}, Description: ${item.description}, Price: ${item.price}, Item ID: ${item.item_id}, Section ID: ${section.section_id}`);
-            const add_body = {
+            const addBody = {
                 name: item.name,
                 description: item.description,
                 price: item.price,
-            };
+            };;
 
-            /* fetch() makes a GET request by default. */
-            console.log(JSON.stringify(add_body));
-
-            const assign_body = { section_id: section.section_id };
-            // Assign item to section
+            const assignBody = { section_id: section.section_id };
             const assignResponse = await fetch(`http://localhost:5000/dashboard/section/item/${item.item_id}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json", token: localStorage.token },
-                body: JSON.stringify(assign_body)
+                body: JSON.stringify(assignBody)
             });
 
         } catch (err: any) {
@@ -56,7 +46,7 @@ const DisplaySections = ({ menu_id }) => {
         }
     };
 
-    async function handleAddSection(formData: FormData){
+    async function handleAddSection(formData: FormData) {
         const sectionName = formData.get("name")?.toString() || "null";
         const jsonBody = { name: sectionName }
         try {
@@ -65,15 +55,14 @@ const DisplaySections = ({ menu_id }) => {
                 headers: { "Content-Type": "application/json", token: jwtToken },
                 body: JSON.stringify(jsonBody)
             })
-            if (!addSectionResponse.ok) 
+            if (!addSectionResponse.ok)
                 throw new Error(addSectionResponse.statusText);
             else
-                setSections([{name: sectionName}, ...sections])
-        } catch (err: any){
+                setSections([{ name: sectionName }, ...sections])
+        } catch (err: any) {
             console.error(err.message);
         }
     }
-
 
     return (
         <Fragment>

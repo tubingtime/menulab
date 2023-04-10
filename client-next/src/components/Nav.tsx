@@ -1,10 +1,9 @@
 import React, { Fragment, useState, useEffect, useRef } from 'react';
-//import { toast } from 'react-toastify';
 import { signOut } from 'next-auth/react';
 import './nav.css';
 import Link from 'next/link';
 
-import { Righteous, Silkscreen } from 'next/font/google'
+import { Silkscreen } from 'next/font/google'
 const silkscreen = Silkscreen({
     weight: ['400'],
     subsets: ['latin']

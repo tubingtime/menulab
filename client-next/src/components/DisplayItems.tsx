@@ -3,9 +3,7 @@ import { useToken } from "@/lib/SessionManagement";
 import EditItem from "@/components/EditItem";
 
 const DisplayItems = ({ items, menus }) => {
-
     const jwtToken = useToken();
-
     const [updatedItems, setItems] = useState(items);
 
     const deleteItem = async (id) => {
@@ -24,22 +22,17 @@ const DisplayItems = ({ items, menus }) => {
 
     const handleMenuClick = async (item, menu) => {
         try {
-            console.log(`Name: ${item.name}, Description: ${item.description}, Price: ${item.price}, Item ID: ${item.item_id}, Menu ID: ${menu.menu_id}`);
-            const add_body = {
+            const addBody = {
                 name: item.name,
                 description: item.description,
                 price: item.price,
             };
 
-            /* fetch() makes a GET request by default. */
-            console.log(JSON.stringify(add_body));
-
-            const assign_body = { menu_id: menu.menu_id };
-            // Assign item to menu
+            const assignBody = { menu_id: menu.menu_id };
             const assignResponse = await fetch(`http://localhost:5000/dashboard/menus/item/${item.item_id}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json", token: localStorage.token },
-                body: JSON.stringify(assign_body)
+                body: JSON.stringify(assignBody)
             });
 
         } catch (err: any) {
