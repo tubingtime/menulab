@@ -1,6 +1,5 @@
 "use client"
 
-import Link from "next/link";
 import React, { Fragment, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useRouter } from "next/navigation"
@@ -8,15 +7,12 @@ import HomeNav from "@/components/HomeNav";
 
 
 const Register = () => {
-
+    const router = useRouter();
     const [inputs, setInputs] = useState({
         name: '',
         email: '',
         password: ''
     });
-
-    const router = useRouter();
-
     const { name, email, password } = inputs;
 
     const onChange = e => {
@@ -25,11 +21,8 @@ const Register = () => {
 
     const onSubmitForm = async (e) => {
         e.preventDefault();
-
         try {
-
             const body = { name, email, password };
-
             const response = await fetch('http://localhost:5000/auth/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -37,15 +30,12 @@ const Register = () => {
             });
 
             const parseRes = await response.json();
-
             if (parseRes.token) {
                 toast.success("Registered successfully!");
                 router.push("/api/auth/signin");
             } else {
                 toast.error(parseRes);
             }
-
-
         } catch (err: any) {
             toast.error("Registration failed.");
             console.error(err.message);
