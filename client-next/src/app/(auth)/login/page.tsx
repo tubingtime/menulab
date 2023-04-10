@@ -42,15 +42,15 @@ const Login = () => {
     return (
         <Fragment>
             <HomeNav />
-            <h1 className="text-center my-5">Login</h1>
+            <h1 className="display text-center my-5">Login</h1>
             <h3 className="text-center my-2 text-danger">{authError}</h3>
-            <div className="w-25 mx-auto">
+            <div className="w-50 mx-auto">
                 <form onSubmit={onSubmitLoginForm}>
                     <input
                         type="email"
                         name="email"
                         placeholder="Enter your email"
-                        className="form-control my-3"
+                        className="form-control my-2"
                         value={email}
                         onChange={e => onChange(e)}
                     />
@@ -58,11 +58,11 @@ const Login = () => {
                         type="password"
                         name="password"
                         placeholder="Enter your password"
-                        className="form-control my-3"
+                        className="form-control my-2"
                         value={password}
                         onChange={e => onChange(e)}
                     />
-                    <button className="btn btn-success btn-block">Submit</button>
+                    <button className="btn btn-success btn-block my-2">Submit</button>
                 </form>
             </div>
         </Fragment>

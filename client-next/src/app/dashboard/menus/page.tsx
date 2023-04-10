@@ -61,7 +61,7 @@ const Menus = () => {
         <Fragment>
             <Nav />
             <section>
-                <h1>Menus</h1>
+                <h1 className="display">Menus</h1>
             </section>
 
             <section>

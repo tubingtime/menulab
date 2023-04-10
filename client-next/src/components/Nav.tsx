@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect, useRef } from 'react';
 import { signOut } from 'next-auth/react';
-import './nav.css';
+import '@/app/globals.css';
 import Link from 'next/link';
 
 import { Silkscreen } from 'next/font/google'

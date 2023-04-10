@@ -53,7 +53,7 @@ const Items = () => {
         <Fragment>
             <Nav />
             <section>
-                <h1>Items</h1>
+                <h1 className="display">Items</h1>
             </section>
             <section>
                 <h2>Add an Item</h2>

@@ -1,13 +1,12 @@
+import React from 'react';
+import "./home.css";
+import HomeNav from '@/components/HomeNav';
+
 import { Silkscreen } from 'next/font/google'
 const silkscreen = Silkscreen({
     weight: ['400'],
     subsets: ['latin']
 })
-
-import React from 'react';
-import "./home.css";
-import Link from 'next/link'
-import HomeNav from '@/components/HomeNav';
 
 function Home() {
     return (
@@ -19,7 +18,6 @@ function Home() {
                         <span className={silkscreen.className}>MenuLab</span>
                     </h1>
                 </section>
-
             </div>
         </div>
     );

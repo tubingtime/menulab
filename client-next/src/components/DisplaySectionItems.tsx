@@ -60,9 +60,9 @@ const DisplaySectionItems = ({ section_id, sections }) => {
                         <tbody>
                             {sectionItems.map((item, i) => (
                                 <tr key={i}>
-                                    <td>{item.name}</td>
-                                    <td>{item.description}</td>
-                                    <td>{item.price}</td>
+                                    <td className="table-name">{item.name}</td>
+                                    <td className="table-description">{item.description}</td>
+                                    <td className="table-price">{item.price}</td>
                                     <td><EditItem item={item} /></td>
                                     <td><AssignToSection item={item} sections={sections} /></td>
                                     <td><button className="btn btn-outline-danger btn-sm" onClick={() => deleteItem(item.item_id)}>Delete</button></td>
