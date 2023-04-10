@@ -8,7 +8,6 @@ const AddItem = (props?: { menu_id?: any }) => {
     const onSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
-        console.log(JSON.stringify(Object.fromEntries(formData.entries())));
 
         try {
             // Do POST Request
@@ -18,7 +17,6 @@ const AddItem = (props?: { menu_id?: any }) => {
                 body: JSON.stringify(Object.fromEntries(formData.entries()))
             });
             const results: { item_id: number }[] = await addItem.json();
-            console.log("item_id", results[0].item_id);
             const item_id = results[0].item_id;
 
             if (props?.menu_id) {
@@ -28,7 +26,6 @@ const AddItem = (props?: { menu_id?: any }) => {
                     headers: { "Content-Type": "application/json", token: jwtToken },
                     body: JSON.stringify({ menu_id: props.menu_id })
                 });
-                console.log(assignItem);
             }
 
         } catch (err: any) {

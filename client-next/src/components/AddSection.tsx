@@ -1,14 +1,12 @@
 import { useToken } from "@/lib/SessionManagement";
-import { FormEvent, useState } from "react";
 
-const AddSection = ({handleAddSection}) => {
+const AddSection = ({ handleAddSection }) => {
     const jwtToken = useToken();
 
     const onSubmit = async (e) => {
         e.preventDefault(); // not working :[
         const formData = new FormData(e.target);
-        console.log(formData.get("name"));
-        if (formData.get("name") == ""){
+        if (formData.get("name") == "") {
             return; // manual check
         }
         handleAddSection(formData);

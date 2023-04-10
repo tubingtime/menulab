@@ -1,7 +1,6 @@
 "use client"
 import { useSession } from "next-auth/react"
 
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const session = useSession();
   const finishedLoading = (session.status !== "loading");

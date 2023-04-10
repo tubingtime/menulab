@@ -3,9 +3,7 @@ import { useToken } from "@/lib/SessionManagement";
 import EditItem from "@/components/EditItem";
 
 const DisplayMenuItems = ({ items }) => {
-
     const jwtToken = useToken();
-
     const [updatedItems, setItems] = useState(items);
 
     const deleteItem = async (id) => {
@@ -21,8 +19,6 @@ const DisplayMenuItems = ({ items }) => {
             console.error(err.message);
         }
     };
-
-
 
     return (
         <Fragment>

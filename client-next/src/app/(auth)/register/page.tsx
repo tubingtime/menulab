@@ -1,10 +1,8 @@
 "use client"
-
 import React, { Fragment, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useRouter } from "next/navigation"
 import HomeNav from "@/components/HomeNav";
-
 
 const Register = () => {
     const router = useRouter();
