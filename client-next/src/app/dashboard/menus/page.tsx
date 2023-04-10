@@ -1,5 +1,4 @@
 "use client"
-
 import React, { Fragment, useState, useEffect } from 'react';
 import Nav from '@/components/Nav';
 import Link from 'next/link';
@@ -7,9 +6,8 @@ import { useToken } from '@/lib/SessionManagement';
 import EditMenuName from '@/components/EditMenuName';
 
 const Menus = () => {
-    const [menus, setMenus] = useState<any[]>([]);
-
     const jwtToken = useToken();
+    const [menus, setMenus] = useState<any[]>([]);
 
     const deleteMenu = async id => {
         try {
@@ -19,30 +17,23 @@ const Menus = () => {
             });
 
             setMenus(menus.filter(menu => menu.menu_id !== id));
-
         } catch (err: any) {
             console.error(err.message);
         }
     };
-
 
     const [name, setName] = useState("");
 
     const onSubmitForm = async (e) => {
         e.preventDefault();
         try {
-            console.log("onSubmit");
             const body = { name };
-
-            /* fetch() makes a GET request by default. */
-            console.log(JSON.stringify(body));
             const response = await fetch("http://localhost:5000/dashboard/menus", {
                 method: "POST",
                 headers: { "Content-Type": "application/json", token: jwtToken },
                 body: JSON.stringify(body)
             });
-            console.log(response);
-            
+
             getMenus();
         } catch (err: any) {
             console.error(err.message);
@@ -56,9 +47,6 @@ const Menus = () => {
             });
 
             const jsonData = await response.json();
-            console.log(jsonData);
-
-            // Sort the array by the 'name' field in ascending order
             const sortedData = jsonData.sort((a, b) => a.name.localeCompare(b.name));
             setMenus(sortedData);
         } catch (err: any) {
@@ -69,7 +57,6 @@ const Menus = () => {
         getMenus();
     }, [])
 
-    // Buttons do not have any functionality yet.
     return (
         <Fragment>
             <Nav />
