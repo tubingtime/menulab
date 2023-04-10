@@ -1,5 +1,4 @@
 "use client"
-
 import React, { Fragment, useState, useEffect } from 'react';
 import Nav from '@/components/Nav';
 import { useToken } from '@/lib/SessionManagement';
@@ -7,9 +6,7 @@ import DisplayItems from '@/components/DisplayItems';
 import AddItem from '@/components/AddItem';
 import "bootstrap/js/dist/dropdown"
 
-
 const Items = () => {
-
     const jwtToken = useToken();
 
     const [items, setItems] = useState<any[]>([]);
@@ -22,15 +19,14 @@ const Items = () => {
             });
 
             const jsonData = await response.json();
-            console.log(jsonData);
-
-            // Sort the array by the 'name' field in ascending order
             const sortedData = jsonData.sort((a, b) => a.name.localeCompare(b.name));
             setItems(sortedData);
         } catch (err: any) {
             console.error(err.message);
         };
     }
+
+    const [menus, setMenus] = useState<any[]>([]);
 
     async function getMenus() {
         try {
@@ -40,9 +36,6 @@ const Items = () => {
             });
 
             const jsonData = await response.json();
-            console.log(jsonData);
-
-            // Sort the array by the 'name' field in ascending order
             const sortedData = jsonData.sort((a, b) => a.name.localeCompare(b.name));
             setMenus(sortedData);
         } catch (err: any) {
@@ -55,9 +48,6 @@ const Items = () => {
         getItems();
     }, []);
 
-
-    /* GET ALL THE MENUS TO ASSIGN TO */
-    const [menus, setMenus] = useState<any[]>([]);
 
     return (
         <Fragment>
