@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from "react";
 import { useToken } from "@/lib/SessionManagement";
 import EditItem from "@/components/EditItem";
+import AssignToMenu from "./AssignToMenu";
 
 const DisplayItems = ({ items, menus }) => {
     const jwtToken = useToken();
@@ -15,26 +16,6 @@ const DisplayItems = ({ items, menus }) => {
 
             setItems(updatedItems.filter(item => item.item_id !== id));
             window.location.reload();
-        } catch (err: any) {
-            console.error(err.message);
-        }
-    };
-
-    const handleMenuClick = async (item, menu) => {
-        try {
-            const addBody = {
-                name: item.name,
-                description: item.description,
-                price: item.price,
-            };
-
-            const assignBody = { menu_id: menu.menu_id };
-            const assignResponse = await fetch(`http://localhost:5000/dashboard/menus/item/${item.item_id}`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json", token: localStorage.token },
-                body: JSON.stringify(assignBody)
-            });
-
         } catch (err: any) {
             console.error(err.message);
         }
@@ -61,27 +42,7 @@ const DisplayItems = ({ items, menus }) => {
                                 <td>{item.description}</td>
                                 <td>{item.price}</td>
                                 <td><EditItem item={item} /></td>
-                                <td>
-                                    <div className="btn-group">
-                                        <button
-                                            type="button"
-                                            className="btn btn-outline-info dropdown-toggle btn-sm"
-                                            data-bs-toggle="dropdown"
-                                            aria-expanded="false"
-                                        >
-                                            Assign To...
-                                        </button>
-                                        <ul className="dropdown-menu">
-                                            {menus.map((menu) => (
-                                                <li key={menu.menu_id}>
-                                                    <a className="dropdown-item" href="#" onClick={() => handleMenuClick(item, menu)}>
-                                                        {menu.name}
-                                                    </a>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                </td>
+                                <td><AssignToMenu item={item} menus={menus} /></td>
                                 <td><button className="btn btn-outline-danger btn-sm" onClick={() => deleteItem(item.item_id)}>Delete</button></td>
                             </tr>
                         ))}

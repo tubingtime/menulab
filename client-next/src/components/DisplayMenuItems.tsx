@@ -1,8 +1,9 @@
 import React, { Fragment, useState } from "react";
 import { useToken } from "@/lib/SessionManagement";
 import EditItem from "@/components/EditItem";
+import AssignToSection from "./AssignToSection";
 
-const DisplayMenuItems = ({ items }) => {
+const DisplayMenuItems = ({ items, sections }) => {
     const jwtToken = useToken();
     const [updatedItems, setItems] = useState(items);
 
@@ -41,18 +42,7 @@ const DisplayMenuItems = ({ items }) => {
                                 <td>{item.description}</td>
                                 <td>{item.price}</td>
                                 <td><EditItem item={item} /></td>
-                                <td>
-                                    <div className="btn-group">
-                                        <button
-                                            type="button"
-                                            className="btn btn-outline-info dropdown-toggle btn-sm"
-                                            data-bs-toggle="dropdown"
-                                            aria-expanded="false"
-                                        >
-                                            Assign To...
-                                        </button>
-                                    </div>
-                                </td>
+                                <td><AssignToSection item={item} sections={sections} /></td>
                                 <td><button className="btn btn-outline-danger btn-sm" onClick={() => deleteItem(item.item_id)}>Delete</button></td>
                             </tr>
                         ))}

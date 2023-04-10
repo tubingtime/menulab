@@ -24,59 +24,15 @@ const DisplaySections = ({ menu_id }) => {
         getSections()
     }, []);
 
-    const [selectedSectionId, setSelectedSectionId] = useState(null);
-
-    const handleSectionClick = async (item, section) => {
-        try {
-            const addBody = {
-                name: item.name,
-                description: item.description,
-                price: item.price,
-            };;
-
-            const assignBody = { section_id: section.section_id };
-            const assignResponse = await fetch(`http://localhost:5000/dashboard/section/item/${item.item_id}`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json", token: localStorage.token },
-                body: JSON.stringify(assignBody)
-            });
-
-        } catch (err: any) {
-            console.error(err.message);
-        }
-    };
-
-    async function handleAddSection(formData: FormData) {
-        const sectionName = formData.get("name")?.toString() || "null";
-        const jsonBody = { name: sectionName }
-        try {
-            const addSectionResponse = await fetch(`http://localhost:5000/dashboard/section/${menu_id}`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json", token: jwtToken },
-                body: JSON.stringify(jsonBody)
-            })
-            if (!addSectionResponse.ok)
-                throw new Error(addSectionResponse.statusText);
-            else
-                setSections([{ name: sectionName }, ...sections])
-        } catch (err: any) {
-            console.error(err.message);
-        }
-    }
-
     return (
         <Fragment>
-            <div className="mb-5">
-                <AddSection handleAddSection={handleAddSection} />
-            </div>
-            <div>
-                {sections.map((section, i) => (
-                    <div key={i}>
-                        <h2>{section.name}</h2>
-                        <DisplaySectionItems section_id={section.section_id} sections={sections} />
-                    </div>
-                ))}
-            </div>
+            {sections.map((section, i) => (
+                <div key={i}>
+                    <h2>{section.name}</h2>
+                    <DisplaySectionItems section_id={section.section_id} sections={sections} />
+                    <br />
+                </div>
+            ))}
         </Fragment>
     )
 

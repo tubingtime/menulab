@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { useToken } from "@/lib/SessionManagement";
 import EditItem from "@/components/EditItem";
+import AssignToSection from "./AssignToSection";
 
 const DisplaySectionItems = ({ section_id, sections }) => {
 
@@ -23,27 +24,6 @@ const DisplaySectionItems = ({ section_id, sections }) => {
         };
     }
 
-    const handleSectionClick = async (item, section) => {
-        try {
-            const addBody = {
-                name: item.name,
-                description: item.description,
-                price: item.price,
-            };
-            const assignBody = { section_id: section.section_id };
-            const assignResponse = await fetch(`http://localhost:5000/dashboard/section/item/${item.item_id}`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json", token: localStorage.token },
-                body: JSON.stringify(assignBody)
-            });
-            window.location.reload();
-
-        } catch (err: any) {
-            console.error(err.message);
-        }
-    };
-
-
     useEffect(() => {
         getSectionItems();
     }, []);
@@ -61,7 +41,6 @@ const DisplaySectionItems = ({ section_id, sections }) => {
             console.error(err.message);
         }
     };
-
 
 
     return (
@@ -85,27 +64,7 @@ const DisplaySectionItems = ({ section_id, sections }) => {
                                     <td>{item.description}</td>
                                     <td>{item.price}</td>
                                     <td><EditItem item={item} /></td>
-                                    <td>
-                                        <div className="btn-group">
-                                            <button
-                                                type="button"
-                                                className="btn btn-outline-info dropdown-toggle btn-sm"
-                                                data-bs-toggle="dropdown"
-                                                aria-expanded="false"
-                                            >
-                                                Assign To...
-                                            </button>
-                                            <ul className="dropdown-menu">
-                                                {sections.map((section, i) => (
-                                                    <li key={i}>
-                                                        <a className="dropdown-item" onClick={() => handleSectionClick(item, section)}>
-                                                            {section.name}
-                                                        </a>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
-                                    </td>
+                                    <td><AssignToSection item={item} sections={sections} /></td>
                                     <td><button className="btn btn-outline-danger btn-sm" onClick={() => deleteItem(item.item_id)}>Delete</button></td>
                                 </tr>
                             ))}

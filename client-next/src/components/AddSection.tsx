@@ -1,16 +1,29 @@
 import { useToken } from "@/lib/SessionManagement";
 
-const AddSection = ({ handleAddSection }) => {
+const AddSection = ({ menu_id }) => {
     const jwtToken = useToken();
 
     const onSubmit = async (e) => {
         e.preventDefault(); // not working :[
         const formData = new FormData(e.target);
+
         if (formData.get("name") == "") {
             return; // manual check
         }
-        handleAddSection(formData);
+
+        const sectionName = formData.get("name")?.toString() || "null";
+        const jsonBody = { name: sectionName }
+        try {
+            const addSectionResponse = await fetch(`http://localhost:5000/dashboard/section/${menu_id}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json", token: jwtToken },
+                body: JSON.stringify(jsonBody)
+            })
+        } catch (err: any) {
+            console.error(err.message);
+        }
         e.target.reset(); // clear form inputs
+        window.location.reload();
     };
 
     return (
@@ -20,7 +33,7 @@ const AddSection = ({ handleAddSection }) => {
                     <Field name="name" />
                 </div>
                 <div>
-                    <button className="btn btn-primary">Add Section</button>
+                    <button className="btn btn-primary">Add</button>
                 </div>
             </form>
         </>
