@@ -56,7 +56,6 @@ const Items = () => {
                 <h1 className="display">Items</h1>
             </section>
             <section>
-                <h2>Add an Item</h2>
                 <AddItem />
             </section>
             <section>

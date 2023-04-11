@@ -76,11 +76,8 @@ const ListItems = () => {
                 <h1>{menuName}</h1>
             </section>
             <section>
-                <h2>Add Item</h2>
                 <AddItem menu_id={menu_id} />
-            </section>
-            <section>
-                <h2>Add Section</h2>
+                &nbsp;
                 <AddSection menu_id={menu_id} />
             </section>
             <section>
