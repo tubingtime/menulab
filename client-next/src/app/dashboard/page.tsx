@@ -24,8 +24,44 @@ export default function Dashboard() {
         }
     }
 
+    const [itemCount, setItemCount] = useState<number>(0);
+
+    const getItemCount = async () => {
+        try {
+            const response = await fetch("http://localhost:5000/dashboard/items", {
+                method: "GET",
+                headers: { token: jwtToken }
+            });
+
+            const jsonData = await response.json();
+            const count = Object.keys(jsonData).length;
+            setItemCount(count);
+        } catch (err: any) {
+            console.error(err.message);
+        };
+    }
+
+    const [menuCount, setMenuCount] = useState<number>(0);
+
+    const getMenuCount = async () => {
+        try {
+            const response = await fetch("http://localhost:5000/dashboard/menus", {
+                method: "GET",
+                headers: { token: jwtToken }
+            });
+
+            const jsonData = await response.json();
+            const count = Object.keys(jsonData).length;
+            setMenuCount(count);
+        } catch (err: any) {
+            console.error(err.message);
+        };
+    }
+
     useEffect(() => {
         getName();
+        getItemCount();
+        getMenuCount();
     }, [])
 
 
@@ -40,16 +76,16 @@ export default function Dashboard() {
             </section>
             <section>
                 <div className="card-deck">
-                    <div className="card border-primary mb-3 w-25">
+                    <div className="card border-primary mb-3 w-50" >
                         <div className="card-header">Menus</div>
                         <div className="card-body">
-                            <h2 className="card-text">25</h2>
+                            <h2 className="card-text">{menuCount}</h2>
                         </div>
                     </div>
-                    <div className="card border-primary mb-3 w-25">
+                    <div className="card border-primary mb-3 w-50">
                         <div className="card-header">Items</div>
                         <div className="card-body">
-                            <h2 className="card-text">25</h2>
+                            <h2 className="card-text">{itemCount}</h2>
                         </div>
                     </div>
                 </div>
