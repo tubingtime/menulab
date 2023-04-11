@@ -32,4 +32,17 @@ Or just create a new branch by:
 Make commits to this branch.
 Try to only work on things that address the issue you created. 
 
+# Step 3: Create a Pull Request with your updates. 
+
+# Step 4: Have a team member review your PR.
+
+# Step 5: Merge your PR and delete the branch.
+To delete a branch locally:
+```git branch -d <branch>```
+
+To delete a branch remotely:
+```git push <remote> -delete <branch>```
+ex.
+```git push origin --delete fix/authentication```
+
 #TODO: Complete this doc.

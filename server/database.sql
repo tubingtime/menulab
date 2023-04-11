@@ -38,7 +38,7 @@ CREATE TABLE menu_assignments (
 );
 
 
-CREATE TABLE section_menu_item_assignments (
+CREATE TABLE section_assignments (
   assignment_id SERIAL PRIMARY KEY,
   section_id INTEGER REFERENCES sections(section_id) ON DELETE CASCADE,
   item_id INTEGER REFERENCES items(item_id) ON DELETE CASCADE
