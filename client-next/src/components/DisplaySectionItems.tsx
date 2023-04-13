@@ -2,6 +2,7 @@ import React, { Fragment, useState, useEffect } from "react";
 import { useToken } from "@/lib/SessionManagement";
 import EditItem from "@/components/EditItem";
 import AssignToSection from "./AssignToSection";
+import DeleteItem from "./DeleteItem";
 
 const DisplaySectionItems = ({ section_id, sections }) => {
 
@@ -53,7 +54,7 @@ const DisplaySectionItems = ({ section_id, sections }) => {
                                 <th>Name</th>
                                 <th>Description</th>
                                 <th>Price</th>
-                                <th></th>
+                                <th colSpan={2}></th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -65,7 +66,7 @@ const DisplaySectionItems = ({ section_id, sections }) => {
                                     <td className="table-price">{item.price}</td>
                                     <td><EditItem item={item} /></td>
                                     <td><AssignToSection item={item} sections={sections} /></td>
-                                    <td><button className="btn btn-outline-danger btn-sm" onClick={() => deleteItem(item.item_id)}>Delete</button></td>
+                                    <td><DeleteItem item={item} items={sectionItems}/></td>
                                 </tr>
                             ))}
                         </tbody>

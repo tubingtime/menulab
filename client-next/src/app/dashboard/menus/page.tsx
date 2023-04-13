@@ -8,23 +8,11 @@ import Link from 'next/link';
 import { useToken } from '@/lib/SessionManagement';
 import EditMenuName from '@/components/EditMenuName';
 import AddMenu from '@/components/AddMenu';
+import DeleteMenu from '@/components/DeleteMenu';
 
 const Menus = () => {
     const jwtToken = useToken();
     const [menus, setMenus] = useState<any[]>([]);
-
-    const deleteMenu = async id => {
-        try {
-            const deleteItem = await fetch(`http://localhost:5000/dashboard/menus/${id}`, {
-                method: "DELETE",
-                headers: { token: jwtToken }
-            });
-
-            setMenus(menus.filter(menu => menu.menu_id !== id));
-        } catch (err: any) {
-            console.error(err.message);
-        }
-    };
 
     const [name, setName] = useState("");
 
@@ -90,7 +78,7 @@ const Menus = () => {
                                             }
                                         }} className="btn btn-outline-primary btn-sm">...</Link>
                                         <EditMenuName menu={menu} />
-                                        <button className="btn btn-outline-danger btn-sm" onClick={() => deleteMenu(menu.menu_id)}>Delete</button>
+                                        <DeleteMenu menu={menu} menus={menus} />
                                     </div>
                                 </div>
                             </div>
