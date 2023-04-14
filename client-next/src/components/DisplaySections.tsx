@@ -3,6 +3,7 @@ import { useToken } from "@/lib/SessionManagement";
 import DisplaySectionItems from "./DisplaySectionItems";
 import AddSection from "./AddSection";
 import DeleteSection from "./DeleteSection";
+import { Accordion } from 'react-bootstrap';
 
 const DisplaySections = ({ menu_id }) => {
     const jwtToken = useToken();
@@ -43,15 +44,17 @@ const DisplaySections = ({ menu_id }) => {
     }, []);
 
     return (
-        <Fragment>
-            <AddSection handleAddSection={handleAddSection} />
+        <Fragment>    
+            <Accordion defaultActiveKey="0">
             {sections.map((section, i) => (
-                <div key={i}>
-                    <h2>{section.name} <DeleteSection section={section} sections={sections} /></h2>
+                <Accordion.Item eventKey={i.toString()} key={i}>
+                <Accordion.Header>{section.name}</Accordion.Header>
+                <Accordion.Body>
                     <DisplaySectionItems section_id={section.section_id} sections={sections} />
-                    <br />
-                </div>
+                </Accordion.Body>
+                </Accordion.Item>
             ))}
+        </Accordion>
         </Fragment>
     )
 

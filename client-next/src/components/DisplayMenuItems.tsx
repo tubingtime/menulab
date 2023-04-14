@@ -1,8 +1,9 @@
-import React, { Fragment, useState } from "react";
+import { Fragment, useState } from "react";
 import { useToken } from "@/lib/SessionManagement";
 import EditItem from "@/components/EditItem";
 import AssignToSection from "./AssignToSection";
 import DeleteItem from "./DeleteItem";
+import Image from 'next/image'
 
 const DisplayMenuItems = ({ items, sections }) => {
     const jwtToken = useToken();
@@ -10,32 +11,27 @@ const DisplayMenuItems = ({ items, sections }) => {
 
     return (
         <Fragment>
-            <div style={{ display: 'flex', justifyContent: 'center', backgroundColor: 'white' }}>
-                <table className="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>Price</th>
-                            <th colSpan={2}></th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {items.map((item, i) => (
-                            <tr key={i}>
-                                <td className="table-name">{item.name}</td>
-                                <td className="table-description">{item.description}</td>
-                                <td className="table-price">{item.price}</td>
-                                <td><EditItem item={item} /></td>
-                                <td><AssignToSection item={item} sections={sections} /></td>
-                                <td><DeleteItem item={item} items={items}/></td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+            <div className="row row-cols-1 row-cols-md-2 g-4">
+                {items.map((item, i) => (
+                    <div key={i} className="col">
+                        <div className="card" style={{ width: 'auto', height: '20rem' }}>
+                            <div className="card-body">
+                                <h5 className="card-title">{item.name}</h5>
+                                <small className="text-muted">{item.price}</small>
+                                <p className="card-text">{item.description}</p>
+                                <div className="d-flex justify-content-between align-items-center">
+                                    <div className="btn-group">
+                                        <EditItem item={item} />
+                                        <AssignToSection item={item} sections={sections} />
+                                        <DeleteItem item={item} items={items}/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                ))}
             </div>
-        </Fragment >
+        </Fragment>
     );
 };
 
