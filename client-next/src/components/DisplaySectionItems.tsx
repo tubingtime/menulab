@@ -48,13 +48,13 @@ const DisplaySectionItems = ({ section_id, sections }) => {
 
     return (
         <Fragment>
-            <div style={{ display: 'flex', justifyContent: 'center', backgroundColor: 'white' }}>
+            <div style={{ backgroundColor: 'white' }}>
                 {(sectionItems && sectionItems.length > 0) ? (
-                    <div className="row g-4">
+                    <div className="row row-cols-1 row-cols-md-2 g-4">
                         {sectionItems.map((item, i) => (
                             <div key={i} className="col">
-                                <div className="card" style={{ width: '20rem', height: '20rem' }}>
-                                <div className="card-body" style={{ height: '150px' }}>
+                                <div className="card" style={{ width: 'auto', height: '20rem' }}>
+                                <div className="card-body">
                                         <h5 className="card-title">{item.name}</h5>
                                         <small className="text-muted">{item.price}</small>
                                         <p className="card-text">{item.description}</p>

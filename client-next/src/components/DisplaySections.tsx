@@ -3,7 +3,7 @@ import { useToken } from "@/lib/SessionManagement";
 import DisplaySectionItems from "./DisplaySectionItems";
 import AddSection from "./AddSection";
 import DeleteSection from "./DeleteSection";
-import { Accordion, AccordionToggle, AccordionCollapse, Card, Button } from 'react-bootstrap';
+import { Accordion } from 'react-bootstrap';
 
 const DisplaySections = ({ menu_id }) => {
     const jwtToken = useToken();
