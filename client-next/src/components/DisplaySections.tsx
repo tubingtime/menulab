@@ -2,10 +2,12 @@ import React, { Fragment, useState, useEffect } from "react";
 import { useToken } from "@/lib/SessionManagement";
 import DisplaySectionItems from "./DisplaySectionItems";
 import AddSection from "./AddSection";
+import DeleteSection from "./DeleteSection";
 
 const DisplaySections = ({ menu_id }) => {
     const jwtToken = useToken();
     const [sections, setSections] = useState<any[]>([]);
+
     const getSections = async () => {
         try {
             const response = await fetch(`http://localhost:5000/dashboard/sections/${menu_id}`, {
@@ -20,6 +22,7 @@ const DisplaySections = ({ menu_id }) => {
             console.error(err.message);
         };
     }
+
     useEffect(() => {
         getSections()
     }, []);
@@ -28,7 +31,7 @@ const DisplaySections = ({ menu_id }) => {
         <Fragment>
             {sections.map((section, i) => (
                 <div key={i}>
-                    <h2>{section.name}</h2>
+                    <h2>{section.name} <DeleteSection section={section} sections={sections}/></h2>
                     <DisplaySectionItems section_id={section.section_id} sections={sections} />
                     <br />
                 </div>

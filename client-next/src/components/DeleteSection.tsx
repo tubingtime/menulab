@@ -1,18 +1,18 @@
 import React, { Fragment, useState } from "react";
 import { useToken } from "@/lib/SessionManagement";
 
-const DeleteMenu = ({ menu, menus }) => {
+const DeleteSection = ({ section, sections }) => {
     const jwtToken = useToken();
-    const [updatedMenus, setMenus] = useState<any[]>([]);
+    const [updatedsections, setSections] = useState<any[]>([]);
 
-    const deleteMenu = async id => {
+    const deleteSection = async id => {
         try {
-            const deleteItem = await fetch(`http://localhost:5000/dashboard/menus/${id}`, {
+            const deleteItem = await fetch(`http://localhost:5000/dashboard/section/${id}`, {
                 method: "DELETE",
                 headers: { token: jwtToken }
             });
 
-            setMenus(menus.filter(menu => menu.menu_id !== id));
+            setSections(sections.filter(section => section.section_id !== id));
             window.location.reload();
         } catch (err: any) {
             console.error(err.message);
@@ -23,15 +23,15 @@ const DeleteMenu = ({ menu, menus }) => {
         <Fragment>
             <button
                 type="button"
-                className="btn btn-outline-danger btn-sm"
+                className="btn btn-danger btn-sm"
                 data-bs-toggle="modal"
-                data-bs-target={`#delete-menu-modal-${menu.menu_id}`}
+                data-bs-target={`#delete-section-modal-${section.section_id}`}
             >
                 Delete
             </button>
             <div
                 className="modal"
-                id={`delete-menu-modal-${menu.menu_id}`}
+                id={`delete-section-modal-${section.section_id}`}
             >
                 <div className="modal-dialog">
                     <div className="modal-content">
@@ -46,7 +46,7 @@ const DeleteMenu = ({ menu, menus }) => {
                         </div>
 
                         <div className="modal-body">
-                            Are you sure you want to delete <b>{menu.name}</b>?
+                            Are you sure you want to delete <b>{section.name}</b>?
                         </div>
 
                         <div className="modal-footer">
@@ -61,7 +61,7 @@ const DeleteMenu = ({ menu, menus }) => {
                                 type="button"
                                 className="btn btn-danger"
                                 data-bs-dismiss="modal"
-                                onClick={() => deleteMenu(menu.menu_id)}
+                                onClick={() => deleteSection(section.section_id)}
                             >
                                 Delete
                             </button>
@@ -73,4 +73,4 @@ const DeleteMenu = ({ menu, menus }) => {
     );
 };
 
-export default DeleteMenu;
+export default DeleteSection;

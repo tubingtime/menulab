@@ -76,7 +76,7 @@ const Menus = () => {
                                             query: {
                                                 menu_id: menu.menu_id
                                             }
-                                        }} className="btn btn-outline-primary btn-sm">...</Link>
+                                        }} className="btn btn-outline-primary btn-sm">Show Menu</Link>
                                         <EditMenuName menu={menu} />
                                         <DeleteMenu menu={menu} menus={menus} />
                                     </div>

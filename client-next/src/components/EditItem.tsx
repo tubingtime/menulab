@@ -8,7 +8,7 @@ const EditItem = ({ item }) => {
     const [description, setDescription] = useState(item.description);
     const [name, setName] = useState(item.name);
     const [price, setPrice] = useState(item.price);
-    
+
     const updateItem = async e => {
         e.preventDefault();
         try {
@@ -50,12 +50,10 @@ const EditItem = ({ item }) => {
                             <h4 className="modal-title">Edit Item</h4>
                             <button
                                 type="button"
-                                className="close"
+                                className="btn-close"
                                 data-bs-dismiss="modal"
-                                onClick={() => setDescription(item.description)}
-                            >
-                                &times;
-                            </button>
+                                aria-label="Close"
+                            ></button>
                         </div>
 
                         <div className="modal-body">

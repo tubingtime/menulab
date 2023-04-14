@@ -39,11 +39,10 @@ const DeleteItem = ({ item, items }) => {
                             <h4 className="modal-title"> Confirm Delete </h4>
                             <button
                                 type="button"
-                                className="close"
+                                className="btn-close"
                                 data-bs-dismiss="modal"
-                            >
-                                &times;
-                            </button>
+                                aria-label="Close"
+                            ></button>
                         </div>
 
                         <div className="modal-body">

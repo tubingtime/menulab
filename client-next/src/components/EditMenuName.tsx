@@ -49,12 +49,10 @@ const EditMenuName = ({ menu }) => {
                             <h4 className="modal-title">Edit Menu</h4>
                             <button
                                 type="button"
-                                className="close"
+                                className="btn-close"
                                 data-bs-dismiss="modal"
-                                onClick={() => setName(menu.name)}
-                            >
-                                &times;
-                            </button>
+                                aria-label="Close"
+                            ></button>
                         </div>
 
                         <div className="modal-body">
