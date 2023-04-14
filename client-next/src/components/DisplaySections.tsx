@@ -24,6 +24,21 @@ const DisplaySections = ({ menu_id }) => {
         };
     }
 
+    async function handleAddSection(formData: FormData) {
+        const sectionName = formData.get("name")?.toString() || "null";
+        const jsonBody = { name: sectionName }
+        try {
+            const addSectionResponse = await fetch(`http://localhost:5000/dashboard/section/${menu_id}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json", token: jwtToken },
+                body: JSON.stringify(jsonBody)
+            })
+            setSections([...sections, { name: sectionName }])
+        } catch (err: any) {
+            console.error(err.message);
+        }
+    }
+
     useEffect(() => {
         getSections()
     }, []);
