@@ -54,7 +54,7 @@ const DisplaySectionItems = ({ section_id, sections }) => {
                         {sectionItems.map((item, i) => (
                             <div key={i} className="col">
                                 <div className="card" style={{ width: '20rem', height: '20rem' }}>
-                                    <div className="card-body" style={{ height: '150px', overflow: 'hidden' }}>
+                                <div className="card-body" style={{ height: '150px' }}>
                                         <h5 className="card-title">{item.name}</h5>
                                         <small className="text-muted">{item.price}</small>
                                         <p className="card-text">{item.description}</p>

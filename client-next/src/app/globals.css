@@ -243,5 +243,5 @@ input[type=text]:focus {
 }
 
 .accordion-body {
-  border: none;
+  border-width: none;
 }

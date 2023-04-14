@@ -34,7 +34,7 @@ const DisplaySections = ({ menu_id }) => {
             {sections.map((section, i) => (
                 <Accordion.Item eventKey={i.toString()} key={i}>
                 <Accordion.Header>{section.name}</Accordion.Header>
-                <Accordion.Body style={{}}>
+                <Accordion.Body>
                     <DisplaySectionItems section_id={section.section_id} sections={sections} />
                 </Accordion.Body>
                 </Accordion.Item>

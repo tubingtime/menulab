@@ -1,13 +1,19 @@
 import React, { Fragment, useState } from "react";
 import { useToken } from "@/lib/SessionManagement";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 
 const EditItem = ({ item }) => {
-    window.bootstrap = require('bootstrap/js/dist/modal');
     const jwtToken = useToken();
 
     const [description, setDescription] = useState(item.description);
     const [name, setName] = useState(item.name);
     const [price, setPrice] = useState(item.price);
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     const updateItem = async e => {
         e.preventDefault();
@@ -31,88 +37,40 @@ const EditItem = ({ item }) => {
 
     return (
         <Fragment>
-            <button
-                type="button"
-                className="btn btn-outline-info btn-sm"
-                data-bs-toggle="modal"
-                data-bs-target={`#id${item.item_id}`}
-            >
-                Edit
-            </button>
-            <div
-                className="modal"
-                id={`id${item.item_id}`}
-                onClick={() => setDescription(item.description)}
-            >
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h4 className="modal-title">Edit Item</h4>
-                            <button
-                                type="button"
-                                className="btn-close"
-                                data-bs-dismiss="modal"
-                                aria-label="Close"
-                            ></button>
-                        </div>
+            <Button variant="outline-info" size="sm" onClick={handleShow}>Edit</Button>
 
-                        <div className="modal-body">
-                            <div className="row">
-
-                                <div className="col">
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        value={name}
-                                        onChange={(e) => setName(e.target.value)}
-                                    />
-                                </div>
-                                <div className="col">
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        value={price}
-                                        onChange={(e) => setPrice(e.target.value)}
-                                    />
-                                </div>
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Edit Item</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Form.Group className="row mb-3">
+                            <Form.Label className="col-sm-3 col-form-label">Name</Form.Label>
+                            <div className="col-sm-9">
+                                <Form.Control type="text" value={name} onChange={(e) => setName(e.target.value)} />
                             </div>
-                            <div className="row">
-                                <div className="col">
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        value={description}
-                                        onChange={(e) => setDescription(e.target.value)}
-                                    />
-                                </div>
+                        </Form.Group>
+                        <Form.Group className="row mb-3">
+                            <Form.Label className="col-sm-3 col-form-label">Price</Form.Label>
+                            <div className="col-sm-9">
+                                <Form.Control type="text" value={price} onChange={(e) => setPrice(e.target.value)} />
                             </div>
-                        </div>
+                        </Form.Group>
+                        <Form.Group className="row mb-3">
+                            <Form.Label className="col-sm-3 col-form-label">Description</Form.Label>
+                            <div className="col-sm-9">
+                                <Form.Control as="textarea" rows={3} value={description} onChange={(e) => setDescription(e.target.value)} />
+                            </div>
+                        </Form.Group>
+                    </Form>
 
-                        <div className="modal-footer">
-                            <button
-                                type="button"
-                                className="btn btn-outline-info"
-                                data-bs-dismiss="modal"
-                                onClick={(e) => updateItem(e)}
-                            >
-                                Edit
-                            </button>
-                            <button>
-                                <label className="form-label" for="customFile">Default file input example</label>
-                                <input type="file" class="form-control" id="customFile" />
-                            </button>
-                            <button
-                                type="button"
-                                className="btn btn-outline-danger"
-                                data-bs-dismiss="modal"
-                                onClick={() => setDescription(item.description)}
-                            >
-                                Close
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="outline-info" onClick={(e) => updateItem(e)}>Edit</Button>
+                    <Button variant="outline-danger" onClick={() => { handleClose(); setDescription(item.description); }}>Close</Button>
+                </Modal.Footer>
+            </Modal>
         </Fragment>
     );
 };

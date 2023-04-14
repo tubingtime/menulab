@@ -73,18 +73,21 @@ const ListItems = () => {
         <Fragment>
             <Nav />
             <section>
-                <h1>{menuName}</h1>
-            </section>
-            <section>
-                <AddItem menu_id={menu_id} />
-                &nbsp;
-                <AddSection menu_id={menu_id} />
+                <h1 style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span>{menuName}</span>
+                    <AddSection menu_id={menu_id} />
+                </h1>
             </section>
             <section>
                 <DisplaySections menu_id={menu_id} />
             </section>
             <section>
-                <h2>All Items</h2>
+                <h2 style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span>Items</span>
+                    <AddItem menu_id={menu_id} />
+                </h2>
+                &nbsp;
+                &nbsp;
                 <DisplayMenuItems items={items} sections={sections} />
             </section>
         </Fragment>
