@@ -293,6 +293,22 @@ router.put("/item/:item_id", async (req, res) => {
     }
 });
 
+/* Add a photo to an Item. */
+router.put('/items/:item_id/photo', async (req, res) => {
+    const { item_id } = req.params;
+    const { photo_reference } = req.body;
+
+    try {
+        const result = await pool.query(
+            'UPDATE items SET photo_reference = $1 WHERE item_id = $2 RETURNING *',
+            [photo_reference, item_id]
+        );
+        res.json(result.rows[0]);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Error adding photo to item.' });
+    }
+});
 /**
  * Edit an Menu Name.
  * 
