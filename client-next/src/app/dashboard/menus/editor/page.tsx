@@ -77,8 +77,6 @@ const ListItems = () => {
             </section>
             <section>
                 <AddItem menu_id={menu_id} />
-                &nbsp;
-                <AddSection menu_id={menu_id} />
             </section>
             <section>
                 <DisplaySections menu_id={menu_id} />

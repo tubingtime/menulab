@@ -23,15 +23,31 @@ const DisplaySections = ({ menu_id }) => {
         };
     }
 
+    async function handleAddSection(formData: FormData) {
+        const sectionName = formData.get("name")?.toString() || "null";
+        const jsonBody = { name: sectionName }
+        try {
+            const addSectionResponse = await fetch(`http://localhost:5000/dashboard/section/${menu_id}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json", token: jwtToken },
+                body: JSON.stringify(jsonBody)
+            })
+            setSections([...sections, { name: sectionName }])
+        } catch (err: any) {
+            console.error(err.message);
+        }
+    }
+
     useEffect(() => {
         getSections()
     }, []);
 
     return (
         <Fragment>
+            <AddSection handleAddSection={handleAddSection} />
             {sections.map((section, i) => (
                 <div key={i}>
-                    <h2>{section.name} <DeleteSection section={section} sections={sections}/></h2>
+                    <h2>{section.name} <DeleteSection section={section} sections={sections} /></h2>
                     <DisplaySectionItems section_id={section.section_id} sections={sections} />
                     <br />
                 </div>
