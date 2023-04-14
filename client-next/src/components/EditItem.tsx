@@ -64,6 +64,8 @@ const EditItem = ({ item }) => {
                             </div>
                         </Form.Group>
                     </Form>
+                  
+                    <input type="file" className="form-control" id="customFile" />
 
                 </Modal.Body>
                 <Modal.Footer>

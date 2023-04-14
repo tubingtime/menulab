@@ -5,6 +5,7 @@ import AssignToSection from "./AssignToSection";
 import DeleteItem from "./DeleteItem";
 import Image from 'next/image'
 import { IncomingMessage } from "http";
+import { Card } from "react-bootstrap";
 
 const DisplaySectionItems = ({ section_id, sections }) => {
 
@@ -53,21 +54,32 @@ const DisplaySectionItems = ({ section_id, sections }) => {
                     <div className="row row-cols-1 row-cols-md-2 g-4">
                         {sectionItems.map((item, i) => (
                             <div key={i} className="col">
-                                <div className="card" style={{ width: 'auto', height: '20rem' }}>
-                                <div className="card-body">
-                                        <h5 className="card-title">{item.name}</h5>
-                                        <small className="text-muted">{item.price}</small>
-                                        <p className="card-text">{item.description}</p>
-                                        <div className="d-flex justify-content-between align-items-center">
-                                            <div className="btn-group">
-                                                <EditItem item={item} />
-                                                <AssignToSection item={item} sections={sections} />
-                                                <DeleteItem item={item} items={sectionItems} />
-                                            </div>
-                                        </div>
+                            <div className="card" style={{ width: 'auto', height: '20rem' }}>
+                              <div className="card-body d-flex">
+                                <div className="w-50 pr-3">
+                                  <h5 className="card-title">{item.name}</h5>
+                                  <small className="text-muted">{item.price}</small>
+                                  <p className="card-text">{item.description}</p>
+                                  <div className="d-flex justify-content-between align-items-center">
+                                    <div className="btn-group">
+                                      <EditItem item={item} />
+                                      <AssignToSection item={item} sections={sections} />
+                                      <DeleteItem item={item} items={sectionItems} />
                                     </div>
+                                  </div>
                                 </div>
+                                <div className="w-50 position-relative">
+                                  <Card.Img
+                                    variant="primary"
+                                    src="/image-placeholder.png"
+                                    style={{ width: '275px', height: '250px', top: '10px', left: '0px', position: 'absolute' }}
+                                  />
+                                </div>
+                              </div>
                             </div>
+                          </div>
+                          
+
                         ))}
                     </div>
                 ) : (
