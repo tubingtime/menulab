@@ -469,13 +469,9 @@ router.get("/sections/:menu_id", authorization, async (req, res) => {
 router.get("/section/item/:item_id", authorization, async (req, res) => {
     try {
         const item_id = req.params.item_id;
-        const menu_id = req.body.menu_id;
         const getSection = await pool.query(
-            "SELECT section_assignments.section_id FROM section_assignments \
-            JOIN sections ON section_assignments.section_id = sections.section_id \
-            WHERE section_assignments.item_id = $1 AND \
-            sections.menu_id = $2",
-            [item_id, menu_id]);
+            "SELECT section_id FROM section_assignments WHERE item_id = $1",
+            [item_id]);
         res.json(getSection.rows);
     } catch (err) {
         console.error(err.message);
@@ -497,13 +493,31 @@ router.get("/section/item/:item_id", authorization, async (req, res) => {
  */
 router.post("/section/item/:item_id", authorization, async (req, res) => {
     try {
-        const section_id = req.body.section_id;
+        const new_section_id = req.body.section_id;
         const item_id = req.params.item_id;
-        const assignMenuItem = await pool.query(
-            "INSERT INTO section_assignments(section_id, item_id) \
-            VALUES((SELECT section_id FROM sections WHERE section_id = $1), \
-            (SELECT item_id FROM items WHERE item_id = $2))",
-            [section_id, item_id]);
+        const { rows } = await pool.query(
+            `
+            WITH current_assignment AS (
+              SELECT section_id
+              FROM section_assignments
+              WHERE item_id = $1
+            ), removed_assignment AS (
+              DELETE FROM section_assignments
+              WHERE item_id = $1
+                AND section_id = (SELECT section_id FROM current_assignment)
+              RETURNING *
+            ), inserted_assignment AS (
+              INSERT INTO section_assignments (section_id, item_id)
+              VALUES ($2, $1)
+              RETURNING *
+            )
+            SELECT *
+            FROM removed_assignment
+            FULL OUTER JOIN inserted_assignment
+            ON true;
+            `,
+            [item_id, new_section_id]
+        );
         res.json("Item assigned to section.");
     } catch (err) {
         console.error(err.message);
