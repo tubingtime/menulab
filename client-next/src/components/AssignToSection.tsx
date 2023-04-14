@@ -8,19 +8,17 @@ const AssignToSection = ({ item, sections }) => {
         try {
             // TODO: Need to check if already assigned to a section.
             // If already assigned to a section, then unassign and assign to the new section.
-
-            const addBody = {
-                name: item.name,
-                description: item.description,
-                price: item.price,
+            const body = {
+                section_id: section.section_id
             };
-            const assignBody = { section_id: section.section_id };
-            const assignResponse = await fetch(`http://localhost:5000/dashboard/section/item/${item.item_id}`, {
+
+            const response = await fetch(`http://localhost:5000/dashboard/section/item/${item.item_id}`, {
                 method: "POST",
-                headers: { "Content-Type": "application/json", token: localStorage.token },
-                body: JSON.stringify(assignBody)
+                headers: { "Content-Type": "application/json", token: jwtToken },
+                body: JSON.stringify(body)
             });
-            window.location.reload();
+            console.log(response);
+            //window.location.reload();
         } catch (err: any) {
             console.error(err.message);
         }
