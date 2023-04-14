@@ -97,6 +97,10 @@ const EditItem = ({ item }) => {
                             >
                                 Edit
                             </button>
+                            <button>
+                                <label className="form-label" for="customFile">Default file input example</label>
+                                <input type="file" class="form-control" id="customFile" />
+                            </button>
                             <button
                                 type="button"
                                 className="btn btn-outline-danger"

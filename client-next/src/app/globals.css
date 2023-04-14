@@ -241,3 +241,7 @@ input[type=text]:focus {
 .table-price {
   font-size: 14px;
 }
+
+.accordion-body {
+  border: none;
+}

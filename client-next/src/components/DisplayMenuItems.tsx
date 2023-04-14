@@ -11,15 +11,10 @@ const DisplayMenuItems = ({ items, sections }) => {
 
     return (
         <Fragment>
-            <div className="row row-cols-1 row-cols-md-3 g-4">
+            <div className="row row-cols-1 row-cols-md-2 g-4">
                 {items.map((item, i) => (
                     <div key={i} className="col">
-                        <div className="card">
-                        {item.image ? (
-                                <Image className="card-img-top" src={item.image} alt={item.name} />
-                            ) : (
-                                <input type="file" className="form-control" id={`customFile-${i}`} />
-                            )}
+                        <div className="card" style={{ width: 'auto', height: '20rem' }}>
                             <div className="card-body">
                                 <h5 className="card-title">{item.name}</h5>
                                 <small className="text-muted">{item.price}</small>
