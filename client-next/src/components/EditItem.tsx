@@ -63,9 +63,11 @@ const EditItem = ({ item }) => {
                                 <Form.Control as="textarea" rows={3} value={description} onChange={(e) => setDescription(e.target.value)} />
                             </div>
                         </Form.Group>
+                        <Form.Group>
+                            <input type="file" className="form-control" id="customFile" />
+                            <button type="submit">Upload</button>
+                        </Form.Group>
                     </Form>
-                  
-                    <input type="file" className="form-control" id="customFile" />
 
                 </Modal.Body>
                 <Modal.Footer>
