@@ -1,6 +1,3 @@
-
-
-
 "use client"
 import React, { Fragment, useState, useEffect } from 'react';
 import Nav from '@/components/Nav';
