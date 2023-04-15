@@ -29,7 +29,7 @@ const AssignToMenu = ({ item, menus }) => {
             <div className="btn-group">
                 <button
                     type="button"
-                    className="btn btn-outline-info dropdown-toggle btn-sm"
+                    className="btn btn-outline-primary dropdown-toggle btn-sm"
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                 >

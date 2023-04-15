@@ -10,27 +10,27 @@ const DisplayItems = ({ items, menus }) => {
 
     return (
         <Fragment>
-
-            <div style={{ display: 'flex', justifyContent: 'center', backgroundColor: 'white' }}>
-                <table className="table table-striped">
+            <div className="table-responsive-sm">
+                <table className="table table-hover">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>Price</th>
-                            <th colSpan={2}></th>
-                            <th></th>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Price</th>
+                            <th colSpan={3}></th>
                         </tr>
                     </thead>
                     <tbody>
                         {items.map((item, i) => (
                             <tr key={i}>
+                                <th scope="row">{i + 1}</th>
                                 <td className="table-name">{item.name}</td>
                                 <td className="table-description">{item.description}</td>
                                 <td className="table-price">{item.price}</td>
-                                <td><EditItem item={item} /></td>
                                 <td><AssignToMenu item={item} menus={menus} /></td>
-                                <td><DeleteItem item={item} items={items}/></td>
+                                <td><EditItem item={item} /></td>
+                                <td><DeleteItem item={item} items={items} /></td>
                             </tr>
                         ))}
                     </tbody>
