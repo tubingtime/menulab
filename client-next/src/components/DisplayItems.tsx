@@ -24,7 +24,7 @@ const DisplayItems = ({ items, menus }) => {
                     <tbody>
                         {items.map((item, i) => (
                             <tr key={i}>
-                                <th scope="row">{i + 1}</th>
+                                <th className="table-num" scope="row">{i + 1}</th>
                                 <td className="table-name">{item.name}</td>
                                 <td className="table-description">{item.description}</td>
                                 <td className="table-price">{item.price}</td>

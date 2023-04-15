@@ -62,7 +62,7 @@ const DisplaySectionItems = ({ section_id, sections }) => {
                                             <div className="col-8">
                                                 <div className="card-title">{item.name}</div>
                                                 <p className="card-text">{item.price}</p>
-
+                                                <p className="text-muted">{item.description}</p>
                                             </div>
                                             <div className="col-4">
                                                 <Card.Img
@@ -73,7 +73,6 @@ const DisplaySectionItems = ({ section_id, sections }) => {
                                             </div>
                                         </div>
                                         <div className="row">
-                                            <p className="text-muted">{item.description}</p>
                                             <div className="d-grid gap-2 d-md-flex justify-content-md-end">
                                                 <AssignToSection item={item} sections={sections} />
                                                 <EditItem item={item} />

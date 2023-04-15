@@ -228,6 +228,11 @@ input[type=text]:focus {
 }
 
 /* Table */
+.table-num {
+  font-size: 14px;
+  font-weight: normal;
+}
+
 .table-name {
   font-size: 14px;
   font-weight: bold;
