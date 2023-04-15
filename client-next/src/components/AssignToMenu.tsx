@@ -33,7 +33,7 @@ const AssignToMenu = ({ item, menus }) => {
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                 >
-                    Assign To...
+                    Assign
                 </button>
                 <ul className="dropdown-menu">
                     {menus.map((menu) => (
