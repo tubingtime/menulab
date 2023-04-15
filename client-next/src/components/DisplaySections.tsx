@@ -45,7 +45,7 @@ const DisplaySections = ({ menu_id }) => {
 
     return (
         <Fragment>
-            <Accordion defaultActiveKey="0" flush>
+            <Accordion flush>
                 {sections.map((section, i) => (
                     <Accordion.Item eventKey={i.toString()} key={i}>
                         <Accordion.Header>{section.name}</Accordion.Header>
