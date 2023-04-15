@@ -4,104 +4,104 @@ import React, { Fragment, useState, useEffect } from 'react';
 // Either do <AddMenu /> OR
 // <AddMenu menuId={menuId} />
 const AddMenu = (props?: { menu_id?: any }) => {
-    window.bootstrap = require('bootstrap/js/dist/modal');
-    const jwtToken = useToken();
-    const [menus, setMenus] = useState<any[]>([]);
-    const [name, setName] = useState("");
+  window.bootstrap = require('bootstrap/js/dist/modal');
+  const jwtToken = useToken();
+  const [menus, setMenus] = useState<any[]>([]);
+  const [name, setName] = useState("");
 
-    const onSubmitForm = async (e) => {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-        console.log(JSON.stringify(Object.fromEntries(formData.entries())));
+  const onSubmitForm = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    console.log(JSON.stringify(Object.fromEntries(formData.entries())));
 
-        try {
-                const body = { name };
-    
-                /* fetch() makes a GET request by default. */
-                console.log(JSON.stringify(body));
-                const response = await fetch("http://localhost:5000/dashboard/menus", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json", token: jwtToken },
-                    body: JSON.stringify(body)
-                });
-                console.log(response);
-                
-        } catch (err: any) {
-            console.error(err.message);
-        }
-        window.location.reload();
-    };
+    try {
+      const body = { name };
 
-    return (
-        <>
-    <button
-      type="button"
-      className="btn btn-primary"
-      data-bs-toggle="modal"
-      data-bs-target="#addMenuModal"
-    >
-      Add Menu
-    </button>
+      /* fetch() makes a GET request by default. */
+      console.log(JSON.stringify(body));
+      const response = await fetch("http://localhost:5000/dashboard/menus", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", token: jwtToken },
+        body: JSON.stringify(body)
+      });
+      console.log(response);
 
-    <div
-      className="modal fade"
-      id="addMenuModal"
-      tabIndex={-1}
-      aria-labelledby="addItemModalLabel"
-      aria-hidden="true"
-    >
-      <div className="modal-dialog">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h4 className="modal-title" id="addMenuLabel">Add Menu</h4>
-            <button
-              type="button"
-              className="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div className="modal-body">
-                <form className="mt-2" onSubmit={onSubmitForm}>
-                    <div className="row">
-                        <div className="col">
-                            <label>Name</label>
-                            <input
-                                type="text"
-                                name="name"
-                                placeholder="Enter a menu name."
-                                required
-                                className="form-control"
-                                value={name}
-                                onChange={e => setName(e.target.value)}
-                            />
-                        </div>
-                        <div>
-                            <button className="btn btn-primary">Add</button>
-                        </div>
-                    </div>
-                </form>
+    } catch (err: any) {
+      console.error(err.message);
+    }
+    window.location.reload();
+  };
+
+  return (
+    <>
+      <button
+        type="button"
+        className="btn btn-primary"
+        data-bs-toggle="modal"
+        data-bs-target="#addMenuModal"
+      >
+        Add Menu
+      </button>
+
+      <div
+        className="modal fade"
+        id="addMenuModal"
+        tabIndex={-1}
+        aria-labelledby="addItemModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h4 className="modal-title" id="addMenuLabel">Add Menu</h4>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              <form className="mt-2" onSubmit={onSubmitForm}>
+                <div className="row">
+                  <div className="col">
+                    <label>Name</label>
+                    <input
+                      type="text"
+                      name="name"
+                      placeholder="Enter a menu name."
+                      required
+                      className="form-control"
+                      value={name}
+                      onChange={e => setName(e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <button className="btn btn-primary">Add</button>
+                  </div>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </>
-    );
+    </>
+  );
 };
 
 const Field = <T extends string | number>(props: { name: string }) => {
-    return (
-        <>
-            <div className="col">
-                <input
-                    type="text"
-                    name={props.name}
-                    placeholder={`Enter item ${props.name}.`}
-                    className="form-control"
-                />
-            </div>
-        </>
-    );
+  return (
+    <>
+      <div className="col">
+        <input
+          type="text"
+          name={props.name}
+          placeholder={`Enter item ${props.name}.`}
+          className="form-control"
+        />
+      </div>
+    </>
+  );
 };
 
 export default AddMenu;

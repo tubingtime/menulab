@@ -73,10 +73,13 @@ const ListItems = () => {
         <Fragment>
             <Nav />
             <section>
-                <h1 style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <span>{menuName}</span>
+                <h1 className='display' style={{ textAlign: 'center' }}>{menuName}</h1>
+            </section>
+            <section>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} >
+                    <h2>Sections</h2>
                     <AddSection menu_id={menu_id} />
-                </h1>
+                </div>
             </section>
             <section>
                 <DisplaySections menu_id={menu_id} />
@@ -86,11 +89,11 @@ const ListItems = () => {
                     <span>Items</span>
                     <AddItem menu_id={menu_id} />
                 </h2>
-                &nbsp;
-                &nbsp;
+            </section>
+            <section>
                 <DisplayMenuItems items={items} sections={sections} />
             </section>
-        </Fragment>
+        </Fragment >
     );
 };
 

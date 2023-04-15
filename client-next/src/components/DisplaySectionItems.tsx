@@ -49,45 +49,49 @@ const DisplaySectionItems = ({ section_id, sections }) => {
 
     return (
         <Fragment>
-            <div style={{ backgroundColor: 'white' }}>
-                {(sectionItems && sectionItems.length > 0) ? (
-                    <div className="row row-cols-1 row-cols-md-2 g-4">
-                        {sectionItems.map((item, i) => (
-                            <div key={i} className="col">
-                            <div className="card" style={{ width: 'auto', height: '20rem' }}>
-                              <div className="card-body d-flex">
-                                <div className="w-50 pr-3">
-                                  <h5 className="card-title">{item.name}</h5>
-                                  <small className="text-muted">{item.price}</small>
-                                  <p className="card-text">{item.description}</p>
-                                  <div className="d-flex justify-content-between align-items-center">
-                                    <div className="btn-group">
-                                      <EditItem item={item} />
-                                      <AssignToSection item={item} sections={sections} />
-                                      <DeleteItem item={item} items={sectionItems} />
+
+            {(sectionItems && sectionItems.length > 0) ? (
+                <div className="card-deck row row-cols-1 row-cols-md-2 g-4">
+
+                    {sectionItems.map((item, i) => (
+                        <div className="column" key={i}>
+                            <div className="card" >
+                                <div className="card-body">
+                                    <div className="containter">
+                                        <div className="row">
+                                            <div className="col-8">
+                                                <div className="card-title">{item.name}</div>
+                                                <p className="card-text">{item.price}</p>
+                                                <p className="text-muted">{item.description}</p>
+                                            </div>
+                                            <div className="col-4">
+                                                <Card.Img
+                                                    variant="primary"
+                                                    src="/image-placeholder.png"
+                                                    className=" img-fluid"
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+                                                <AssignToSection item={item} sections={sections} />
+                                                <EditItem item={item} />
+                                                <DeleteItem item={item} items={sectionItems} />
+                                            </div>
+                                        </div>
                                     </div>
-                                  </div>
                                 </div>
-                                <div className="w-50 position-relative">
-                                  <Card.Img
-                                    variant="primary"
-                                    src="/image-placeholder.png"
-                                    style={{ width: '275px', height: '250px', top: '10px', left: '0px', position: 'absolute' }}
-                                  />
-                                </div>
-                              </div>
+
                             </div>
-                          </div>
-                          
+                        </div>
 
-                        ))}
-                    </div>
-                ) : (
-                    <p>No items in this section</p>
-                )}
-            </div>
+                    ))}
+                </div>
 
-
+            ) : (
+                <p>No items in this section</p>
+            )
+            }
         </Fragment >
     );
 };

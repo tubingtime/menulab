@@ -13,7 +13,7 @@ export default function HomeNav() {
         <Fragment>
             <nav className="navbar navbar-light bg-light" >
                 <div className="nav-item" >
-                    <Link href="/login" className="btn btn-primary">Login</Link>
+                    <Link href="/register" className="btn btn-primary">Register</Link>
                 </div>
                 <div className="mx-auto order-0">
                     <div className="navbar-brand" style={{}}>
@@ -23,7 +23,7 @@ export default function HomeNav() {
                     </div>
                 </div>
                 <div className="nav-item" >
-                    <Link href="/register" className="btn btn-primary">Register</Link>
+                    <Link href="/login" className="btn btn-primary">Login</Link>
                 </div>
             </nav>
         </Fragment >

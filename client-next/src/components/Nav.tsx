@@ -51,7 +51,7 @@ const Nav = () => {
                 </div>
             </div>
 
-            <nav className="navbar navbar-light bg-light" style={{ boxShadow: "0px 0px 8px #888888" }} >
+            <nav className="navbar navbar-light bg-light">
                 <button className="navbar-toggler hamburger-button" type="button" aria-expanded="false" aria-label="Toggle navigation" onClick={toggleNav} style={{ zIndex: 2, margin: "0 15px" }}>
                     <div className={`animated-icon ${isOpen ? 'open' : ''}`}>
                         <span></span>
@@ -66,10 +66,11 @@ const Nav = () => {
                         </div>
                     </Link>
                 </div>
-                <form className="form-inline" style={{ margin: "0 15px" }}>
+                <form className="form-inline" >
                     <button className="btn btn-primary" onClick={e => logout(e)}>Logout</button>
                 </form>
             </nav>
+
             <br></br>
             <br></br>
         </Fragment>

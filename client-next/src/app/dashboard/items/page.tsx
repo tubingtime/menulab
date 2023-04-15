@@ -53,13 +53,12 @@ const Items = () => {
         <Fragment>
             <Nav />
             <section>
-                <h1 className="display">Items</h1>
+                <h1 style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span>Items</span>
+                    <AddItem />
+                </h1>
             </section>
             <section>
-                <AddItem />
-            </section>
-            <section>
-                <h2>Items</h2>
                 <DisplayItems items={items} menus={menus} />
             </section>
         </Fragment >
