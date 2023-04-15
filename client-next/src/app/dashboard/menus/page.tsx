@@ -1,5 +1,5 @@
 
- 
+
 
 "use client"
 import React, { Fragment, useState, useEffect } from 'react';
@@ -14,23 +14,6 @@ const Menus = () => {
     const jwtToken = useToken();
     const [menus, setMenus] = useState<any[]>([]);
 
-    const [name, setName] = useState("");
-
-    const onSubmitForm = async (e) => {
-        e.preventDefault();
-        try {
-            const body = { name };
-            const response = await fetch("http://localhost:5000/dashboard/menus", {
-                method: "POST",
-                headers: { "Content-Type": "application/json", token: jwtToken },
-                body: JSON.stringify(body)
-            });
-
-            getMenus();
-        } catch (err: any) {
-            console.error(err.message);
-        }
-    };
     const getMenus = async () => {
         try {
             const response = await fetch("http://localhost:5000/dashboard/menus", {
@@ -57,7 +40,7 @@ const Menus = () => {
             </section>
 
             <section>
-                <AddMenu/>
+                <AddMenu />
             </section>
 
             <section>
