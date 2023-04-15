@@ -49,8 +49,52 @@ const DisplaySectionItems = ({ section_id, sections }) => {
 
     return (
         <Fragment>
-            <div style={{ backgroundColor: 'white' }}>
+
+            {(sectionItems && sectionItems.length > 0) ? (
+                <div className="card-deck row row-cols-1 row-cols-md-2 g-4">
+
+                    {sectionItems.map((item, i) => (
+                        <div className="column" key={i}>
+                            <div className="card" >
+                                <div className="card-body">
+                                    <div className="containter">
+                                        <div className="row">
+                                            <div className="col-8">
+
+                                                <div className="card-title">{item.name}</div>
+                                                <p className="card-text">{item.price}</p>
+                                                <p className="text-muted">{item.description}</p>
+                                                <div className="d-grid gap-2 d-md-flex">
+                                                    <AssignToSection item={item} sections={sections} />
+                                                    <EditItem item={item} />
+                                                    <DeleteItem item={item} items={sectionItems} />
+                                                </div>
+                                            </div>
+                                            <div className="col-4">
+                                                <Card.Img
+                                                    variant="primary"
+                                                    src="/image-placeholder.png"
+                                                    className="img-thumbnail"
+
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    ))}
+                </div>
+
+            ) : (
+                <p>No items in this section</p>
+            )
+            }
+            {/* <div style={{ backgroundColor: 'white' }}>
                 {(sectionItems && sectionItems.length > 0) ? (
+                
                     <div className="row row-cols-1 row-cols-md-2 g-4">
                         {sectionItems.map((item, i) => (
                             <div key={i} className="col">
@@ -85,7 +129,7 @@ const DisplaySectionItems = ({ section_id, sections }) => {
                 ) : (
                     <p>No items in this section</p>
                 )}
-            </div>
+            </div> */}
 
 
         </Fragment >
