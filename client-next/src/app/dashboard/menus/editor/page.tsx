@@ -76,10 +76,12 @@ const ListItems = () => {
                 <h1 className='display' style={{ textAlign: 'center' }}>{menuName}</h1>
             </section>
             <section>
-                <h2 style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <span>Sections</span>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} >
+                    <h2>Sections</h2>
                     <AddSection menu_id={menu_id} />
-                </h2>
+                </div>
+            </section>
+            <section>
                 <DisplaySections menu_id={menu_id} />
             </section>
             <section>
@@ -87,9 +89,11 @@ const ListItems = () => {
                     <span>Items</span>
                     <AddItem menu_id={menu_id} />
                 </h2>
+            </section>
+            <section>
                 <DisplayMenuItems items={items} sections={sections} />
             </section>
-        </Fragment>
+        </Fragment >
     );
 };
 
