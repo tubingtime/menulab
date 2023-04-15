@@ -1,6 +1,7 @@
 "use client"
 import React, { Fragment, useState, useEffect } from 'react';
 import Nav from "@/components/Nav";
+import Link from 'next/link';
 import { useToken } from '@/lib/SessionManagement';
 
 export default function Dashboard() {
@@ -75,21 +76,32 @@ export default function Dashboard() {
                 <h2>Welcome, {name}!</h2>
             </section>
             <section>
-                <div className="card-deck">
-                    <div className="card border-primary mb-3 w-50" >
-                        <div className="card-header">Menus</div>
-                        <div className="card-body">
-                            <h2 className="card-text">{menuCount}</h2>
+                <div className="row row-cols-1 row-cols-md-2 g-4">
+                    <div className="column">
+                        <div className="card border-primary">
+                            <div className="card-header">Menus</div>
+                            <div className="card-body">
+                                <div className="card-text">
+                                    <Link href={{ pathname: "../dashboard/menus/", }} className="stretched-link" style={{ textDecoration: 'none', color: 'black' }}>
+                                        <h2 >{menuCount}</h2>
+                                    </Link>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div className="card border-primary mb-3 w-50">
-                        <div className="card-header">Items</div>
-                        <div className="card-body">
-                            <h2 className="card-text">{itemCount}</h2>
+                    <div className="column">
+                        <div className="card border-primary">
+                            <div className="card-header">Items</div>
+                            <div className="card-body">
+                                <div className="card-text">
+                                    <Link href={{ pathname: "../dashboard/items/", }} className="stretched-link" style={{ textDecoration: 'none', color: 'black' }}>
+                                        <h2 >{itemCount}</h2>
+                                    </Link>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-
             </section >
         </Fragment >
     );
