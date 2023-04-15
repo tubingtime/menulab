@@ -68,7 +68,7 @@ const DisplaySectionItems = ({ section_id, sections }) => {
                                                 <Card.Img
                                                     variant="primary"
                                                     src="/image-placeholder.png"
-                                                    className="img-thumbnail"
+                                                    className=" img-fluid"
 
                                                 />
                                             </div>
