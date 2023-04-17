@@ -18,7 +18,7 @@ const AssignToSection = ({ item, sections }) => {
                 body: JSON.stringify(body)
             });
             console.log(response);
-            //window.location.reload();
+            window.location.reload();
         } catch (err: any) {
             console.error(err.message);
         }

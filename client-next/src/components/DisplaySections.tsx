@@ -45,16 +45,24 @@ const DisplaySections = ({ menu_id }) => {
 
     return (
         <Fragment>
-            <Accordion flush>
-                {sections.map((section, i) => (
-                    <Accordion.Item eventKey={i.toString()} key={i}>
-                        <Accordion.Header>{section.name}</Accordion.Header>
-                        <Accordion.Body>
-                            <DisplaySectionItems section_id={section.section_id} sections={sections} />
-                        </Accordion.Body>
-                    </Accordion.Item>
-                ))}
-            </Accordion>
+            <section>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} >
+                    <h2>Sections</h2>
+                    <AddSection handleAddSection={handleAddSection} />
+                </div>
+            </section>
+            <section>
+                <Accordion flush>
+                    {sections.map((section, i) => (
+                        <Accordion.Item eventKey={i.toString()} key={i}>
+                            <Accordion.Header>{section.name}</Accordion.Header>
+                            <Accordion.Body>
+                                <DisplaySectionItems section_id={section.section_id} sections={sections} />
+                            </Accordion.Body>
+                        </Accordion.Item>
+                    ))}
+                </Accordion>
+            </section>
         </Fragment>
     )
 
