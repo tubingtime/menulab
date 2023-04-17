@@ -44,13 +44,14 @@ const AddMenu = (props?: { menu_id?: any }) => {
       </button>
 
       <div
-        className="modal"
+        className="modal fade"
         id="addMenuModal"
         aria-labelledby="addItemModalLabel"
         aria-hidden="true"
       >
         <div className="modal-dialog">
           <div className="modal-content">
+
             <div className="modal-header">
               <h4 className="modal-title" id="addMenuLabel">Add Menu</h4>
               <button
@@ -61,8 +62,9 @@ const AddMenu = (props?: { menu_id?: any }) => {
               ></button>
             </div>
 
-            <div className="modal-body">
-              <form onSubmit={onSubmitForm}>
+            <form className="mt-2" onSubmit={onSubmitForm}>
+
+              <div className="modal-body">
                 <div className="row">
                   <div className="col">
                     <input
@@ -76,15 +78,15 @@ const AddMenu = (props?: { menu_id?: any }) => {
                     />
                   </div>
                 </div>
-              </form>
-            </div>
+              </div>
 
-            <div className="modal-footer">
-              <button className="btn btn-primary">Add</button>
-            </div>
-          </div>
-        </div>
-      </div>
+              <div className="modal-footer">
+                <button className="btn btn-primary">Add</button>
+              </div>
+            </form>
+          </div >
+        </div >
+      </div >
     </>
   );
 };
