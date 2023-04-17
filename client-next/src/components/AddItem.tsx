@@ -73,10 +73,14 @@ const AddItem = (props?: { menu_id?: any }) => {
                 <div className="row">
                   <Field name="description" />
                 </div>
-                <div>
-                  <button className="btn btn-primary">Add</button>
+                <div className="col">
+                  <input type="file" className="form-control mt-3" id="customFile" />
                 </div>
               </form>
+            </div>
+
+            <div className="modal-footer">
+              <button className="btn btn-primary">Add</button>
             </div>
           </div>
         </div>

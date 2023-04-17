@@ -44,15 +44,13 @@ const AddMenu = (props?: { menu_id?: any }) => {
       </button>
 
       <div
-        className="modal fade"
+        className="modal"
         id="addMenuModal"
-        tabIndex={-1}
         aria-labelledby="addItemModalLabel"
         aria-hidden="true"
       >
         <div className="modal-dialog">
           <div className="modal-content">
-
             <div className="modal-header">
               <h4 className="modal-title" id="addMenuLabel">Add Menu</h4>
               <button
