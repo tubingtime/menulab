@@ -45,27 +45,26 @@ const EditItem = ({ item }) => {
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
-                        <Form.Group className="row mb-3">
-                            <Form.Label className="col-sm-3 col-form-label">Name</Form.Label>
-                            <div className="col-sm-9">
+                        <Form.Group className="row">
+                            <div className="col">
+                                <Form.Label className="mb-0">Name</Form.Label>
                                 <Form.Control type="text" value={name} onChange={(e) => setName(e.target.value)} />
                             </div>
-                        </Form.Group>
-                        <Form.Group className="row mb-3">
-                            <Form.Label className="col-sm-3 col-form-label">Price</Form.Label>
-                            <div className="col-sm-9">
+                            <div className="col">
+                                <Form.Label className="mb-0">Price</Form.Label>
                                 <Form.Control type="text" value={price} onChange={(e) => setPrice(e.target.value)} />
                             </div>
                         </Form.Group>
-                        <Form.Group className="row mb-3">
-                            <Form.Label className="col-sm-3 col-form-label">Description</Form.Label>
-                            <div className="col-sm-9">
-                                <Form.Control as="textarea" rows={3} value={description} onChange={(e) => setDescription(e.target.value)} />
+                        <Form.Group className="row">
+                            <div className="col">
+                                <Form.Label>Description</Form.Label>
+                                <Form.Control as="textarea" rows={2} value={description} onChange={(e) => setDescription(e.target.value)} />
                             </div>
                         </Form.Group>
-                        <Form.Group>
-                            <input type="file" className="form-control" id="customFile" />
-                            <button type="submit">Upload</button>
+                        <Form.Group className="row">
+                            <div className="col">
+                                <input type="file" className="form-control mt-3" id="customFile" />
+                            </div>
                         </Form.Group>
                     </Form>
 

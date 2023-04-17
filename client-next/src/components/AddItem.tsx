@@ -64,8 +64,9 @@ const AddItem = (props?: { menu_id?: any }) => {
                 aria-label="Close"
               ></button>
             </div>
-            <div className="modal-body">
-              <form className="mt-2" onSubmit={onSubmit}>
+            <form className="mt-2" onSubmit={onSubmit}>
+              <div className="modal-body">
+
                 <div className="row">
                   <Field name="name" />
                   <Field name="price" />
@@ -73,11 +74,16 @@ const AddItem = (props?: { menu_id?: any }) => {
                 <div className="row">
                   <Field name="description" />
                 </div>
-                <div>
-                  <button className="btn btn-primary">Add</button>
+                <div className="col">
+                  <input type="file" className="form-control mt-3" id="customFile" />
                 </div>
-              </form>
-            </div>
+
+              </div>
+
+              <div className="modal-footer">
+                <button className="btn btn-primary">Add</button>
+              </div>
+            </form>
           </div>
         </div>
       </div>

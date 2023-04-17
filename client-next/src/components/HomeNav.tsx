@@ -16,7 +16,7 @@ export default function HomeNav() {
                     <Link href="/register" className="btn btn-primary">Register</Link>
                 </div>
                 <div className="mx-auto order-0">
-                    <div className="navbar-brand" style={{}}>
+                    <div className="navbar-brand">
                         <div className={silkscreen.className}>
                             MenuLab
                         </div>

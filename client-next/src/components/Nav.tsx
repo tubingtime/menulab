@@ -52,7 +52,7 @@ const Nav = () => {
             </div>
 
             <nav className="navbar navbar-light bg-light">
-                <button className="navbar-toggler hamburger-button" type="button" aria-expanded="false" aria-label="Toggle navigation" onClick={toggleNav} style={{ zIndex: 2, margin: "0 15px" }}>
+                <button className="navbar-toggler hamburger-button" type="button" aria-expanded="false" aria-label="Toggle navigation" onClick={toggleNav} style={{ zIndex: 2 }}>
                     <div className={`animated-icon ${isOpen ? 'open' : ''}`}>
                         <span></span>
                         <span></span>

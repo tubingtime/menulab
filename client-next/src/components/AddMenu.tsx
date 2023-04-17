@@ -46,12 +46,12 @@ const AddMenu = (props?: { menu_id?: any }) => {
       <div
         className="modal fade"
         id="addMenuModal"
-        tabIndex={-1}
         aria-labelledby="addItemModalLabel"
         aria-hidden="true"
       >
         <div className="modal-dialog">
           <div className="modal-content">
+
             <div className="modal-header">
               <h4 className="modal-title" id="addMenuLabel">Add Menu</h4>
               <button
@@ -61,11 +61,12 @@ const AddMenu = (props?: { menu_id?: any }) => {
                 aria-label="Close"
               ></button>
             </div>
-            <div className="modal-body">
-              <form className="mt-2" onSubmit={onSubmitForm}>
+
+            <form className="mt-2" onSubmit={onSubmitForm}>
+
+              <div className="modal-body">
                 <div className="row">
                   <div className="col">
-                    <label>Name</label>
                     <input
                       type="text"
                       name="name"
@@ -76,15 +77,16 @@ const AddMenu = (props?: { menu_id?: any }) => {
                       onChange={e => setName(e.target.value)}
                     />
                   </div>
-                  <div>
-                    <button className="btn btn-primary">Add</button>
-                  </div>
                 </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
+              </div>
+
+              <div className="modal-footer">
+                <button className="btn btn-primary">Add</button>
+              </div>
+            </form>
+          </div >
+        </div >
+      </div >
     </>
   );
 };
