@@ -40,14 +40,14 @@ const AddSection = ({ handleAddSection }) => {
                             ></button>
                         </div>
                         <div className="modal-body">
-                            <form className="mt-2" onSubmit={onSubmit}>
+                            <form onSubmit={onSubmit}>
                                 <div className="row">
                                     <Field name="name" />
                                 </div>
-                                <div>
-                                    <button className="btn btn-primary">Add</button>
-                                </div>
                             </form>
+                        </div>
+                        <div className="modal-footer">
+                            <button className="btn btn-primary">Add</button>
                         </div>
                     </div>
                 </div>
