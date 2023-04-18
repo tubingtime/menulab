@@ -55,7 +55,7 @@ const DisplaySectionItems = ({ section_id, sections }) => {
 
                     {sectionItems.map((item, i) => (
                         <div className="column" key={i}>
-                            <div className="card" >
+                            <div className="card h-100" >
                                 <div className="card-body">
                                     <div className="containter">
                                         <div className="row">
@@ -79,9 +79,9 @@ const DisplaySectionItems = ({ section_id, sections }) => {
                                                 <DeleteItem item={item} items={sectionItems} />
                                             </div>
                                         </div>
+
                                     </div>
                                 </div>
-
                             </div>
                         </div>
 

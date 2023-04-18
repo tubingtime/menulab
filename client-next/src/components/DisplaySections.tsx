@@ -58,8 +58,12 @@ const DisplaySections = ({ menu_id }) => {
                             <Accordion.Header>{section.name}</Accordion.Header>
                             <Accordion.Body>
                                 <DisplaySectionItems section_id={section.section_id} sections={sections} />
+                                <div className="d-flex justify-content-end">
+                                    <DeleteSection section={section} sections={sections} />
+                                </div>
                             </Accordion.Body>
                         </Accordion.Item>
+
                     ))}
                 </Accordion>
             </section>
