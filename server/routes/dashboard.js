@@ -1,6 +1,32 @@
 const router = require("express").Router();
 const pool = require("../db");
 const authorization = require('../middleware/authorization');
+const cloudinary = require("../cloudinary").v2;
+
+// image upload API
+router.post("/image-upload", authorization, (request, response) => {
+  // collected image from a user
+  const data = {
+    image: request.body.image,
+  }
+
+  console.log(data);
+
+  // upload image here
+  cloudinary.uploader.upload(data.image)
+  .then((result) => {
+    response.status(200).send({
+      message: "success",
+      result,
+    });
+  }).catch((error) => {
+    response.status(500).send({
+      message: "failure",
+      error,
+    });
+  });
+
+});
 
 /**
  * This checks the user authorization against the user table.
