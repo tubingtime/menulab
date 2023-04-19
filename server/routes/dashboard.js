@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const pool = require("../db");
 const authorization = require('../middleware/authorization');
-const cloudinary = require("../cloudinary").v2;
+const cloudinary = require("../cloudinary");
 
 // image upload API
 router.post("/image-upload", authorization, (request, response) => {
@@ -9,7 +9,7 @@ router.post("/image-upload", authorization, (request, response) => {
   const data = {
     image: request.body.image,
   }
-
+  
   console.log(data);
 
   // upload image here
@@ -133,15 +133,18 @@ router.get("/menus", authorization, async (req, res) => {
  *      "name": "",
  *      "description": "", (<-- This field is optional)
  *      "price": ""
+ *      "photo_reference": ""
  */
 router.post("/item", authorization, async (req, res) => {
     try {
         const name = req.body.name;
         const description = req.body.description;
         const price = req.body.price;
+        const picture = await cloudinary.uploader.upload(req.body.photo_reference);
         const createMenuItem = await pool.query(
-            "INSERT INTO items(name, description, price, user_id) VALUES($1, $2, $3, $4) RETURNING item_id",
-            [name, description, price, req.user]);
+          "INSERT INTO items(name, description, price, photo_reference, user_id) VALUES($1, $2, $3, $4, $5) RETURNING item_id",
+          [name, description, price, picture.secure_url, req.user]
+        );
         res.json(createMenuItem.rows);
     } catch (err) {
         console.error(err.message);
