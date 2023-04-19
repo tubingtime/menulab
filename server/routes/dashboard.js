@@ -43,9 +43,9 @@ router.post('/menus', authorization, async (req, res) => {
     try {
         const { name } = req.body;
         const addMenu = await pool.query(
-            "INSERT INTO menus(name, user_id) VALUES($1, $2)",
+            "INSERT INTO menus(name, user_id) VALUES($1, $2) RETURNING menu_id",
             [name, req.user]);
-        res.json("Menu created.");
+        res.json(addMenu.rows);
     } catch (err) {
         console.error(err.message);
         res.status(500).json('Server error');
