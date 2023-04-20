@@ -1,6 +1,32 @@
 const router = require("express").Router();
 const pool = require("../db");
 const authorization = require('../middleware/authorization');
+const cloudinary = require("../cloudinary").v2;
+
+// image upload API
+router.post("/image-upload", authorization, (request, response) => {
+  // collected image from a user
+  const data = {
+    image: request.body.image,
+  }
+
+  console.log(data);
+
+  // upload image here
+  cloudinary.uploader.upload(data.image)
+  .then((result) => {
+    response.status(200).send({
+      message: "success",
+      result,
+    });
+  }).catch((error) => {
+    response.status(500).send({
+      message: "failure",
+      error,
+    });
+  });
+
+});
 
 /**
  * This checks the user authorization against the user table.
@@ -43,9 +69,9 @@ router.post('/menus', authorization, async (req, res) => {
     try {
         const { name } = req.body;
         const addMenu = await pool.query(
-            "INSERT INTO menus(name, user_id) VALUES($1, $2)",
+            "INSERT INTO menus(name, user_id) VALUES($1, $2) RETURNING menu_id",
             [name, req.user]);
-        res.json("Menu created.");
+        res.json(addMenu.rows);
     } catch (err) {
         console.error(err.message);
         res.status(500).json('Server error');
