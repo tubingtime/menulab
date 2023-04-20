@@ -4,7 +4,7 @@ import EditItem from "@/components/EditItem";
 import AssignToMenu from "./AssignToMenu";
 import DeleteItem from "./DeleteItem";
 
-const DisplayItems = ({ items, menus }) => {
+const DisplayItems = ({ items, menus, itemsDispatch }) => {
     const jwtToken = useToken();
     const [updatedItems, setItems] = useState(items);
 
@@ -29,8 +29,8 @@ const DisplayItems = ({ items, menus }) => {
                                 <td className="table-description">{item.description}</td>
                                 <td className="table-price">{item.price}</td>
                                 <td><AssignToMenu item={item} menus={menus} /></td>
-                                <td><EditItem item={item} /></td>
-                                <td><DeleteItem item={item} items={items} /></td>
+                                <td><EditItem item={item} itemsDispatch={itemsDispatch} /></td>
+                                <td><DeleteItem item={item} itemsDispatch={itemsDispatch} /></td>
                             </tr>
                         ))}
                     </tbody>

@@ -15,7 +15,7 @@ const AssignToMenu = ({ item, menus }) => {
             const assignBody = { menu_id: menu.menu_id };
             const assignResponse = await fetch(`http://localhost:5000/dashboard/menus/item/${item.item_id}`, {
                 method: "POST",
-                headers: { "Content-Type": "application/json", token: localStorage.token },
+                headers: { "Content-Type": "application/json", token: jwtToken },
                 body: JSON.stringify(assignBody)
             });
 

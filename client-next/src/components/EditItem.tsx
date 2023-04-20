@@ -4,8 +4,12 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
-const EditItem = ({ item }) => {
+
+const EditItem = ({item, itemsDispatch}) => {
+
+    window.bootstrap = require('bootstrap/js/dist/modal');
     const jwtToken = useToken();
+    
 
     const [description, setDescription] = useState(item.description);
     const [name, setName] = useState(item.name);
@@ -29,7 +33,18 @@ const EditItem = ({ item }) => {
                 }
             );
 
-            window.location.reload();
+            const changedItem = {
+                item_id: item.item_id,
+                description: description,
+                name: name,
+                price: price
+            };
+
+            itemsDispatch({
+                type: 'changed',
+                item: changedItem
+            });
+
         } catch (err: any) {
             console.error(err.message);
         }

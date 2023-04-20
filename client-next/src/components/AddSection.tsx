@@ -1,7 +1,27 @@
 import { useToken } from "@/lib/SessionManagement";
 
-const AddSection = ({ handleAddSection }) => {
+const AddSection = ({ menu_id, sectionsDispatch }) => {
     const jwtToken = useToken();
+
+    async function handleAddSection(formData: FormData) {
+        const sectionName = formData.get("name")?.toString() || "null";
+        const jsonBody = { name: sectionName }
+        try {
+            const addSectionResponse = await fetch(`http://localhost:5000/dashboard/section/${menu_id}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json", token: jwtToken },
+                body: JSON.stringify(jsonBody)
+            })
+            const jsonData = await addSectionResponse.json();
+            const section_id = jsonData.section_id;
+            sectionsDispatch({
+                type: "added",
+                section: { name: sectionName, section_id: section_id }
+            })
+        } catch (err: any) {
+            console.error(err.message);
+        }
+    }
 
     const onSubmit = async (e) => {
         e.preventDefault(); // not working :[
@@ -39,16 +59,16 @@ const AddSection = ({ handleAddSection }) => {
                                 aria-label="Close"
                             ></button>
                         </div>
-                        <div className="modal-body">
-                            <form onSubmit={onSubmit}>
+                        <form onSubmit={onSubmit}>
+                            <div className="modal-body">
                                 <div className="row">
                                     <Field name="name" />
                                 </div>
-                            </form>
-                        </div>
-                        <div className="modal-footer">
-                            <button className="btn btn-primary">Add</button>
-                        </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button className="btn btn-primary">Add</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

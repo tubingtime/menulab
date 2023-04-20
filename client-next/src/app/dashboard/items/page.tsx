@@ -1,15 +1,16 @@
 "use client"
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect, useReducer } from 'react';
 import Nav from '@/components/Nav';
 import { useToken } from '@/lib/SessionManagement';
 import DisplayItems from '@/components/DisplayItems';
 import AddItem from '@/components/AddItem';
 import "bootstrap/js/dist/dropdown"
+import itemsReducer from '@/lib/itemsReducer';
 
 const Items = () => {
     const jwtToken = useToken();
 
-    const [items, setItems] = useState<any[]>([]);
+    const [items, itemsDispatch] = useReducer(itemsReducer, []);
 
     const getItems = async () => {
         try {
@@ -20,7 +21,10 @@ const Items = () => {
 
             const jsonData = await response.json();
             const sortedData = jsonData.sort((a, b) => a.name.localeCompare(b.name));
-            setItems(sortedData);
+            itemsDispatch({
+                type: 'set',
+                items: sortedData
+            });
         } catch (err: any) {
             console.error(err.message);
         };
@@ -55,11 +59,11 @@ const Items = () => {
             <section>
                 <h1 style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <span>Items</span>
-                    <AddItem />
+                    <AddItem itemsDispatch={itemsDispatch}/>
                 </h1>
             </section>
             <section>
-                <DisplayItems items={items} menus={menus} />
+                <DisplayItems items={items} menus={menus} itemsDispatch={itemsDispatch} />
             </section>
         </Fragment >
     );

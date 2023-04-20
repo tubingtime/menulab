@@ -1,9 +1,11 @@
-import React, { Fragment, useState } from "react";
+import React, { useContext, Fragment } from "react";
 import { useToken } from "@/lib/SessionManagement";
+import { MenusDispatchContext } from "@/lib/menusContext";
 
-const DeleteMenu = ({ menu, menus }) => {
+const DeleteMenu = ({ menu }) => {
     const jwtToken = useToken();
-    const [updatedMenus, setMenus] = useState<any[]>([]);
+
+    const dispatch = useContext(MenusDispatchContext);
 
     const deleteMenu = async id => {
         try {
@@ -12,8 +14,10 @@ const DeleteMenu = ({ menu, menus }) => {
                 headers: { token: jwtToken }
             });
 
-            setMenus(menus.filter(menu => menu.menu_id !== id));
-            window.location.reload();
+            dispatch({
+                type: 'deleted',
+                menu: menu
+            })
         } catch (err: any) {
             console.error(err.message);
         }

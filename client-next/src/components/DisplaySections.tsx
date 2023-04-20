@@ -1,13 +1,14 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect, useReducer } from "react";
 import { useToken } from "@/lib/SessionManagement";
 import DisplaySectionItems from "./DisplaySectionItems";
 import AddSection from "./AddSection";
-import DeleteSection from "./DeleteSection";
 import { Accordion } from 'react-bootstrap';
+import sectionsReducer from "@/lib/sectionsReducer";
+import DeleteSection from "./DeleteSection";
 
-const DisplaySections = ({ menu_id }) => {
+const DisplaySections = ({ menu_id, itemsDispatch, items}) => {
     const jwtToken = useToken();
-    const [sections, setSections] = useState<any[]>([]);
+    const [sections, sectionsDispatch] = useReducer(sectionsReducer, [])
 
     const getSections = async () => {
         try {
@@ -18,25 +19,13 @@ const DisplaySections = ({ menu_id }) => {
 
             const jsonData = await response.json();
             const sortedData = jsonData.sort((a, b) => a.name.localeCompare(b.name));
-            setSections(sortedData);
+            sectionsDispatch({
+                type: 'set',
+                sections: sortedData
+            });
         } catch (err: any) {
             console.error(err.message);
         };
-    }
-
-    async function handleAddSection(formData: FormData) {
-        const sectionName = formData.get("name")?.toString() || "null";
-        const jsonBody = { name: sectionName }
-        try {
-            const addSectionResponse = await fetch(`http://localhost:5000/dashboard/section/${menu_id}`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json", token: jwtToken },
-                body: JSON.stringify(jsonBody)
-            })
-            setSections([...sections, { name: sectionName }])
-        } catch (err: any) {
-            console.error(err.message);
-        }
     }
 
     useEffect(() => {
@@ -48,18 +37,18 @@ const DisplaySections = ({ menu_id }) => {
             <section>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} >
                     <h2>Sections</h2>
-                    <AddSection handleAddSection={handleAddSection} />
+                    <AddSection menu_id={menu_id} sectionsDispatch={sectionsDispatch} />
                 </div>
             </section>
             <section>
                 <Accordion flush>
-                    {sections.map((section, i) => (
-                        <Accordion.Item eventKey={i.toString()} key={i}>
+                    {sections.map((section) => (
+                        <Accordion.Item eventKey={section.section_id.toString()} key={section.section_id}>
                             <Accordion.Header>{section.name}</Accordion.Header>
                             <Accordion.Body>
-                                <DisplaySectionItems section_id={section.section_id} sections={sections} />
+                                <DisplaySectionItems section_id={section.section_id} sections={sections} itemsDispatch={itemsDispatch} items={items} />
                                 <div className="d-flex justify-content-end">
-                                    <DeleteSection section={section} sections={sections} />
+                                    <DeleteSection section={section} sectionsDispatch={sectionsDispatch} />
                                 </div>
                             </Accordion.Body>
                         </Accordion.Item>
