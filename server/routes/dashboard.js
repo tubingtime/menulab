@@ -386,9 +386,9 @@ router.post('/section/:menu_id', authorization, async (req, res) => {
         const { name } = req.body;
         const { menu_id } = req.params;
         const addSection = await pool.query(
-            "INSERT INTO sections(name, menu_id) VALUES($1, $2)",
+            "INSERT INTO sections(name, menu_id) VALUES($1, $2) RETURNING section_id",
             [name, menu_id]);
-        res.json("Section created.");
+        res.json(addSection.rows[0]);
     } catch (err) {
         console.error(err.message);
         res.status(500).json('Server error');
