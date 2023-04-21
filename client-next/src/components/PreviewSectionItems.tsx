@@ -38,6 +38,15 @@ const DisplaySectionItems = ({ section_id, sections, itemsDispatch, items }) => 
     }, []);
 
 
+    // Function to get image URL from Cloudinary
+    const getImageUrl = (item) => {
+        if (item.photo_reference) {
+            return `https://res.cloudinary.com/dm4j1v9ev/image/upload/${item.photo_reference}`;
+        } else {
+            return "/image-placeholder.png";
+        }
+    };
+
     return (
         <Fragment>
             {(sectionItemIDs.size > 0) ? (
@@ -56,10 +65,16 @@ const DisplaySectionItems = ({ section_id, sections, itemsDispatch, items }) => 
                                                 <p className="text-muted">{item.description}</p>
                                             </div>
                                             <div className="col-4">
-                                                <Card.Img
+                                            <Card.Img
                                                     variant="primary"
-                                                    src="/image-placeholder.png"
-                                                    className=" img-fluid"
+                                                    src={getImageUrl(item)}
+                                                    className="img-fluid"
+                                                    style={{
+                                                        width: "200px",
+                                                        height: "200px",
+                                                        objectFit: "cover",
+                                                        objectPosition: "center"
+                                                    }}
                                                 />
                                             </div>
                                         </div>

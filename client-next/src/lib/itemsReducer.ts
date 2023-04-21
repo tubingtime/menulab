@@ -15,6 +15,7 @@ export interface Item {
     name: string
     price: number
     description: string
+    photo_reference: string
 }
 
 

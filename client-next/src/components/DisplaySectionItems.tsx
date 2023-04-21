@@ -7,23 +7,27 @@ import UploadFile from "./UploadFile";
 import Image from 'next/image'
 import { IncomingMessage } from "http";
 import { Card } from "react-bootstrap";
+import itemsReducer from "@/lib/itemsReducer";
 
-const DisplaySectionItems = ({ section_id, sections }) => {
+const DisplaySectionItems = ({ section_id, sections, itemsDispatch, items }) => {
 
     const jwtToken = useToken();
 
-    const [sectionItems, setSectionItems] = useState<any[]>([]);
+    const [sectionItemIDs, setSectionItemIDs] = useState(new Set<string>);
 
     const getSectionItems = async () => {
         try {
             const response = await fetch(`http://localhost:5000/dashboard/section/${section_id}`, {
                 method: "GET",
-                headers: { token: localStorage.token }
+                headers: { token: jwtToken }
             });
 
             const jsonData = await response.json();
-            const sortedData = jsonData.sort((a, b) => a.name.localeCompare(b.name));
-            setSectionItems(sortedData);
+            const sectionIdSet = new Set<string>();
+            jsonData.map((item) => {
+                sectionIdSet.add(item.item_id);
+            })
+            setSectionItemIDs(sectionIdSet);
         } catch (err: any) {
             console.error(err.message);
         };
@@ -33,19 +37,6 @@ const DisplaySectionItems = ({ section_id, sections }) => {
         getSectionItems();
     }, []);
 
-    const deleteItem = async (id) => {
-        try {
-            const deleteItem = await fetch(`http://localhost:5000/dashboard/item/${id}`, {
-                method: "DELETE",
-                headers: { token: jwtToken }
-            });
-
-            setSectionItems(sectionItems.filter(item => item.item_id !== id));
-            window.location.reload();
-        } catch (err: any) {
-            console.error(err.message);
-        }
-    };
 
     // Function to get image URL from Cloudinary
     const getImageUrl = (item) => {
@@ -58,12 +49,12 @@ const DisplaySectionItems = ({ section_id, sections }) => {
 
     return (
         <Fragment>
-
-            {(sectionItems && sectionItems.length > 0) ? (
+            {(sectionItemIDs.size > 0) ? (
                 <div className="card-deck row row-cols-1 row-cols-md-2 g-4">
 
-                    {sectionItems.map((item, i) => (
-                        <div className="column" key={i}>
+                    {items.map((item) => (
+                        (sectionItemIDs.has(item.item_id)) &&
+                        <div className="column" key={item.item_id}>
                             <div className="card h-100" >
                                 <div className="card-body">
                                     <div className="containter">
@@ -91,8 +82,11 @@ const DisplaySectionItems = ({ section_id, sections }) => {
                                         <div className="row">
                                             <div className="d-grid gap-2 d-md-flex justify-content-md-end">
                                                 <AssignToSection item={item} sections={sections} />
-                                                <EditItem item={item} />
-                                                <DeleteItem item={item} items={sectionItems} />
+                                                <EditItem item={item} itemsDispatch={itemsDispatch} />
+                                                <DeleteItem
+                                                    item={item}
+                                                    itemsDispatch={itemsDispatch}
+                                                />
                                             </div>
                                         </div>
 

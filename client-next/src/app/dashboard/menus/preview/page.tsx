@@ -79,8 +79,8 @@ const ListItems = () => {
                 <h1 className='display' style={{ textAlign: 'center' }}>{menuName}</h1>
             </section>
             {sections.map((section) => (
-                <section>
-                    <div key={section.section_id}>
+                <section key={section.section_id}>
+                    <div>
                         <h2>{section.name}</h2>
                         <PreviewSectionItems section_id={section.section_id} sections={sections} itemsDispatch={itemsDispatch} items={items} />
                     </div>
