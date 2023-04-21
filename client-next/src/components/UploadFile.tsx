@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useToken } from "@/lib/SessionManagement";
 import Image from "next/image";
 
-function UploadFile() {
+function UploadFile({ item }: { item: any }) {
   const jwtToken = useToken();
   const [file, setFile] = useState<File | undefined>(undefined);
   const [fileUrl, setFileUrl] = useState<string | undefined>(undefined);
@@ -24,18 +24,18 @@ function UploadFile() {
       alert("Please select a file to upload");
       return;
     }
-
+  
     const formData = new FormData();
     formData.append("file", file);
     console.log(formData);
-
+  
     try {
-      const response = await fetch(`http://localhost:5000/dashboard/persist-image`, {
+      const response = await fetch(`http://localhost:5000/dashboard/persist-image/${item.item_id}`, {
         method: "POST",
         headers: { token: jwtToken },
         body: formData,
       });
-
+  
       const data = await response.json();
       setFileUrl(data.url);
       alert("File uploaded successfully!");
@@ -59,9 +59,9 @@ function UploadFile() {
           )}
         </div>
       )}
-      <button type="button" onClick={handleUpload}>
-        Upload
-      </button>
+      <button type="button" onClick={() => handleUpload(item.id)}>
+  Upload
+</button>
     </div>
   );
 }

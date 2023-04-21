@@ -71,7 +71,7 @@ const DisplaySectionItems = ({ section_id, sections }) => {
                                                     src="/image-placeholder.png"
                                                     className=" img-fluid"
                                                 />
-                                                <UploadFile/>
+                                                <UploadFile item={item}/>
                                             </div>
                                         </div>
                                         <div className="row">
