@@ -7,16 +7,6 @@ const multer = require("multer");
 const path = require("path");
 const upload = multer({ dest: "public/images" });
 
-// Set up the storage engine for uploaded files
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "./persist-image");
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + "-" + file.originalname);
-  },
-});
-
 
 
 /**
@@ -144,7 +134,21 @@ router.post("/item", authorization, async (req, res) => {
     }
 })
 
-router.post("/persist-image", authorization, upload.single("file"), async (request, response) => {
+
+/**
+ * Get all Menus.
+ * 
+ * To try this in Postman: 
+ * POST: http://localhost:5000/dashboard/persist-image/:item_id
+ * Header: 
+ *      key: token
+ *      value: the actual token
+ * 
+ * Body (as Form-Data):
+ *    file : File_Name.jpeg
+ * 
+ */
+router.post("/persist-image/:item_id", authorization, upload.single("file"), async (request, response) => {
   try {
     const photo_reference = request.file.path;
     const photoUrl = path.join(__dirname, "..", photo_reference);
@@ -152,10 +156,16 @@ router.post("/persist-image", authorization, upload.single("file"), async (reque
     // Upload the image to Cloudinary
     const photo = await cloudinary.uploader.upload(photoUrl);
 
-    // Insert the image URL into the database
+    // Insert the image URL into the images database
     const insertQuery = "INSERT INTO images (cloudinary_id, image_url) VALUES ($1, $2) RETURNING *";
     const values = [photo.public_id, photo.secure_url];
     const result = await pool.query(insertQuery, values);
+
+    // Insert the image URL into the items database
+    const item_id = request.params.item_id;
+    const updateQuery = "UPDATE items SET photo_reference = $1 WHERE item_id = $2";
+    const updateValues = [photo.public_id, item_id];
+    const result2 = await pool.query(updateQuery, updateValues);
 
     // Return the inserted row as a response
     const insertedRow = result.rows[0];
@@ -182,7 +192,7 @@ router.post("/persist-image", authorization, upload.single("file"), async (reque
  * Retrieve Image.
  * 
  * To try this in Postman:
- * POST: http://localhost:5000/dashboard/persist-image
+ * POST: 
  * Header:
  *      key: token
  *      value: the actual token
