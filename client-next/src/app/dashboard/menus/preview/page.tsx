@@ -3,12 +3,7 @@ import React, { Fragment, useState, useEffect, useReducer, createContext } from 
 import Nav from '@/components/Nav';
 import { useSearchParams } from 'next/navigation'
 import { useToken } from '@/lib/SessionManagement';
-import AddItem from '@/components/AddItem';
-import DisplayMenuItems from '@/components/DisplayMenuItems';
-import DisplaySections from '@/components/DisplaySections';
-import AddSection from '@/components/AddSection';
-import Link from 'next/link';
-
+import PreviewSectionItems from '@/components/PreviewSectionItems';
 import "bootstrap/js/dist/dropdown"
 import itemsReducer from '@/lib/itemsReducer';
 
@@ -83,16 +78,14 @@ const ListItems = () => {
             <section>
                 <h1 className='display' style={{ textAlign: 'center' }}>{menuName}</h1>
             </section>
-            <DisplaySections items={items} menu_id={menu_id} itemsDispatch={itemsDispatch} />
-            <section>
-                <h2 style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <span>Items</span>
-                    <AddItem menu_id={menu_id} itemsDispatch={itemsDispatch} />
-                </h2>
-            </section>
-            <section>
-                <DisplayMenuItems items={items} sections={sections} itemsDispatch={itemsDispatch} />
-            </section>
+            {sections.map((section) => (
+                <section>
+                    <div key={section.section_id}>
+                        <h2>{section.name}</h2>
+                        <PreviewSectionItems section_id={section.section_id} sections={sections} itemsDispatch={itemsDispatch} items={items} />
+                    </div>
+                </section>
+            ))}
         </Fragment >
     );
 };

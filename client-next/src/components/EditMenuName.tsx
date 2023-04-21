@@ -48,11 +48,10 @@ const EditMenuName = ({ menu }) => {
 
     return (
         <Fragment>
-            <Button variant="outline-info" size="sm" onClick={handleShow}>Edit</Button>
-
+            <Button variant="link" onClick={handleShow} style={{ textDecoration: 'none', color: 'black' }}>{name}</Button>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Edit Menu</Modal.Title>
+                    <Modal.Title>Edit Name</Modal.Title>
                 </Modal.Header>
                 <Form onSubmit={(e) => updateName(e)}>
                     <Modal.Body>

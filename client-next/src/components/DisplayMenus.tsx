@@ -17,17 +17,22 @@ const DisplayMenus = () => {
                     <div className="column" key={menu.menu_id}>
                         <div className="card" >
                             <div className="card-header" style={{ textAlign: 'center' }}>
-                                {menu.name}
+                                <EditMenuName menu={menu} />
                             </div>
                             <div className="card-body">
                                 <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+                                    <Link href={{
+                                        pathname: "../dashboard/menus/preview",
+                                        query: {
+                                            menu_id: menu.menu_id
+                                        }
+                                    }} className="btn btn-outline-primary btn-sm">Preview</Link>
                                     <Link href={{
                                         pathname: "../dashboard/menus/editor",
                                         query: {
                                             menu_id: menu.menu_id
                                         }
-                                    }} className="btn btn-outline-primary btn-sm">Show Menu</Link>
-                                    <EditMenuName menu={menu} />
+                                    }} className="btn btn-outline-info btn-sm">Edit</Link>
                                     <DeleteMenu menu={menu} />
                                 </div>
                             </div>
