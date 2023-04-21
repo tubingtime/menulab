@@ -156,16 +156,11 @@ router.post("/persist-image/:item_id", authorization, upload.single("file"), asy
     // Upload the image to Cloudinary
     const photo = await cloudinary.uploader.upload(photoUrl);
 
-    // Insert the image URL into the images database
-    const insertQuery = "INSERT INTO images (cloudinary_id, image_url) VALUES ($1, $2) RETURNING *";
-    const values = [photo.public_id, photo.secure_url];
-    const result = await pool.query(insertQuery, values);
-
-    // Insert the image URL into the items database
+    // Update the photo reference URL into the items database
     const item_id = request.params.item_id;
     const updateQuery = "UPDATE items SET photo_reference = $1 WHERE item_id = $2";
     const updateValues = [photo.public_id, item_id];
-    const result2 = await pool.query(updateQuery, updateValues);
+    const result = await pool.query(updateQuery, updateValues);
 
     // Return the inserted row as a response
     const insertedRow = result.rows[0];
@@ -173,8 +168,6 @@ router.post("/persist-image/:item_id", authorization, upload.single("file"), asy
       status: "success",
       data: {
         message: "Image Uploaded Successfully",
-        cloudinary_id: insertedRow.cloudinary_id,
-        image_url: insertedRow.image_url,
       },
     });
   } catch (error) {
@@ -187,50 +180,6 @@ router.post("/persist-image/:item_id", authorization, upload.single("file"), asy
   }
 });
 
-
-/**
- * Retrieve Image.
- * 
- * To try this in Postman:
- * POST: 
- * Header:
- *      key: token
- *      value: the actual token
- *      Content-Type: application/json
- *      
- */
-router.get("/retrieve-image/:cloudinary_id", (request, response) => {
-  // data from user
-  const { cloudinary_id } = request.params;
-
-  pool.connect((err, client) => {
-    // query to find image
-    const query = "SELECT * FROM images WHERE cloudinary_id = $1";
-    const value = [cloudinary_id];
-
-    // execute query
-    client
-      .query(query, value)
-      .then((output) => {
-        response.status(200).send({
-          status: "success",
-          data: {
-            id: output.rows[0].cloudinary_id,
-            url: output.rows[0].image_url,
-          },
-        });
-      })
-      .catch((error) => {
-        response.status(401).send({
-          status: "failure",
-          data: {
-            message: "could not retrieve record!",
-            error,
-          },
-        });
-      });
-  });
-});
 
 
 
