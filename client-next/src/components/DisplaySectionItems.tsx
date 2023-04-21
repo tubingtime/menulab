@@ -99,10 +99,6 @@ const DisplaySectionItems = ({ section_id, sections, itemsDispatch, items }) => 
                                                 <EditItem item={item}
                                                     itemsDispatch={itemsDispatch}
                                                 />
-                                                <
-                                                    item={item}
-                                                    itemsDispatch={itemsDispatch}
-                                                />
                                                 <DeleteItem item={item} itemsDispatch={itemsDispatch} />
                                             </div>
                                         </div>
