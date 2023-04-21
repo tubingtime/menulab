@@ -6,8 +6,6 @@ const AssignToSection = ({ item, sections }) => {
 
     const handleSectionClick = async (item, section) => {
         try {
-            // TODO: Need to check if already assigned to a section.
-            // If already assigned to a section, then unassign and assign to the new section.
             const body = {
                 section_id: section.section_id
             };
@@ -36,8 +34,8 @@ const AssignToSection = ({ item, sections }) => {
                     Assign
                 </button>
                 <ul className="dropdown-menu">
-                    {sections.map((section, i) => (
-                        <li key={i}>
+                    {sections.map((section) => (
+                        <li key={section.section_id}>
                             <a className="dropdown-item" onClick={() => handleSectionClick(item, section)}>
                                 {section.name}
                             </a>

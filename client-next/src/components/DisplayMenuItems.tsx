@@ -5,9 +5,9 @@ import AssignToSection from "./AssignToSection";
 import DeleteItem from "./DeleteItem";
 import Image from 'next/image'
 
-const DisplayMenuItems = ({ items, sections }) => {
-    const jwtToken = useToken();
+const DisplayMenuItems = ({ items, sections, itemsDispatch }) => {
     const [updatedItems, setItems] = useState(items);
+
 
 
     return (
@@ -25,14 +25,15 @@ const DisplayMenuItems = ({ items, sections }) => {
                     </thead>
                     <tbody>
                         {items.map((item, i) => (
-                            <tr key={i}>
-                                <th className="table-num" scope="row">{i + 1}</th>
+                            
+                            <tr key={item.item_id}>
+                                <th className="table-num" scope="row">{i+1}</th>
                                 <td className="table-name">{item.name}</td>
                                 <td className="table-description">{item.description}</td>
                                 <td className="table-price">{item.price}</td>
                                 <td><AssignToSection item={item} sections={sections} /></td>
-                                <td><EditItem item={item} /></td>
-                                <td><DeleteItem item={item} items={items} /></td>
+                                <td><EditItem item={item} itemsDispatch={itemsDispatch} /></td>
+                                <td><DeleteItem item={item} itemsDispatch={itemsDispatch}/></td>
                             </tr>
                         ))}
                     </tbody>

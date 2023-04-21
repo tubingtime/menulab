@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from "react";
 import { useToken } from "@/lib/SessionManagement";
 
-const DeleteSection = ({ section, sections }) => {
+const DeleteSection = ({ section, sectionsDispatch }) => {
     const jwtToken = useToken();
     const [updatedsections, setSections] = useState<any[]>([]);
 
@@ -12,8 +12,10 @@ const DeleteSection = ({ section, sections }) => {
                 headers: { token: jwtToken }
             });
 
-            setSections(sections.filter(section => section.section_id !== id));
-            window.location.reload();
+            sectionsDispatch({
+                type: 'deleted',
+                section: section
+            })
         } catch (err: any) {
             console.error(err.message);
         }

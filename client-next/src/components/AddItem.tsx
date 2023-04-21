@@ -2,7 +2,7 @@ import { useToken } from "@/lib/SessionManagement";
 
 // Either do <AddItem /> OR
 // <AddItem menuId={menuId} />
-const AddItem = (props?: { menu_id?: any }) => {
+const AddItem = (props?: {itemsDispatch, menu_id?: any}) => {
   window.bootstrap = require('bootstrap/js/dist/modal');
   const jwtToken = useToken();
 
@@ -10,30 +10,38 @@ const AddItem = (props?: { menu_id?: any }) => {
     e.preventDefault();
     const formData = new FormData(e.target);
 
-    try {
-      // Do POST Request
-      const addItem = await fetch("http://localhost:5000/dashboard/item", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", token: jwtToken },
-        body: JSON.stringify(Object.fromEntries(formData.entries()))
-      });
-      const results: { item_id: number }[] = await addItem.json();
-      const item_id = results[0].item_id;
+        try {
+            // Do POST Request
+            const itemObj = Object.fromEntries(formData.entries());
 
-      if (props?.menu_id) {
-        // Assign (do second POST request).
-        const assignItem = await fetch(`http://localhost:5000/dashboard/menus/item/${item_id}`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json", token: jwtToken },
-          body: JSON.stringify({ menu_id: props.menu_id })
-        });
-      }
+            const addItem = await fetch("http://localhost:5000/dashboard/item", {
+                method: "POST",
+                headers: { "Content-Type": "application/json", token: jwtToken },
+                body: JSON.stringify(itemObj)
+            });
+            const results: { item_id: number }[] = await addItem.json();
+            const item_id = results[0].item_id;
+            if (props?.menu_id) {
+                // Assign (do second POST request).
+                const assignItem = await fetch(`http://localhost:5000/dashboard/menus/item/${item_id}`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json", token: jwtToken },
+                    body: JSON.stringify({ menu_id: props.menu_id })
+                });
+            }
 
-    } catch (err: any) {
-      console.error(err.message);
-    }
-    window.location.reload();
-  };
+            formData.append("item_id", item_id.toString());
+            const itemObjWithId = Object.fromEntries(formData.entries());
+            props?.itemsDispatch({
+              type: 'added',
+              item: itemObjWithId
+            })
+            e.target.reset();
+            
+        } catch (err: any) {
+            console.error(err.message);
+        }
+    };
 
   return (
     <>

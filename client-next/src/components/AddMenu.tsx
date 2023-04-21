@@ -1,109 +1,73 @@
 import { useToken } from "@/lib/SessionManagement";
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { useState, Fragment, useContext } from 'react';
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import { MenusDispatchContext } from "@/lib/menusContext";
 
 // Either do <AddMenu /> OR
 // <AddMenu menuId={menuId} />
 const AddMenu = (props?: { menu_id?: any }) => {
-  window.bootstrap = require('bootstrap/js/dist/modal');
-  const jwtToken = useToken();
-  const [menus, setMenus] = useState<any[]>([]);
-  const [name, setName] = useState("");
+    window.bootstrap = require('bootstrap/js/dist/modal');
+    const jwtToken = useToken();
+    const [name, setName] = useState("");
+    const [show, setShow] = useState(false);
 
-  const onSubmitForm = async (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    console.log(JSON.stringify(Object.fromEntries(formData.entries())));
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+    const dispatch = useContext(MenusDispatchContext);
 
-    try {
-      const body = { name };
+    const handleAddMenu = async (e) => {
+        e.preventDefault();
 
-      /* fetch() makes a GET request by default. */
-      console.log(JSON.stringify(body));
-      const response = await fetch("http://localhost:5000/dashboard/menus", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", token: jwtToken },
-        body: JSON.stringify(body)
-      });
-      console.log(response);
+        try {
+            const body = { name };
+            const addMenu = await fetch("http://localhost:5000/dashboard/menus", {
+                method: "POST",
+                headers: { "Content-Type": "application/json", token: jwtToken },
+                body: JSON.stringify(body)
+            });
 
-    } catch (err: any) {
-      console.error(err.message);
-    }
-    window.location.reload();
-  };
+            const results: { menu_id: number }[] = await addMenu.json();
+            const addedMenu = {
+                menu_id: results[0].menu_id,
+                name: name
+            };
 
-  return (
-    <>
-      <button
-        type="button"
-        className="btn btn-primary"
-        data-bs-toggle="modal"
-        data-bs-target="#addMenuModal"
-      >
-        Add Menu
-      </button>
+            dispatch({
+                type: 'added',
+                menu: addedMenu,
+            })
 
-      <div
-        className="modal fade"
-        id="addMenuModal"
-        aria-labelledby="addItemModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog">
-          <div className="modal-content">
+            e.target.reset();
+        } catch (err: any) {
+            console.error(err.message);
+        }
+    };
 
-            <div className="modal-header">
-              <h4 className="modal-title" id="addMenuLabel">Add Menu</h4>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
+    return (
+        <Fragment>
+            <Button variant="primary" onClick={handleShow}>Add Menu</Button>
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Add Menu</Modal.Title>
+                </Modal.Header>
+                <Form onSubmit={(e) => handleAddMenu(e)}> {/* Allow user to press enter*/}
+                    <Modal.Body>
+                        <Form.Group className="row">
+                            <div className="col">
+                                <Form.Control placeholder="Enter menu name." type="text" value={name} onChange={(e) => setName(e.target.value)} />
+                            </div>
+                        </Form.Group>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button type='submit' variant="primary" onClick={handleClose}>Add</Button>
+                    </Modal.Footer>
+                </Form>
+            </Modal>
+        </Fragment>
 
-            <form className="mt-2" onSubmit={onSubmitForm}>
-
-              <div className="modal-body">
-                <div className="row">
-                  <div className="col">
-                    <input
-                      type="text"
-                      name="name"
-                      placeholder="Enter a menu name."
-                      required
-                      className="form-control"
-                      value={name}
-                      onChange={e => setName(e.target.value)}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="modal-footer">
-                <button className="btn btn-primary">Add</button>
-              </div>
-            </form>
-          </div >
-        </div >
-      </div >
-    </>
-  );
-};
-
-const Field = <T extends string | number>(props: { name: string }) => {
-  return (
-    <>
-      <div className="col">
-        <input
-          type="text"
-          name={props.name}
-          placeholder={`Enter item ${props.name}.`}
-          className="form-control"
-        />
-      </div>
-    </>
-  );
+    );
 };
 
 export default AddMenu;

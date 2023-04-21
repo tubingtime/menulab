@@ -1,5 +1,5 @@
 "use client"
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect, useReducer, createContext } from 'react';
 import Nav from '@/components/Nav';
 import { useSearchParams } from 'next/navigation'
 import { useToken } from '@/lib/SessionManagement';
@@ -9,6 +9,7 @@ import DisplaySections from '@/components/DisplaySections';
 import AddSection from '@/components/AddSection';
 
 import "bootstrap/js/dist/dropdown"
+import itemsReducer from '@/lib/itemsReducer';
 
 
 const ListItems = () => {
@@ -17,7 +18,9 @@ const ListItems = () => {
     const menu_id = searchParams?.get('menu_id');
     const [menuName, setMenuName] = useState("");
 
-    const [items, setItems] = useState<any[]>([]);
+    const [items, itemsDispatch] = useReducer(itemsReducer, []);
+
+    createContext(items);
 
     const getItems = async (menu_id) => {
         try {
@@ -28,7 +31,10 @@ const ListItems = () => {
 
             const jsonData = await response.json();
             const sortedData = jsonData.sort((a, b) => a.name.localeCompare(b.name));
-            setItems(sortedData);
+            itemsDispatch({
+                type: 'set',
+                items: sortedData
+            })
         } catch (err: any) {
             console.error(err.message);
         };
@@ -76,15 +82,15 @@ const ListItems = () => {
             <section>
                 <h1 className='display' style={{ textAlign: 'center' }}>{menuName}</h1>
             </section>
-            <DisplaySections menu_id={menu_id} />
+            <DisplaySections items={items} menu_id={menu_id} itemsDispatch={itemsDispatch} />
             <section>
                 <h2 style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <span>Items</span>
-                    <AddItem menu_id={menu_id} />
+                    <AddItem menu_id={menu_id} itemsDispatch={itemsDispatch}/>
                 </h2>
             </section>
             <section>
-                <DisplayMenuItems items={items} sections={sections} />
+                <DisplayMenuItems items={items} sections={sections} itemsDispatch={itemsDispatch} />
             </section>
         </Fragment >
     );

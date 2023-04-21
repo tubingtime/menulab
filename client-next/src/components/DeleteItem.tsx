@@ -1,9 +1,9 @@
 import React, { Fragment, useState } from "react";
 import { useToken } from "@/lib/SessionManagement";
 
-const DeleteItem = ({ item, items }) => {
+const DeleteItem = ({item, itemsDispatch}) => {
+
     const jwtToken = useToken();
-    const [updatedItems, setItems] = useState(items);
 
     const deleteItem = async (id) => {
         try {
@@ -12,8 +12,10 @@ const DeleteItem = ({ item, items }) => {
                 headers: { token: jwtToken }
             });
 
-            setItems(items.filter(item => item.item_id !== id));
-            window.location.reload();
+            itemsDispatch({
+                type: 'deleted',
+                item: item
+            })
         } catch (err: any) {
             console.error(err.message);
         }
