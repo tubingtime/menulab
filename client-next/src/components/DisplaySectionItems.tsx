@@ -49,7 +49,6 @@ const DisplaySectionItems = ({ section_id, sections }) => {
 
     // Function to get image URL from Cloudinary
     const getImageUrl = (item) => {
-        console.log(item);
         if (item.photo_reference) {
             return `https://res.cloudinary.com/dm4j1v9ev/image/upload/${item.photo_reference}`;
         } else {
