@@ -50,17 +50,6 @@ function UploadFile({ item }: { item: any }) {
   return (
     <div>
       <input type="file" onChange={handleFileInput} />
-      {fileUrl && (
-        <div>
-          {file.type.startsWith("image/") ? (
-            <Image src={fileUrl} alt={file.name} width={500} height={500} />
-          ) : (
-            <a href={fileUrl} download={file.name}>
-              Download {file.name}
-            </a>
-          )}
-        </div>
-      )}
       <button type="button" onClick={() => handleUpload()}>
   Upload
 </button>
