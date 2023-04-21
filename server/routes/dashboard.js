@@ -5,7 +5,7 @@ const cloudinary = require("../cloudinary");
 const express = require("express");
 const multer = require("multer");
 const path = require("path");
-const upload = multer({ dest: "uploads/" });
+const upload = multer({ dest: "public/images" });
 
 // Set up the storage engine for uploaded files
 const storage = multer.diskStorage({
