@@ -43,6 +43,8 @@ function UploadFile({ item }: { item: any }) {
       console.error(error);
       alert("Failed to upload file");
     }
+
+    window.location.reload();
   };
 
   return (
@@ -59,7 +61,7 @@ function UploadFile({ item }: { item: any }) {
           )}
         </div>
       )}
-      <button type="button" onClick={() => handleUpload(item.id)}>
+      <button type="button" onClick={() => handleUpload()}>
   Upload
 </button>
     </div>
