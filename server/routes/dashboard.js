@@ -1,32 +1,13 @@
 const router = require("express").Router();
 const pool = require("../db");
 const authorization = require('../middleware/authorization');
-const cloudinary = require("../cloudinary").v2;
+const cloudinary = require("../cloudinary");
+const express = require("express");
+const multer = require("multer");
+const path = require("path");
+const upload = multer({ dest: "public/images" });
 
-// image upload API
-router.post("/image-upload", authorization, (request, response) => {
-  // collected image from a user
-  const data = {
-    image: request.body.image,
-  }
 
-  console.log(data);
-
-  // upload image here
-  cloudinary.uploader.upload(data.image)
-  .then((result) => {
-    response.status(200).send({
-      message: "success",
-      result,
-    });
-  }).catch((error) => {
-    response.status(500).send({
-      message: "failure",
-      error,
-    });
-  });
-
-});
 
 /**
  * This checks the user authorization against the user table.
@@ -133,21 +114,124 @@ router.get("/menus", authorization, async (req, res) => {
  *      "name": "",
  *      "description": "", (<-- This field is optional)
  *      "price": ""
+ *      "photo_reference": ""
  */
 router.post("/item", authorization, async (req, res) => {
     try {
         const name = req.body.name;
         const description = req.body.description;
         const price = req.body.price;
+        // const picture = await cloudinary.uploader.upload(req.body.photo_reference);
         const createMenuItem = await pool.query(
-            "INSERT INTO items(name, description, price, user_id) VALUES($1, $2, $3, $4) RETURNING item_id",
-            [name, description, price, req.user]);
+          "INSERT INTO items(name, description, price, user_id) VALUES($1, $2, $3) RETURNING item_id",
+          /* picture.secure_url, */
+          [name, description, price, req.user]
+        );
         res.json(createMenuItem.rows);
     } catch (err) {
         console.error(err.message);
         res.status(500).json('Server error');
     }
 })
+
+
+/**
+ * Get all Menus.
+ * 
+ * To try this in Postman: 
+ * POST: http://localhost:5000/dashboard/persist-image/:item_id
+ * Header: 
+ *      key: token
+ *      value: the actual token
+ * 
+ * Body (as Form-Data):
+ *    file : File_Name.jpeg
+ * 
+ */
+router.post("/persist-image/:item_id", authorization, upload.single("file"), async (request, response) => {
+  try {
+    const photo_reference = request.file.path;
+    const photoUrl = path.join(__dirname, "..", photo_reference);
+
+    // Upload the image to Cloudinary
+    const photo = await cloudinary.uploader.upload(photoUrl);
+
+    // Insert the image URL into the images database
+    const insertQuery = "INSERT INTO images (cloudinary_id, image_url) VALUES ($1, $2) RETURNING *";
+    const values = [photo.public_id, photo.secure_url];
+    const result = await pool.query(insertQuery, values);
+
+    // Insert the image URL into the items database
+    const item_id = request.params.item_id;
+    const updateQuery = "UPDATE items SET photo_reference = $1 WHERE item_id = $2";
+    const updateValues = [photo.public_id, item_id];
+    const result2 = await pool.query(updateQuery, updateValues);
+
+    // Return the inserted row as a response
+    const insertedRow = result.rows[0];
+    response.status(201).json({
+      status: "success",
+      data: {
+        message: "Image Uploaded Successfully",
+        cloudinary_id: insertedRow.cloudinary_id,
+        image_url: insertedRow.image_url,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    response.status(500).json({
+      status: "error",
+      message: "Failed to upload image",
+      error: error.message,
+    });
+  }
+});
+
+
+/**
+ * Retrieve Image.
+ * 
+ * To try this in Postman:
+ * POST: 
+ * Header:
+ *      key: token
+ *      value: the actual token
+ *      Content-Type: application/json
+ *      
+ */
+router.get("/retrieve-image/:cloudinary_id", (request, response) => {
+  // data from user
+  const { cloudinary_id } = request.params;
+
+  pool.connect((err, client) => {
+    // query to find image
+    const query = "SELECT * FROM images WHERE cloudinary_id = $1";
+    const value = [cloudinary_id];
+
+    // execute query
+    client
+      .query(query, value)
+      .then((output) => {
+        response.status(200).send({
+          status: "success",
+          data: {
+            id: output.rows[0].cloudinary_id,
+            url: output.rows[0].image_url,
+          },
+        });
+      })
+      .catch((error) => {
+        response.status(401).send({
+          status: "failure",
+          data: {
+            message: "could not retrieve record!",
+            error,
+          },
+        });
+      });
+  });
+});
+
 
 
 //TODO: Security: make sure users can only delete / assign their own items.

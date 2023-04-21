@@ -44,6 +44,14 @@ CREATE TABLE section_assignments (
   item_id INTEGER REFERENCES items(item_id) ON DELETE CASCADE
 );
 
+CREATE TABLE images (
+  title VARCHAR(255) NOT NULL,
+  cloudinary_id VARCHAR(255) NOT NULL,
+  image_url VARCHAR(255) NOT NULL,
+  PRIMARY KEY (cloudinary_id)
+);
+
+
 
 -- Insert fake users.
 INSERT INTO users(user_name, user_email, user_password) 
