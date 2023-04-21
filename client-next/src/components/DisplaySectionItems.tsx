@@ -78,6 +78,7 @@ const DisplaySectionItems = ({ section_id, sections }) => {
                                                     variant="primary"
                                                     src={getImageUrl(item)}
                                                     className=" img-fluid"
+                                                    // style={{ width: "200px", height: "250px" }}
                                                 />
                                                 <UploadFile item={item}/>
                                             </div>
