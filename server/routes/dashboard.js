@@ -301,7 +301,7 @@ router.get("/menus/:menu_id", authorization, async (req, res) => {
         const menu_id = req.params.menu_id;
         // TODO: Fix this so that it returns for a specific user and menu.
         const getMenuItems = await pool.query(
-            "SELECT items.name, items.description, items.price, items.item_id \
+            "SELECT items.name, items.description, items.price, items.item_id, items.photo_reference \
             FROM items JOIN menu_assignments \
             ON items.item_id = menu_assignments.item_id \
             WHERE menu_assignments.menu_id =$1",
@@ -691,7 +691,7 @@ router.get("/section/:section_id", authorization, async (req, res) => {
     try {
         const section_id = req.params.section_id;
         const getSectionItems = await pool.query(
-            "SELECT items.name, items.description, items.price, items.item_id \
+            "SELECT items.name, items.description, items.price, items.item_id, items.photo_reference \
             FROM items JOIN section_assignments \
             ON items.item_id = section_assignments.item_id \
             WHERE section_assignments.section_id =$1",
