@@ -2,6 +2,22 @@ const router = require("express").Router();
 const pool = require("../db");
 const authorization = require('../middleware/authorization');
 const cloudinary = require("../cloudinary");
+const express = require("express");
+const multer = require("multer");
+const path = require("path");
+const upload = multer({ dest: "uploads/" });
+
+// Set up the storage engine for uploaded files
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./persist-image");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
+
+
 
 /**
  * This checks the user authorization against the user table.
@@ -128,34 +144,22 @@ router.post("/item", authorization, async (req, res) => {
     }
 })
 
-
-/**
- * Persist Image.
- * 
- * To try this in Postman:
- * POST: http://localhost:5000/dashboard/persist-image
- * Header:
- *      key: token
- *      value: the actual token
- * Body:
- *      "photo_reference": ""
- */
-router.post("/persist-image", authorization, async (request, response) => {
+router.post("/persist-image", authorization, upload.single("file"), async (request, response) => {
   try {
-    const image = request.body.photo_reference;
-    // collected image from a user
-    const photo_reference = await cloudinary.uploader.upload(image);
+    const photo_reference = request.file.path;
+    const photoUrl = path.join(__dirname, "..", photo_reference);
 
-    // inset query to run if the upload to cloudinary is successful
-    const insertQuery = "INSERT INTO images (cloudinary_id, image_url) VALUES($1,$2) RETURNING *";
-    const values = [photo_reference.public_id, photo_reference.secure_url];
+    // Upload the image to Cloudinary
+    const photo = await cloudinary.uploader.upload(photoUrl);
 
-    // execute query
+    // Insert the image URL into the database
+    const insertQuery = "INSERT INTO images (cloudinary_id, image_url) VALUES ($1, $2) RETURNING *";
+    const values = [photo.public_id, photo.secure_url];
     const result = await pool.query(insertQuery, values);
-    const insertedRow = result.rows[0];
 
-    // send success response
-    response.status(201).send({
+    // Return the inserted row as a response
+    const insertedRow = result.rows[0];
+    response.status(201).json({
       status: "success",
       data: {
         message: "Image Uploaded Successfully",
@@ -165,14 +169,14 @@ router.post("/persist-image", authorization, async (request, response) => {
     });
   } catch (error) {
     console.error(error);
-
-    response.status(500).send({
+    response.status(500).json({
       status: "error",
       message: "Failed to upload image",
       error: error.message,
     });
   }
 });
+
 
 /**
  * Retrieve Image.
