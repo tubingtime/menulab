@@ -77,10 +77,15 @@ const DisplaySectionItems = ({ section_id, sections }) => {
                                                 <Card.Img
                                                     variant="primary"
                                                     src={getImageUrl(item)}
-                                                    className=" img-fluid"
-                                                    // style={{ width: "200px", height: "250px" }}
+                                                    className="img-fluid"
+                                                    style={{
+                                                        width: "200px",
+                                                        height: "200px",
+                                                        objectFit: "cover",
+                                                        objectPosition: "center"
+                                                    }}
                                                 />
-                                                <UploadFile item={item}/>
+                                                <UploadFile item={item} />
                                             </div>
                                         </div>
                                         <div className="row">

@@ -3,6 +3,7 @@ import { useToken } from "@/lib/SessionManagement";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import UploadFile from "./UploadFile";
 
 const EditItem = ({ item }) => {
     const jwtToken = useToken();
@@ -62,9 +63,7 @@ const EditItem = ({ item }) => {
                             </div>
                         </Form.Group>
                         <Form.Group className="row">
-                            <div className="col">
-                                <input type="file" className="form-control mt-3" id="customFile" />
-                            </div>
+                            <UploadFile item={item}/>
                         </Form.Group>
                     </Form>
 

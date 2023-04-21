@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useToken } from "@/lib/SessionManagement";
 import Image from "next/image";
 
+//TODO: Maybe UploadImage is a better name
 function UploadFile({ item }: { item: any }) {
   const jwtToken = useToken();
   const [file, setFile] = useState<File | undefined>(undefined);
