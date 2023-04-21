@@ -3,6 +3,7 @@ import { useToken } from "@/lib/SessionManagement";
 import EditItem from "@/components/EditItem";
 import AssignToSection from "./AssignToSection";
 import DeleteItem from "./DeleteItem";
+import UploadFile from "./UploadFile";
 import Image from 'next/image'
 import { IncomingMessage } from "http";
 import { Card } from "react-bootstrap";
@@ -70,6 +71,7 @@ const DisplaySectionItems = ({ section_id, sections }) => {
                                                     src="/image-placeholder.png"
                                                     className=" img-fluid"
                                                 />
+                                                <UploadFile/>
                                             </div>
                                         </div>
                                         <div className="row">
