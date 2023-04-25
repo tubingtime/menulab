@@ -8,12 +8,12 @@ import Image from 'next/image'
 import { IncomingMessage } from "http";
 import { Card } from "react-bootstrap";
 import itemsReducer from "@/lib/itemsReducer";
+import DeleteFile from "./DeleteFile";
 
 const DisplaySectionItems = ({ section_id, sections, itemsDispatch, items }) => {
 
     const jwtToken = useToken();
-
-    const [sectionItemIDs, setSectionItemIDs] = useState(new Set<string>);
+    const [sectionItemIDs, setSectionItemIDs] = useState(new Set<string>());
 
     const getSectionItems = async () => {
         try {
@@ -41,7 +41,7 @@ const DisplaySectionItems = ({ section_id, sections, itemsDispatch, items }) => 
     // Function to get image URL from Cloudinary
     const getImageUrl = (item) => {
         if (item.photo_reference) {
-            return `https://res.cloudinary.com/dm4j1v9ev/image/upload/${item.photo_reference}`;
+            return `http://res.cloudinary.com/dm4j1v9ev/image/upload/${item.photo_reference}`;
         } else {
             return "/image-placeholder.png";
         }
@@ -77,6 +77,9 @@ const DisplaySectionItems = ({ section_id, sections, itemsDispatch, items }) => 
                                                     }}
                                                 />
                                                 <UploadFile item={item} />
+                                                <DeleteFile item={item}
+                                                    itemsDispatch={itemsDispatch}
+                                                />
                                             </div>
                                         </div>
                                         <div className="row">
@@ -106,4 +109,4 @@ const DisplaySectionItems = ({ section_id, sections, itemsDispatch, items }) => 
     );
 };
 
-export default DisplaySectionItems;
+export default DisplaySectionItems; 

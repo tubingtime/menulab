@@ -4,17 +4,19 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import UploadFile from "./UploadFile";
+import DeleteFile from "./DeleteFile";
+import { Image } from 'react-bootstrap';
 
-
-const EditItem = ({item, itemsDispatch}) => {
+const EditItem = ({ item, itemsDispatch }) => {
 
     window.bootstrap = require('bootstrap/js/dist/modal');
     const jwtToken = useToken();
-    
+
 
     const [description, setDescription] = useState(item.description);
     const [name, setName] = useState(item.name);
     const [price, setPrice] = useState(item.price);
+    const [photo_reference, setPhotoReference] = useState(item.photo_reference);
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -23,7 +25,7 @@ const EditItem = ({item, itemsDispatch}) => {
     const updateItem = async e => {
         e.preventDefault();
         try {
-            const body = { name, description, price };
+            const body = { name, description, price, photo_reference };
 
             const response = await fetch(
                 `http://localhost:5000/dashboard/item/${item.item_id}`,
@@ -38,7 +40,8 @@ const EditItem = ({item, itemsDispatch}) => {
                 item_id: item.item_id,
                 description: description,
                 name: name,
-                price: price
+                price: price,
+                photo_reference: photo_reference,
             };
 
             itemsDispatch({
@@ -50,6 +53,15 @@ const EditItem = ({item, itemsDispatch}) => {
             console.error(err.message);
         }
     }
+
+     // Function to get image URL from Cloudinary
+    const getImageUrl = (item) => {
+        if (item.photo_reference) {
+            return `http://res.cloudinary.com/dm4j1v9ev/image/upload/${item.photo_reference}`;
+        } else {
+            return "/image-placeholder.png";
+        }
+    };
 
     return (
         <Fragment>
@@ -78,7 +90,26 @@ const EditItem = ({item, itemsDispatch}) => {
                             </div>
                         </Form.Group>
                         <Form.Group className="row">
-                            <UploadFile item={item}/>
+                            {photo_reference &&
+                                <div className="col">
+                                    <Form.Label>Preview</Form.Label>
+                                    <div>
+                                        <Image src={getImageUrl(item)} alt="item" style={{
+                                                        width: "200px",
+                                                        height: "200px",
+                                                        objectFit: "cover",
+                                                        objectPosition: "center"
+                                                    }} />
+                                    </div>    
+                                </div>
+                            }
+
+                        </Form.Group>
+                        <Form.Group className="row">
+                            <UploadFile item={item} />
+                            <DeleteFile item={item}
+                                itemsDispatch={itemsDispatch}
+                            />
                         </Form.Group>
                     </Form>
 

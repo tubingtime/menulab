@@ -12,7 +12,7 @@ const DisplaySectionItems = ({ section_id, sections, itemsDispatch, items }) => 
 
     const jwtToken = useToken();
 
-    const [sectionItemIDs, setSectionItemIDs] = useState(new Set<string>);
+    const [sectionItemIDs, setSectionItemIDs] = useState(new Set<string>());
 
 
     const getSectionItems = async () => {
