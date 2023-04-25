@@ -121,11 +121,12 @@ router.post("/item", authorization, async (req, res) => {
     const name = req.body.name;
     const description = req.body.description;
     const price = req.body.price;
-    // const picture = await cloudinary.uploader.upload(req.body.photo_reference);
+    const photo_reference = req.body.photo;
+
     const createMenuItem = await pool.query(
-      "INSERT INTO items(name, description, price, user_id) VALUES($1, $2, $3) RETURNING item_id",
+      "INSERT INTO items(name, description, price, user_id, photo_reference) VALUES($1, $2, $3, $4, $5) RETURNING item_id",
       /* picture.secure_url, */
-      [name, description, price, req.user]
+      [name, description, price, req.user, photo_reference]
     );
     res.json(createMenuItem.rows);
   } catch (err) {
@@ -136,7 +137,41 @@ router.post("/item", authorization, async (req, res) => {
 
 
 /**
- * Get all Menus.
+ * Upload image.
+ * 
+ * To try this in Postman: 
+ * POST: http://localhost:5000/dashboard/upload.
+ * Header: 
+ *      key: token
+ *      value: the actual token
+ * 
+ * Body (as Form-Data):
+ *    file : File_Name.jpeg
+ * 
+ */
+router.post("/upload", authorization, upload.single("file"), async (request, response) => {
+  try {
+    console.log(request.file.path);
+    const photo_reference = request.file.path;
+    const photoUrl = path.join(__dirname, "..", photo_reference);
+
+    // Upload the image to Cloudinary
+    const photo = await cloudinary.uploader.upload(photoUrl);
+    response.json(photo);
+
+  } catch (error) {
+    console.error(error);
+    response.status(500).json({
+      status: "error",
+      message: "Failed to upload image",
+      error: error.message,
+    });
+  }
+});
+
+
+/**
+ * Upload image and update item.
  * 
  * To try this in Postman: 
  * POST: http://localhost:5000/dashboard/persist-image/:item_id
