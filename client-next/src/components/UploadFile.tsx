@@ -49,8 +49,8 @@ function UploadFile({ item }: { item: any }) {
 
         // Check if file type is an image
         const fileExtension = file.name.split('.').pop().toLowerCase();
-        if (!['jpg', 'jpeg', 'png', 'gif'].includes(fileExtension)) {
-            setErrorMessage("Please upload an image file (png, jpeg, jpg, gif)");
+        if (!['jpg', 'jpeg', 'png'].includes(fileExtension)) {
+            setErrorMessage("Please upload an image file (png, jpeg, jpg)");
             return;
         }
 
@@ -106,7 +106,7 @@ function UploadFile({ item }: { item: any }) {
             )}
             {errorMessage && (
                 <Alert variant="danger" onClose={() => errorMessage} dismissible>
-                Please upload an image file (png, jpeg, jpg, gif)!
+                Please upload an image file (png, jpeg, jpg)!
             </Alert>
         )}
     </div>
