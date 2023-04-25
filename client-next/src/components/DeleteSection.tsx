@@ -38,7 +38,7 @@ const DeleteSection = ({ section, sectionsDispatch }) => {
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h4 className="modal-title"> Confirm Delete </h4>
+                            <h4 className="modal-title"> Confirm Deletion </h4>
                             <button
                                 type="button"
                                 className="btn-close"
@@ -48,7 +48,7 @@ const DeleteSection = ({ section, sectionsDispatch }) => {
                         </div>
 
                         <div className="modal-body">
-                            Are you sure you want to delete <b>{section.name}</b>?
+                            Are you sure you want to delete <b>{section.name}</b>? This action cannot be undone.
                         </div>
 
                         <div className="modal-footer">

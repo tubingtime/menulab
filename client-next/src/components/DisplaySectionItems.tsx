@@ -64,7 +64,7 @@ const DisplaySectionItems = ({ section_id, sections, itemsDispatch, items }) => 
                                                 <p className="card-text">{item.price}</p>
                                                 <p className="text-muted">{item.description}</p>
                                             </div>
-                                            <div className="col-4">
+                                            <div className="col-4" style={{ marginBottom: "8px" }}>
                                                 <Card.Img
                                                     variant="primary"
                                                     src={getImageUrl(item)}
@@ -76,11 +76,7 @@ const DisplaySectionItems = ({ section_id, sections, itemsDispatch, items }) => 
                                                         objectPosition: "center"
                                                     }}
                                                 />
-                                                <UploadFile item={item} />
-                                                <DeleteFile item={item}
-                                                    itemsDispatch={itemsDispatch}
-                                                />
-                                            </div>
+                                            </div>               
                                         </div>
                                         <div className="row">
                                             <div className="d-grid gap-2 d-md-flex justify-content-md-end">
