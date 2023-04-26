@@ -265,3 +265,22 @@ input[type=text]:focus {
 .card-img-container {
   float: right;
 }
+
+.custom-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-modal .modal-dialog {
+  max-width: 600px; /* Adjust as needed */
+  margin: 0 auto;
+}
+
+.custom-modal .modal-content {
+  height: 200px; /* Adjust as needed */
+}
+
+
+
+
