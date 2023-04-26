@@ -3,8 +3,8 @@ import React, { Fragment, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import UploadImage from "./UploadImage";
 import { Image } from 'react-bootstrap';
-
 
 // Either do <AddItem /> OR
 // <AddItem menuId={menuId} />
@@ -29,6 +29,7 @@ const AddItem = (props?: { itemsDispatch, menu_id?: any }) => {
       // Do POST Request
       // const itemObj = Object.fromEntries(formData.entries());
       const body = { name, description, price, photo_reference };
+      console.log(body);
       const addItem = await fetch("http://localhost:5000/dashboard/item", {
         method: "POST",
         headers: { "Content-Type": "application/json", token: jwtToken },
@@ -44,6 +45,7 @@ const AddItem = (props?: { itemsDispatch, menu_id?: any }) => {
         price: price,
         photo_reference: photo_reference
       }
+      console.log(addedItem);
 
       if (props?.menu_id) {
         // Assign (do second POST request).
@@ -66,13 +68,15 @@ const AddItem = (props?: { itemsDispatch, menu_id?: any }) => {
   };
 
   // Function to get image URL from Cloudinary
-  const getImageUrl = (item) => {
-    if (item.photo_reference) {
-      return `http://res.cloudinary.com/dm4j1v9ev/image/upload/${item.photo_reference}`;
-    } else {
-      return "/image-placeholder.png";
-    }
-  };
+  // const getImageUrl = (props?: { item?: any }) => {
+  //   if (item.photo_reference) {
+  //     return `http://res.cloudinary.com/dm4j1v9ev/image/upload/${item.photo_reference}`;
+  //   } else {
+  //     return "/image-placeholder.png";
+  //   }
+  // };
+
+
   return (
     <Fragment>
       <Button variant="primary" onClick={handleShow}>Add Item</Button>
@@ -99,38 +103,28 @@ const AddItem = (props?: { itemsDispatch, menu_id?: any }) => {
                 <Form.Control as="textarea" rows={2} value={description} placeholder="Optional: Enter item description." onChange={(e) => setDescription(e.target.value)} />
               </div>
             </Form.Group>
+
             <Form.Group className="row">
               {photo_reference &&
                 <div className="col">
                   <Form.Label>Preview</Form.Label>
                   {/* <div>
-                                      <Image src={getImageUrl(item)} alt="item" style={{
-                                          width: "200px",
-                                          height: "200px",
-                                          objectFit: "cover",
-                                          objectPosition: "center"
-                                      }} />
-                                  </div> */}
+                    <Image src={getImageUrl(item)} style={{
+                      width: "200px",
+                      height: "200px",
+                      objectFit: "cover",
+                      objectPosition: "center"
+                    }} />
+                  </div> */}
                 </div>
               }
-
             </Form.Group>
-            {/* <Form.Group className="row">
-                          <UploadImage onUpload={(data) => {
-                              setPhotoReference(data.public_id);
-                              itemsDispatch({
-                                  type: "changed",
-                                  item: {
-                                      ...item,
-                                      photo_reference: data.public_id,
-                                  },
-                              });
 
-                          }} />
-                          <DeleteFile item={item}
-                              itemsDispatch={itemsDispatch}
-                          />
-                      </Form.Group> */}
+            <Form.Group className="row">
+              <UploadImage onUpload={(data) => {
+                setPhotoReference(data.public_id);
+              }} />
+            </Form.Group>
 
           </Modal.Body>
           <Modal.Footer>
