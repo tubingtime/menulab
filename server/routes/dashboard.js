@@ -440,7 +440,7 @@ router.put("/item/:item_id", async (req, res) => {
 });
 
 /* Add a photo to an Item. */
-router.put('/items/:item_id/photo', async (req, res) => {
+router.put('/items/photo/:item_id', async (req, res) => {
   const { item_id } = req.params;
   const { photo_reference } = req.body;
 
