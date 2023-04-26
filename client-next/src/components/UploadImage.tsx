@@ -1,15 +1,27 @@
 import React, { useState } from "react";
 import { useToken } from "@/lib/SessionManagement";
-import Image from "next/image";
 import { Alert } from "react-bootstrap";
 
-function UploadFile({ item }: { item: any }) {
-    const jwtToken = useToken();
-    const [file, setFile] = useState<File | undefined>(undefined);
-    const [fileUrl, setFileUrl] = useState<string | undefined>(undefined);
-    const [publicId, setPublicId] = useState<string | undefined>(item.photo_reference?.public_id);
-    const [showAlert, setShowAlert] = useState(false);
-    const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
+// Optionally take in an item
+// (1) Handle file input.
+// (2) Handle the upload.
+// (3) If the item exists, get the cloudinary image id and delete the image from cloudinary.
+// (4) If the item exists, update the photo reference in the db.
+// (5) If the item doesn't exist, add the item with the image to db.
+
+////////No
+// Upload should be separate from AddItem.
+// A successful upload should return the photo_reference.
+
+function UploadImage(props: {
+  onUpload: (data: any) => void,
+}) {
+  const jwtToken = useToken();
+  const [file, setFile] = useState<File | undefined>(undefined);
+  const [fileUrl, setFileUrl] = useState<string | undefined>(undefined);
+  const [publicId, setPublicId] = useState<any>(undefined);
+  const [showAlert, setShowAlert] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
 
     const handleFileInput = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
@@ -23,28 +35,13 @@ function UploadFile({ item }: { item: any }) {
         }
     };
 
-    const deleteCloudinaryImage = async (publicId) => {
-        try {
-            const response = await fetch(`http://localhost:5000/dashboard/api/${publicId}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                    token: jwtToken
-                },
-            });
-
-            console.log('Image deleted successfully');
-        } catch (error) {
-            console.error('Failed to delete image:', error);
-        }
-    };
-
     const handleUpload = async () => {
         if (!file) {
             return;
         }
-        setPublicId(item.photo_reference);
         const formData = new FormData();
+        const image_id = formData.get("public_id");
+        setPublicId(image_id);
         formData.append("file", file);
 
         // Check if file type is an image
@@ -55,11 +52,8 @@ function UploadFile({ item }: { item: any }) {
         }
 
         try {
-            // Delete the old image if there is one
-            await deleteCloudinaryImage(item.photo_reference);
-
             // Upload the new image
-            const response = await fetch(`http://localhost:5000/dashboard/persist-image/${item.item_id}`, {
+            const response = await fetch(`http://localhost:5000/dashboard/upload`, {
                 method: "POST",
                 headers: { token: jwtToken },
                 body: formData,
@@ -68,13 +62,14 @@ function UploadFile({ item }: { item: any }) {
             const data = await response.json();
             setFileUrl(data.url);
             setPublicId(data.public_id);
+            props.onUpload(data);
             setShowAlert(true);
         } catch (error) {
             console.error(error);
             setErrorMessage("Failed to upload file");
         }
 
-        window.location.reload();
+        // window.location.reload();
     };
 
     return (
@@ -113,4 +108,4 @@ function UploadFile({ item }: { item: any }) {
     );
 }
 
-export default UploadFile;
+export default UploadImage;

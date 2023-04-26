@@ -3,7 +3,7 @@ import { useToken } from "@/lib/SessionManagement";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import UploadFile from "./UploadFile";
+import UploadImage from "./UploadImage";
 import DeleteFile from "./DeleteFile";
 import { Image } from 'react-bootstrap';
 
@@ -63,6 +63,7 @@ const EditItem = ({ item, itemsDispatch }) => {
         }
     };
 
+
     return (
         <Fragment>
             <Button variant="outline-info" size="sm" onClick={handleShow}>Edit</Button>
@@ -121,7 +122,17 @@ const EditItem = ({ item, itemsDispatch }) => {
                             itemsDispatch={itemsDispatch}
                         /></Form.Group>
                         <Form.Group className="row">
-                            <UploadFile item={item} />
+                            <UploadImage onUpload={(data) => {
+                                setPhotoReference(data.public_id);
+                                itemsDispatch({
+                                    type: "changed",
+                                    item: {
+                                        ...item,
+                                        photo_reference: data.public_id,
+                                    },
+                                });
+
+                            }} />
                         </Form.Group>
                     </Form>
 
@@ -131,7 +142,7 @@ const EditItem = ({ item, itemsDispatch }) => {
                     <Button variant="outline-danger" onClick={() => { handleClose(); setDescription(item.description); }}>Close</Button>
                 </Modal.Footer>
             </Modal>
-        </Fragment>
+        </Fragment >
     );
 };
 

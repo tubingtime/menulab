@@ -3,12 +3,7 @@ import { useToken } from "@/lib/SessionManagement";
 import EditItem from "@/components/EditItem";
 import AssignToSection from "./AssignToSection";
 import DeleteItem from "./DeleteItem";
-import UploadFile from "./UploadFile";
-import Image from 'next/image'
-import { IncomingMessage } from "http";
 import { Card } from "react-bootstrap";
-import itemsReducer from "@/lib/itemsReducer";
-import DeleteFile from "./DeleteFile";
 
 const DisplaySectionItems = ({ section_id, sections, itemsDispatch, items }) => {
 
