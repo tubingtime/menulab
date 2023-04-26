@@ -48,7 +48,7 @@ function UploadFile({ item }: { item: any }) {
         formData.append("file", file);
 
         // Check if file type is an image
-        const fileExtension = file.name.split('.').pop().toLowerCase();
+        const fileExtension = file.name.split('.').pop()?.toLowerCase() || "null";
         if (!['jpg', 'jpeg', 'png'].includes(fileExtension)) {
             setErrorMessage("Please upload an image file (png, jpeg, jpg)");
             return;
