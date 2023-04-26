@@ -68,13 +68,13 @@ const AddItem = (props?: { itemsDispatch, menu_id?: any }) => {
   };
 
   // Function to get image URL from Cloudinary
-  // const getImageUrl = (props?: { item?: any }) => {
-  //   if (item.photo_reference) {
-  //     return `http://res.cloudinary.com/dm4j1v9ev/image/upload/${item.photo_reference}`;
-  //   } else {
-  //     return "/image-placeholder.png";
-  //   }
-  // };
+  const getImageUrl = (photo_reference) => {
+    if (photo_reference) {
+      return `http://res.cloudinary.com/dm4j1v9ev/image/upload/${photo_reference}`;
+    } else {
+      return "/image-placeholder.png";
+    }
+  };
 
 
   return (
@@ -108,14 +108,14 @@ const AddItem = (props?: { itemsDispatch, menu_id?: any }) => {
               {photo_reference &&
                 <div className="col">
                   <Form.Label>Preview</Form.Label>
-                  {/* <div>
-                    <Image src={getImageUrl(item)} style={{
+                  <div>
+                    <Image src={getImageUrl(photo_reference)} style={{
                       width: "200px",
                       height: "200px",
                       objectFit: "cover",
                       objectPosition: "center"
                     }} />
-                  </div> */}
+                  </div>
                 </div>
               }
             </Form.Group>
