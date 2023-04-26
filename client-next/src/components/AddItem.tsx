@@ -1,116 +1,144 @@
 import { useToken } from "@/lib/SessionManagement";
+import React, { Fragment, useState } from "react";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import { Image } from 'react-bootstrap';
+
 
 // Either do <AddItem /> OR
 // <AddItem menuId={menuId} />
-const AddItem = (props?: {itemsDispatch, menu_id?: any}) => {
+const AddItem = (props?: { itemsDispatch, menu_id?: any }) => {
   window.bootstrap = require('bootstrap/js/dist/modal');
   const jwtToken = useToken();
 
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
+  const [photo_reference, setPhotoReference] = useState("");
+
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   const onSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
+    // const formData = new FormData(e.target);
 
-        try {
-            // Do POST Request
-            const itemObj = Object.fromEntries(formData.entries());
+    try {
+      // Do POST Request
+      // const itemObj = Object.fromEntries(formData.entries());
+      const body = { name, description, price, photo_reference };
+      const addItem = await fetch("http://localhost:5000/dashboard/item", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", token: jwtToken },
+        body: JSON.stringify(body)
+      });
 
-            const addItem = await fetch("http://localhost:5000/dashboard/item", {
-                method: "POST",
-                headers: { "Content-Type": "application/json", token: jwtToken },
-                body: JSON.stringify(itemObj)
-            });
-            const results: { item_id: number }[] = await addItem.json();
-            const item_id = results[0].item_id;
-            if (props?.menu_id) {
-                // Assign (do second POST request).
-                const assignItem = await fetch(`http://localhost:5000/dashboard/menus/item/${item_id}`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json", token: jwtToken },
-                    body: JSON.stringify({ menu_id: props.menu_id })
-                });
-            }
+      const results: { item_id: number }[] = await addItem.json();
+      const item_id = results[0].item_id;
+      const addedItem = {
+        item_id: item_id,
+        name: name,
+        description: description,
+        price: price,
+        photo_reference: photo_reference
+      }
 
-            formData.append("item_id", item_id.toString());
-            const itemObjWithId = Object.fromEntries(formData.entries());
-            props?.itemsDispatch({
-              type: 'added',
-              item: itemObjWithId
-            })
-            e.target.reset();
-            
-        } catch (err: any) {
-            console.error(err.message);
-        }
-    };
+      if (props?.menu_id) {
+        // Assign (do second POST request).
+        const assignItem = await fetch(`http://localhost:5000/dashboard/menus/item/${item_id}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", token: jwtToken },
+          body: JSON.stringify({ menu_id: props.menu_id })
+        });
+      }
 
+      props?.itemsDispatch({
+        type: 'added',
+        item: addedItem
+      })
+
+      e.target.reset();
+    } catch (err: any) {
+      console.error(err.message);
+    }
+  };
+
+  // Function to get image URL from Cloudinary
+  const getImageUrl = (item) => {
+    if (item.photo_reference) {
+      return `http://res.cloudinary.com/dm4j1v9ev/image/upload/${item.photo_reference}`;
+    } else {
+      return "/image-placeholder.png";
+    }
+  };
   return (
-    <>
-      <button
-        type="button"
-        className="btn btn-primary"
-        data-bs-toggle="modal"
-        data-bs-target="#addItemModal"
-      >
-        Add Item
-      </button>
+    <Fragment>
+      <Button variant="primary" onClick={handleShow}>Add Item</Button>
 
-      <div
-        className="modal fade"
-        id="addItemModal"
-        tabIndex={-1}
-        aria-labelledby="addItemModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h4 className="modal-title" id="addItemModalLabel">Add Item</h4>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <form className="mt-2" onSubmit={onSubmit}>
-              <div className="modal-body">
-
-                <div className="row">
-                  <Field name="name" />
-                  <Field name="price" />
-                </div>
-                <div className="row">
-                  <Field name="description" />
-                </div>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add Item</Modal.Title>
+        </Modal.Header>
+        <Form onSubmit={(e) => onSubmit(e)}>
+          <Modal.Body>
+            <Form.Group className="row">
+              <div className="col">
+                <Form.Label className="mb-0">Name</Form.Label>
+                <Form.Control type="text" value={name} placeholder="Enter item name." onChange={(e) => setName(e.target.value)} />
+              </div>
+              <div className="col">
+                <Form.Label className="mb-0">Price</Form.Label>
+                <Form.Control type="text" value={price} placeholder="Enter item price." onChange={(e) => setPrice(e.target.value)} />
+              </div>
+            </Form.Group>
+            <Form.Group className="row">
+              <div className="col">
+                <Form.Label>Description</Form.Label>
+                <Form.Control as="textarea" rows={2} value={description} placeholder="Optional: Enter item description." onChange={(e) => setDescription(e.target.value)} />
+              </div>
+            </Form.Group>
+            <Form.Group className="row">
+              {photo_reference &&
                 <div className="col">
-                  <input type="file" className="form-control mt-3" id="customFile" />
+                  <Form.Label>Preview</Form.Label>
+                  {/* <div>
+                                      <Image src={getImageUrl(item)} alt="item" style={{
+                                          width: "200px",
+                                          height: "200px",
+                                          objectFit: "cover",
+                                          objectPosition: "center"
+                                      }} />
+                                  </div> */}
                 </div>
+              }
 
-              </div>
+            </Form.Group>
+            {/* <Form.Group className="row">
+                          <UploadImage onUpload={(data) => {
+                              setPhotoReference(data.public_id);
+                              itemsDispatch({
+                                  type: "changed",
+                                  item: {
+                                      ...item,
+                                      photo_reference: data.public_id,
+                                  },
+                              });
 
-              <div className="modal-footer">
-                <button className="btn btn-primary">Add</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </>
-  );
-};
+                          }} />
+                          <DeleteFile item={item}
+                              itemsDispatch={itemsDispatch}
+                          />
+                      </Form.Group> */}
 
-const Field = <T extends string | number>(props: { name: string }) => {
-  return (
-    <>
-      <div className="col">
-        <input
-          type="text"
-          name={props.name}
-          placeholder={`Enter item ${props.name}.`}
-          className="form-control"
-        />
-      </div>
-    </>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button type="submit" variant="primary" onClick={handleClose}>Add</Button>
+          </Modal.Footer>
+        </Form>
+      </Modal>
+    </Fragment >
   );
 };
 
