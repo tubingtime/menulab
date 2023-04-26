@@ -133,9 +133,6 @@ const EditItem = ({ item, itemsDispatch }) => {
                                 });
 
                             }} />
-                            <DeleteFile item={item}
-                                itemsDispatch={itemsDispatch}
-                            />
                         </Form.Group>
                     </Form>
 
