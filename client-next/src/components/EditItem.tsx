@@ -63,23 +63,6 @@ const EditItem = ({ item, itemsDispatch }) => {
         }
     };
 
-    const assignImageToItem = async (item, image_id) => {
-        try {
-            console.log(image_id);
-            const body = image_id;
-            const response = await fetch(
-                `http://localhost:5000/dashboard/item/photo/${item.item_id}`,
-                {
-                    method: "PUT",
-                    headers: { token: jwtToken, "Content-Type": "application/json" },
-                    body: JSON.stringify(body)
-                }
-            );
-            console.log(response);
-        } catch (err: any) {
-            console.error(err.message);
-        }
-    }
 
     return (
         <Fragment>
@@ -125,7 +108,7 @@ const EditItem = ({ item, itemsDispatch }) => {
                         </Form.Group>
                         <Form.Group className="row">
                             <UploadImage onUpload={(data) => {
-                                assignImageToItem(item, data.public_id);
+                                setPhotoReference(data.public_id);
                                 itemsDispatch({
                                     type: "changed",
                                     item: {
