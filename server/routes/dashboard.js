@@ -121,11 +121,10 @@ router.post("/item", authorization, async (req, res) => {
     const name = req.body.name;
     const description = req.body.description;
     const price = req.body.price;
-    const photo_reference = req.body.photo;
+    const photo_reference = req.body.photo_reference;
 
     const createMenuItem = await pool.query(
       "INSERT INTO items(name, description, price, user_id, photo_reference) VALUES($1, $2, $3, $4, $5) RETURNING item_id",
-      /* picture.secure_url, */
       [name, description, price, req.user, photo_reference]
     );
     res.json(createMenuItem.rows);
