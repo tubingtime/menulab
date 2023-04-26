@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 
 function Home(props) {
     return (
-        
         <div id="app-container" className="home">
             <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top" style={{ boxShadow: "0px 0px 8px #888888" }}>
                 <div className="container">

@@ -84,16 +84,17 @@ const EditItem = ({ item, itemsDispatch }) => {
                                 <Form.Control type="text" value={price} onChange={(e) => setPrice(e.target.value)} />
                             </div>
                         </Form.Group>
-                        <Form.Group className="row">
+                        <Form.Group className="row" style={{ marginBottom: "10px" }}>
                             <div className="col">
                                 <Form.Label>Description</Form.Label>
                                 <Form.Control as="textarea" rows={2} value={description} onChange={(e) => setDescription(e.target.value)} />
                             </div>
                         </Form.Group>
-                        <Form.Group className="row">
-                            {photo_reference &&
+
+                        <Form.Group className="row" style={{ marginBottom: "8px" }}>
+                            <Form.Label>Image Preview</Form.Label>
+                            {photo_reference ? (
                                 <div className="col">
-                                    <Form.Label>Preview</Form.Label>
                                     <div>
                                         <Image src={getImageUrl(item)} alt="item" style={{
                                             width: "200px",
@@ -103,9 +104,23 @@ const EditItem = ({ item, itemsDispatch }) => {
                                         }} />
                                     </div>
                                 </div>
-                            }
-
+                            ) : (
+                                <div className="col">
+                                    <div>
+                                        <Image src="/image-placeholder.png" alt="Image Placeholder" style={{
+                                            width: "200px",
+                                            height: "200px",
+                                            objectFit: "cover",
+                                            objectPosition: "center"
+                                        }} />
+                                    </div>
+                                </div>
+                            )}
                         </Form.Group>
+                        <Form.Group className="row" style={{ marginBottom: "8px" }}>
+                            <DeleteFile item={item}
+                            itemsDispatch={itemsDispatch}
+                        /></Form.Group>
                         <Form.Group className="row">
                             <UploadImage onUpload={(data) => {
                                 setPhotoReference(data.public_id);
