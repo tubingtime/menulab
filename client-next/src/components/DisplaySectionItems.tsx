@@ -4,6 +4,7 @@ import EditItem from "@/components/EditItem";
 import AssignToSection from "./AssignToSection";
 import DeleteItem from "./DeleteItem";
 import UploadFile from "./UploadFile";
+import UploadImage from "./UploadImage";
 import Image from 'next/image'
 import { IncomingMessage } from "http";
 import { Card } from "react-bootstrap";
@@ -76,7 +77,16 @@ const DisplaySectionItems = ({ section_id, sections, itemsDispatch, items }) => 
                                                         objectPosition: "center"
                                                     }}
                                                 />
-                                                <UploadFile item={item} />
+
+                                                <UploadImage onUpload={(data) => {
+                                                    itemsDispatch({
+                                                        type: "changed",
+                                                        item: {
+                                                            ...item,
+                                                            photo_reference: data.public_id,
+                                                        },
+                                                    });
+                                                }} />
                                                 <DeleteFile item={item}
                                                     itemsDispatch={itemsDispatch}
                                                 />
