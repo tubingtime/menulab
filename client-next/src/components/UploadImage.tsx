@@ -67,7 +67,7 @@ function UploadFile(props: {
   return (
     <div>
       <input type="file" onChange={handleFileInput} />
-      <button type="button" onClick={() => handleUpload()}>
+      <button type="button" className="btn btn-outline-info" onClick={() => handleUpload()}>
         Upload
       </button>
     </div>

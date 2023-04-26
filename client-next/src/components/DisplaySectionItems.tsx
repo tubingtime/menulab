@@ -77,19 +77,6 @@ const DisplaySectionItems = ({ section_id, sections, itemsDispatch, items }) => 
                                                         objectPosition: "center"
                                                     }}
                                                 />
-
-                                                <UploadImage onUpload={(data) => {
-                                                    itemsDispatch({
-                                                        type: "changed",
-                                                        item: {
-                                                            ...item,
-                                                            photo_reference: data.public_id,
-                                                        },
-                                                    });
-                                                }} />
-                                                <DeleteFile item={item}
-                                                    itemsDispatch={itemsDispatch}
-                                                />
                                             </div>
                                         </div>
                                         <div className="row">

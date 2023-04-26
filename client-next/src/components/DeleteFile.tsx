@@ -14,7 +14,7 @@ function DeleteFile({ item, itemsDispatch }) {
                     token: jwtToken
                 },
             });
-    
+
             console.log('Image deleted successfully');
         } catch (error) {
             console.error('Failed to delete image:', error);
@@ -26,7 +26,7 @@ function DeleteFile({ item, itemsDispatch }) {
             if (!item.photo_reference) {
                 alert('Item does not have a photo_reference to delete');
                 return;
-              }          
+            }
             // Delete the image from Cloudinary
             await deleteCloudinaryImage(item.photo_reference);
 
@@ -57,8 +57,10 @@ function DeleteFile({ item, itemsDispatch }) {
     };
 
     return (
-        <button type="button" onClick={() => handleRemoveImage(item)}>Remove Image</button>
-      );
+        <div>
+            <button type="button" className="btn btn-outline-danger" onClick={() => handleRemoveImage(item)}>Remove Image</button>
+        </div>
+    );
 }
 
 export default DeleteFile;

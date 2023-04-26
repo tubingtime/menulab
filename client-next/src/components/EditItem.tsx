@@ -3,7 +3,7 @@ import { useToken } from "@/lib/SessionManagement";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import UploadFile from "./UploadFile";
+import UploadImage from "./UploadImage";
 import DeleteFile from "./DeleteFile";
 import { Image } from 'react-bootstrap';
 
@@ -54,7 +54,7 @@ const EditItem = ({ item, itemsDispatch }) => {
         }
     }
 
-     // Function to get image URL from Cloudinary
+    // Function to get image URL from Cloudinary
     const getImageUrl = (item) => {
         if (item.photo_reference) {
             return `http://res.cloudinary.com/dm4j1v9ev/image/upload/${item.photo_reference}`;
@@ -62,6 +62,24 @@ const EditItem = ({ item, itemsDispatch }) => {
             return "/image-placeholder.png";
         }
     };
+
+    const assignImageToItem = async (item, image_id) => {
+        try {
+            console.log(image_id);
+            const body = image_id;
+            const response = await fetch(
+                `http://localhost:5000/dashboard/item/photo/${item.item_id}`,
+                {
+                    method: "PUT",
+                    headers: { token: jwtToken, "Content-Type": "application/json" },
+                    body: JSON.stringify(body)
+                }
+            );
+            console.log(response);
+        } catch (err: any) {
+            console.error(err.message);
+        }
+    }
 
     return (
         <Fragment>
@@ -95,18 +113,28 @@ const EditItem = ({ item, itemsDispatch }) => {
                                     <Form.Label>Preview</Form.Label>
                                     <div>
                                         <Image src={getImageUrl(item)} alt="item" style={{
-                                                        width: "200px",
-                                                        height: "200px",
-                                                        objectFit: "cover",
-                                                        objectPosition: "center"
-                                                    }} />
-                                    </div>    
+                                            width: "200px",
+                                            height: "200px",
+                                            objectFit: "cover",
+                                            objectPosition: "center"
+                                        }} />
+                                    </div>
                                 </div>
                             }
 
                         </Form.Group>
                         <Form.Group className="row">
-                            <UploadFile item={item} />
+                            <UploadImage onUpload={(data) => {
+                                assignImageToItem(item, data.public_id);
+                                itemsDispatch({
+                                    type: "changed",
+                                    item: {
+                                        ...item,
+                                        photo_reference: data.public_id,
+                                    },
+                                });
+
+                            }} />
                             <DeleteFile item={item}
                                 itemsDispatch={itemsDispatch}
                             />
@@ -119,7 +147,7 @@ const EditItem = ({ item, itemsDispatch }) => {
                     <Button variant="outline-danger" onClick={() => { handleClose(); setDescription(item.description); }}>Close</Button>
                 </Modal.Footer>
             </Modal>
-        </Fragment>
+        </Fragment >
     );
 };
 
