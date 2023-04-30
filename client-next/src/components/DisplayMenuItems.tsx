@@ -3,9 +3,9 @@ import { useToken } from "@/lib/SessionManagement";
 import EditItem from "@/components/EditItem";
 import AssignToSection from "./AssignToSection";
 import DeleteItem from "./DeleteItem";
-import Image from 'next/image'
 
 const DisplayMenuItems = ({ items, sections, itemsDispatch }) => {
+    const jwtToken = useToken();
     const [updatedItems, setItems] = useState(items);
 
     return (
