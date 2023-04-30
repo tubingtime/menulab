@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect, useReducer, useContext } from "react";
 import { useToken } from "@/lib/SessionManagement";
-import { Card } from "react-bootstrap";
+import { Image } from 'react-bootstrap';
 
 const DisplaySectionItems = ({ section_id, sections, itemsDispatch, items }) => {
 
@@ -59,17 +59,27 @@ const DisplaySectionItems = ({ section_id, sections, itemsDispatch, items }) => 
                                                 <p className="text-muted">{item.description}</p>
                                             </div>
                                             <div className="col-4">
-                                                <Card.Img
-                                                    variant="primary"
-                                                    src={getImageUrl(item)}
-                                                    className="img-fluid"
-                                                    style={{
-                                                        width: "200px",
-                                                        height: "200px",
-                                                        objectFit: "cover",
-                                                        objectPosition: "center"
-                                                    }}
-                                                />
+                                                {item.photo_reference ? (
+                                                    <div>
+                                                        <Image className="img-fluid" src={getImageUrl(item)} alt="item" style={{
+                                                            width: "150px",
+                                                            height: "150px",
+                                                            objectFit: "cover",
+                                                            objectPosition: "center"
+                                                        }} />
+                                                    </div>
+
+                                                ) : (
+
+                                                    <div>
+                                                        <Image className="img-fluid" src="/image-placeholder.png" alt="Image Placeholder" style={{
+                                                            width: "150px",
+                                                            height: "150px",
+                                                            objectFit: "cover",
+                                                            objectPosition: "center"
+                                                        }} />
+                                                    </div>
+                                                )}
                                             </div>
                                         </div>
                                     </div>
