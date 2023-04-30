@@ -23,13 +23,10 @@ const AddItem = (props?: { itemsDispatch, menu_id?: any }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    // const formData = new FormData(e.target);
 
     try {
       // Do POST Request
-      // const itemObj = Object.fromEntries(formData.entries());
       const body = { name, description, price, photo_reference };
-      console.log(body);
       const addItem = await fetch("http://localhost:5000/dashboard/item", {
         method: "POST",
         headers: { "Content-Type": "application/json", token: jwtToken },
@@ -45,7 +42,6 @@ const AddItem = (props?: { itemsDispatch, menu_id?: any }) => {
         price: price,
         photo_reference: photo_reference
       }
-      console.log(addedItem);
 
       if (props?.menu_id) {
         // Assign (do second POST request).

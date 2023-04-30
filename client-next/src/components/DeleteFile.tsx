@@ -22,7 +22,6 @@ function DeleteFile({ item, itemsDispatch }) {
                 },
             });
 
-            console.log("Image deleted successfully");
         } catch (error) {
             console.error("Failed to delete image:", error);
         }
@@ -84,11 +83,11 @@ function DeleteFile({ item, itemsDispatch }) {
                         </Button>
                     </Modal.Footer>
                 </Modal>
-    
+
             </div>
         </div>
     );
-    
+
 }
 
 export default DeleteFile;

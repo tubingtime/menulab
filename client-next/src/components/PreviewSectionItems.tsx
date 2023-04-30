@@ -1,12 +1,6 @@
 import React, { Fragment, useState, useEffect, useReducer, useContext } from "react";
 import { useToken } from "@/lib/SessionManagement";
-import EditItem from "@/components/EditItem";
-import AssignToSection from "./AssignToSection";
-import DeleteItem from "./DeleteItem";
-import Image from 'next/image'
-import { IncomingMessage } from "http";
 import { Card } from "react-bootstrap";
-import itemsReducer from "@/lib/itemsReducer";
 
 const DisplaySectionItems = ({ section_id, sections, itemsDispatch, items }) => {
 
@@ -65,7 +59,7 @@ const DisplaySectionItems = ({ section_id, sections, itemsDispatch, items }) => 
                                                 <p className="text-muted">{item.description}</p>
                                             </div>
                                             <div className="col-4">
-                                            <Card.Img
+                                                <Card.Img
                                                     variant="primary"
                                                     src={getImageUrl(item)}
                                                     className="img-fluid"
