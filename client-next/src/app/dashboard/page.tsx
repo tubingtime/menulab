@@ -102,6 +102,30 @@ export default function Dashboard() {
                         </div>
                     </div>
                 </div>
+                <div className="row row-cols-1 row-cols-md-2 g-4 mt-2">
+                    <div className="column">
+                        <div className="card border-primary">
+                            <div className="card-header">Menu Stats</div>
+                            <div className="card-body">
+                                <div className="card-text h-100">
+                                <MenuGrap
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="column">
+                        <div className="card border-primary">
+                            <div className="card-header">Item Stats</div>
+                            <div className="card-body">
+                                <div className="card-text">
+                                    <Link href={{ pathname: "../dashboard/items/", }} className="stretched-link" style={{ textDecoration: 'none', color: 'black' }}>
+                                        <h2 >{itemCount}</h2>
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section >
         </Fragment >
     );
