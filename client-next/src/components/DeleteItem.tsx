@@ -5,6 +5,21 @@ const DeleteItem = ({item, itemsDispatch}) => {
 
     const jwtToken = useToken();
 
+    const deleteCloudinaryImage = async (publicId) => {
+        try {
+            const response = await fetch(`http://localhost:5000/dashboard/api/${publicId}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    token: jwtToken,
+                },
+            });
+
+        } catch (error) {
+            console.error("Failed to delete image:", error);
+        }
+    };
+
     const deleteItem = async (id) => {
         try {
             const deleteItem = await fetch(`http://localhost:5000/dashboard/item/${id}`, {
@@ -15,7 +30,11 @@ const DeleteItem = ({item, itemsDispatch}) => {
             itemsDispatch({
                 type: 'deleted',
                 item: item
-            })
+            });
+            
+            if (item.photo_reference) {
+                await deleteCloudinaryImage(item.photo_reference);
+            }
         } catch (err: any) {
             console.error(err.message);
         }
