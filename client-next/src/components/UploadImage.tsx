@@ -49,6 +49,9 @@ function UploadImage(props: {
             });
 
             const data = await response.json();
+            if (!response.ok){
+                throw new Error(response.statusText);
+            }
             setFileUrl(data.url);
             setPublicId(data.public_id);
             props.onUpload(data);
@@ -90,10 +93,10 @@ function UploadImage(props: {
             )}
             {errorMessage && (
                 <Alert variant="danger" onClose={() => errorMessage} dismissible>
-                    Please upload an image file (png, jpeg, jpg)!
-                </Alert>
-            )}
-        </div>
+                { errorMessage }
+            </Alert>
+        )}
+    </div>
     );
 }
 

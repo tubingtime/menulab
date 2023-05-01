@@ -140,7 +140,7 @@ input[type=text]:focus {
 }
 
 .animated-icon span {
-  background: #f3e5f5;
+  background: #0275d8;
 }
 
 .animated-icon span:nth-child(1) {
@@ -225,6 +225,11 @@ input[type=text]:focus {
   font-weight: 600;
   display: inline-block;
   width: 100%;
+}
+
+.navbar-toggler {
+  color: transparent;
+  border: none;
 }
 
 /* Display */
