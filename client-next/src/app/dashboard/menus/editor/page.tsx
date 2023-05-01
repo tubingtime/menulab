@@ -6,8 +6,6 @@ import { useToken } from '@/lib/SessionManagement';
 import AddItem from '@/components/AddItem';
 import DisplayMenuItems from '@/components/DisplayMenuItems';
 import DisplaySections from '@/components/DisplaySections';
-import AddSection from '@/components/AddSection';
-import Link from 'next/link';
 
 import "bootstrap/js/dist/dropdown"
 import itemsReducer from '@/lib/itemsReducer';

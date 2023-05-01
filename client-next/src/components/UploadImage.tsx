@@ -2,26 +2,15 @@ import React, { useState } from "react";
 import { useToken } from "@/lib/SessionManagement";
 import { Alert } from "react-bootstrap";
 
-// Optionally take in an item
-// (1) Handle file input.
-// (2) Handle the upload.
-// (3) If the item exists, get the cloudinary image id and delete the image from cloudinary.
-// (4) If the item exists, update the photo reference in the db.
-// (5) If the item doesn't exist, add the item with the image to db.
-
-////////No
-// Upload should be separate from AddItem.
-// A successful upload should return the photo_reference.
-
 function UploadImage(props: {
-  onUpload: (data: any) => void,
+    onUpload: (data: any) => void,
 }) {
-  const jwtToken = useToken();
-  const [file, setFile] = useState<File | undefined>(undefined);
-  const [fileUrl, setFileUrl] = useState<string | undefined>(undefined);
-  const [publicId, setPublicId] = useState<any>(undefined);
-  const [showAlert, setShowAlert] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
+    const jwtToken = useToken();
+    const [file, setFile] = useState<File | undefined>(undefined);
+    const [fileUrl, setFileUrl] = useState<string | undefined>(undefined);
+    const [publicId, setPublicId] = useState<any>(undefined);
+    const [showAlert, setShowAlert] = useState(false);
+    const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
 
     const handleFileInput = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];

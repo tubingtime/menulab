@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 import { useToken } from "@/lib/SessionManagement";
 
 const AssignToSection = ({ item, sections }) => {
@@ -15,8 +15,8 @@ const AssignToSection = ({ item, sections }) => {
                 headers: { "Content-Type": "application/json", token: jwtToken },
                 body: JSON.stringify(body)
             });
-            console.log(response);
-            window.location.reload();
+
+            window.location.reload(); // TODO: STATE MANAGEMENT
         } catch (err: any) {
             console.error(err.message);
         }

@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 import { useToken } from "@/lib/SessionManagement";
 
 const AssignToMenu = ({ item, menus }) => {
@@ -6,19 +6,13 @@ const AssignToMenu = ({ item, menus }) => {
 
     const handleMenuClick = async (item, menu) => {
         try {
-            const addBody = {
-                name: item.name,
-                description: item.description,
-                price: item.price,
-            };
+            const body = { menu_id: menu.menu_id };
 
-            const assignBody = { menu_id: menu.menu_id };
-            const assignResponse = await fetch(`http://localhost:5000/dashboard/menus/item/${item.item_id}`, {
+            const response = await fetch(`http://localhost:5000/dashboard/menus/item/${item.item_id}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json", token: jwtToken },
-                body: JSON.stringify(assignBody)
+                body: JSON.stringify(body)
             });
-
         } catch (err: any) {
             console.error(err.message);
         }

@@ -23,7 +23,7 @@ const DisplayItems = ({ items, menus, itemsDispatch }) => {
                     </thead>
                     <tbody>
                         {items.map((item, i) => (
-                            <tr key={i}>
+                            <tr key={item.item_id}>
                                 <th className="table-num" scope="row">{i + 1}</th>
                                 <td className="table-name">{item.name}</td>
                                 <td className="table-description">{item.description}</td>

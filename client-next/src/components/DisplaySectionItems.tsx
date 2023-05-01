@@ -3,10 +3,9 @@ import { useToken } from "@/lib/SessionManagement";
 import EditItem from "@/components/EditItem";
 import AssignToSection from "./AssignToSection";
 import DeleteItem from "./DeleteItem";
-import { Card } from "react-bootstrap";
+import { Image } from 'react-bootstrap';
 
 const DisplaySectionItems = ({ section_id, sections, itemsDispatch, items }) => {
-
     const jwtToken = useToken();
     const [sectionItemIDs, setSectionItemIDs] = useState(new Set<string>());
 
@@ -50,7 +49,7 @@ const DisplaySectionItems = ({ section_id, sections, itemsDispatch, items }) => 
                     {items.map((item) => (
                         (sectionItemIDs.has(item.item_id)) &&
                         <div className="column" key={item.item_id}>
-                            <div className="card h-100" >
+                            <div className="card" >
                                 <div className="card-body">
                                     <div className="containter">
                                         <div className="row">
@@ -60,18 +59,28 @@ const DisplaySectionItems = ({ section_id, sections, itemsDispatch, items }) => 
                                                 <p className="text-muted">{item.description}</p>
                                             </div>
                                             <div className="col-4" style={{ marginBottom: "8px" }}>
-                                                <Card.Img
-                                                    variant="primary"
-                                                    src={getImageUrl(item)}
-                                                    className="img-fluid"
-                                                    style={{
-                                                        width: "200px",
-                                                        height: "200px",
-                                                        objectFit: "cover",
-                                                        objectPosition: "center"
-                                                    }}
-                                                />
-                                            </div>               
+                                                {item.photo_reference ? (
+                                                    <div>
+                                                        <Image className="img-fluid" src={getImageUrl(item)} alt="item" style={{
+                                                            width: "150px",
+                                                            height: "150px",
+                                                            objectFit: "cover",
+                                                            objectPosition: "center"
+                                                        }} />
+                                                    </div>
+
+                                                ) : (
+
+                                                    <div>
+                                                        <Image className="img-fluid" src="/image-placeholder.png" alt="Image Placeholder" style={{
+                                                            width: "150px",
+                                                            height: "150px",
+                                                            objectFit: "cover",
+                                                            objectPosition: "center"
+                                                        }} />
+                                                    </div>
+                                                )}
+                                            </div>
                                         </div>
                                         <div className="row">
                                             <div className="d-grid gap-2 d-md-flex justify-content-md-end">

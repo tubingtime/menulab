@@ -3,12 +3,10 @@ import { useToken } from "@/lib/SessionManagement";
 import EditItem from "@/components/EditItem";
 import AssignToSection from "./AssignToSection";
 import DeleteItem from "./DeleteItem";
-import Image from 'next/image'
 
 const DisplayMenuItems = ({ items, sections, itemsDispatch }) => {
+    const jwtToken = useToken();
     const [updatedItems, setItems] = useState(items);
-
-
 
     return (
         <Fragment>
@@ -25,15 +23,15 @@ const DisplayMenuItems = ({ items, sections, itemsDispatch }) => {
                     </thead>
                     <tbody>
                         {items.map((item, i) => (
-                            
+
                             <tr key={item.item_id}>
-                                <th className="table-num" scope="row">{i+1}</th>
+                                <th className="table-num" scope="row">{i + 1}</th>
                                 <td className="table-name">{item.name}</td>
                                 <td className="table-description">{item.description}</td>
                                 <td className="table-price">{item.price}</td>
                                 <td><AssignToSection item={item} sections={sections} /></td>
                                 <td><EditItem item={item} itemsDispatch={itemsDispatch} /></td>
-                                <td><DeleteItem item={item} itemsDispatch={itemsDispatch}/></td>
+                                <td><DeleteItem item={item} itemsDispatch={itemsDispatch} /></td>
                             </tr>
                         ))}
                     </tbody>
