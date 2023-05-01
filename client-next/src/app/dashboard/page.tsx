@@ -3,6 +3,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import Nav from "@/components/Nav";
 import Link from 'next/link';
 import { useToken } from '@/lib/SessionManagement';
+import LineGraph from '@/components/LineGraph';
 
 export default function Dashboard() {
     const jwtToken = useToken();
@@ -108,7 +109,7 @@ export default function Dashboard() {
                             <div className="card-header">Menu Stats</div>
                             <div className="card-body">
                                 <div className="card-text h-100">
-                                <MenuGrap
+                                <LineGraph />
                                 </div>
                             </div>
                         </div>
