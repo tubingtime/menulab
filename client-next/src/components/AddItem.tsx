@@ -76,7 +76,7 @@ const AddItem = (props?: { itemsDispatch, menu_id?: any }) => {
   return (
     <Fragment>
       <Button variant="primary" onClick={handleShow}>Add Item</Button>
-
+  
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Add Item</Modal.Title>
@@ -86,11 +86,11 @@ const AddItem = (props?: { itemsDispatch, menu_id?: any }) => {
             <Form.Group className="row">
               <div className="col">
                 <Form.Label className="mb-0">Name</Form.Label>
-                <Form.Control type="text" value={name} placeholder="Enter item name." onChange={(e) => setName(e.target.value)} />
+                <Form.Control type="text" value={name} placeholder="Enter item name." onChange={(e) => setName(e.target.value)} required />
               </div>
               <div className="col">
                 <Form.Label className="mb-0">Price</Form.Label>
-                <Form.Control type="text" value={price} placeholder="Enter item price." onChange={(e) => setPrice(e.target.value)} />
+                <Form.Control type="text" value={price} placeholder="Enter item price." onChange={(e) => setPrice(e.target.value)} required />
               </div>
             </Form.Group>
             <Form.Group className="row">
@@ -99,7 +99,7 @@ const AddItem = (props?: { itemsDispatch, menu_id?: any }) => {
                 <Form.Control as="textarea" rows={2} value={description} placeholder="Optional: Enter item description." onChange={(e) => setDescription(e.target.value)} />
               </div>
             </Form.Group>
-
+  
             <Form.Group className="row">
               {photo_reference &&
                 <div className="col">
@@ -115,21 +115,22 @@ const AddItem = (props?: { itemsDispatch, menu_id?: any }) => {
                 </div>
               }
             </Form.Group>
-
+  
             <Form.Group className="row">
               <UploadImage onUpload={(data) => {
                 setPhotoReference(data.public_id);
               }} />
             </Form.Group>
-
+  
           </Modal.Body>
           <Modal.Footer>
-            <Button type="submit" variant="primary" onClick={handleClose}>Add</Button>
+            <Button type="submit" variant="primary" onClick={handleClose} disabled={!name || !price}>Add</Button>
           </Modal.Footer>
         </Form>
       </Modal>
-    </Fragment >
+    </Fragment>
   );
+  
 };
 
 export default AddItem;
