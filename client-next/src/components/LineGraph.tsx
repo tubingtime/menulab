@@ -34,27 +34,29 @@ function createLineGraph(data, {
   strokeOpacity = 1, // stroke opacity of line
 }: any) {
   // Compute values.
+
   const X = d3.map(data, x) as any[]; 
   const Y = d3.map(data, y) as any[];
-  const I = d3.range(X.length);
-  // const D = d3.map(data, defined);
+  const I = d3.range(X.length) as any[];
 
   // Compute default domains.
   if (xDomain === undefined) xDomain = d3.extent(X);
   if (yDomain === undefined) yDomain = [0, d3.max(Y)];
 
+
   // Construct scales and axes.
-  const xScale = xType(xDomain, xRange);
+  const xScale = d3.scaleUtc(xDomain, xRange);
   const yScale = yType(yDomain, yRange);
-  const xAxis = d3.axisBottom(xScale).ticks(width / 80).tickSizeOuter(0);
+  const xAxis = d3.axisBottom(xScale).ticks(width / 160).tickSizeOuter(0);
   const yAxis = d3.axisLeft(yScale).ticks(height / 40, yFormat);
 
   // Construct a line generator.
   const line = d3.line()
-      // .defined(i => D[i])
       .curve(curve)
       .x(i => xScale(X[i]))
-      .y(i => yScale(Y[i]));
+      .y(i => {
+        return yScale(Y[i]);
+      });
 
   const svgElem = d3.select(chartRef.current);
 
@@ -77,7 +79,7 @@ function createLineGraph(data, {
           .attr("stroke-opacity", 0.1))
       .call(g => g.append("text")
           .attr("x", -marginLeft)
-          .attr("y", 10)
+          .attr("y", marginTop - 20)
           .attr("fill", "currentColor")
           .attr("text-anchor", "start")
           .text(yLabel));
@@ -103,29 +105,33 @@ const LineGraph = (plotData) => {
 
 
   const sampleData = [
-    { "date": "2007-05-04T00:00:00.000Z", "sales": 100.81, "menu_name": "Academic Coffee" },
-    { "date": "2007-05-07T00:00:00.000Z", "sales": 103.92, "menu_name": "Academic Coffee" },
-    { "date": "2007-05-08T00:00:00.000Z", "sales": 105.06, "menu_name": "Academic Coffee" },
-    { "date": "2007-05-09T00:00:00.000Z", "sales": 106.88, "menu_name": "Academic Coffee" },
-    { "date": "2007-05-09T00:00:00.000Z", "sales": 107.34, "menu_name": "Academic Coffee" },
-    { "date": "2007-05-10T00:00:00.000Z", "sales": 108.74, "menu_name": "Academic Coffee" },
-    { "date": "2007-05-13T00:00:00.000Z", "sales": 109.36, "menu_name": "Academic Coffee" },
+    { "date": new Date("2007-04-23"), "sales": 1286.81, "menu_name": "Academic Coffee" },
+    { "date": new Date("2007-04-24"), "sales": 1153.92, "menu_name": "Academic Coffee" },
+    { "date": new Date("2007-04-25"), "sales": 1255.06, "menu_name": "Academic Coffee" },
+    { "date": new Date("2007-04-26"), "sales": 1106.88, "menu_name": "Academic Coffee" },
+    { "date": new Date("2007-04-27"), "sales": 1107.34, "menu_name": "Academic Coffee" },
+    { "date": new Date("2007-04-28"), "sales": 1208.74, "menu_name": "Academic Coffee" },
+    { "date": new Date("2007-04-29"), "sales": 1309.36, "menu_name": "Academic Coffee" },
   ]
+  
 
   useEffect(() => {
     createLineGraph(sampleData, {
       chartRef: chartRef,
       x: (entry) => entry.date,
       y: (entry) => entry.sales,
-      yLabel: "↑ Change in price (%)",
-      color: "steelblue"
+      yLabel: "↑ Change in price ($USD)",
+      color: "steelblue",
+      width: 800,
+      marginTop: 40,
+      marginLeft:  70
     });
   }, []);
   
 
   return (
     <Fragment>
-      <div>
+      <div class="graph">
         <svg ref={chartRef}></svg>
       </div>
     </Fragment >

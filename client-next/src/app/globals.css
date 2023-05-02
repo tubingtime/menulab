@@ -287,5 +287,11 @@ input[type=text]:focus {
 }
 
 
+/* Graph text */
+
+.graph text {
+  font-size: large
+}
+
 
 
