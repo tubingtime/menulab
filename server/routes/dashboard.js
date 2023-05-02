@@ -294,11 +294,11 @@ router.post("/menus/item/:item_id", authorization, async (req, res) => {
  * Get all the MenuItems for ALL Menus.
  * 
  * To try this in Postman:
- * POST: http://localhost:5000/dashboard/items
+ * GET: http://localhost:5000/dashboard/items
  * Header:
  *      key: token
  *      value: the actual token
- * Params: menu_id
+ *      user_id : user_id
  */
 router.get("/items", authorization, async (req, res) => {
   try {
@@ -525,6 +525,8 @@ router.get("/menus/name/:menu_id", async (req, res) => {
  *      {
  *        "name": "The Whispers Saloon"
  *      }
+ * Params:
+ *    menu_id
  */
 router.post('/section/:menu_id', authorization, async (req, res) => {
   try {
