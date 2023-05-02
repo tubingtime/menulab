@@ -5,7 +5,8 @@ import HomeNav from '@/components/HomeNav';
 import { Silkscreen } from 'next/font/google'
 const silkscreen = Silkscreen({
     weight: ['400'],
-    subsets: ['latin']
+    subsets: ['latin'],
+    display: "auto"
 })
 
 function Home() {
