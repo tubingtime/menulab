@@ -278,12 +278,27 @@ router.post("/menus/item/:item_id", authorization, async (req, res) => {
   try {
     const menu_id = req.body.menu_id;
     const item_id = req.params.item_id;
-    const assignMenuItem = await pool.query(
-      "INSERT INTO menu_assignments(menu_id, item_id) \
-            VALUES((SELECT menu_id FROM menus WHERE menu_id = $1), \
-            (SELECT item_id FROM items WHERE item_id = $2))",
-      [menu_id, item_id]);
-    res.json("Item assigned.");
+    const checkMenuItem = await pool.query(
+      "SELECT 1 FROM menu_assignments \
+            WHERE menu_id = (SELECT menu_id FROM menus WHERE menu_id = $1) \
+            AND item_id = (SELECT item_id FROM items WHERE item_id = $2)",
+      [menu_id, item_id]
+    );
+    if (checkMenuItem.rowCount === 0) {
+      const assignMenuItem = await pool.query(
+        "INSERT INTO menu_assignments (menu_id, item_id) \
+                SELECT (SELECT menu_id FROM menus WHERE menu_id = $1), \
+                (SELECT item_id FROM items WHERE item_id = $2) \
+                WHERE NOT EXISTS \
+                  (SELECT 1 FROM menu_assignments \
+                   WHERE menu_id = (SELECT menu_id FROM menus WHERE menu_id = $1) \
+                     AND item_id = (SELECT item_id FROM items WHERE item_id = $2))",
+        [menu_id, item_id]
+      );
+      res.json("Item assigned.");
+    } else {
+      res.json("Item already assigned.");
+    }
   } catch (err) {
     console.error(err.message);
     res.status(500).json('Server error');
