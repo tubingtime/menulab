@@ -1,7 +1,6 @@
 import { useToken } from "@/lib/SessionManagement";
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import * as d3 from "d3"
-import { ScaleLinear } from "d3";
 
 interface PlotData {
 
@@ -11,12 +10,14 @@ function createLineGraph(data, {
   chartRef,
   x = ([x]) => x, // given d in data, returns the (temporal) x-value
   y = ([, y]) => y, // given d in data, returns the (quantitative) y-value
+  catagoryFunc = (c) => c.catagory, // given d in data, returns the catagorical value
   defined, // for gaps in data
   curve = d3.curveLinear, // method of interpolation between points
   marginTop = 20, // top margin, in pixels
   marginRight = 30, // right margin, in pixels
   marginBottom = 30, // bottom margin, in pixels
   marginLeft = 40, // left margin, in pixels
+  legendSpace = 20,
   width = 640, // outer width, in pixels
   height = 400, // outer height, in pixels
   xType = d3.scaleUtc, // the x-scale type
@@ -38,6 +39,7 @@ function createLineGraph(data, {
   const X = d3.map(data, x) as any[]; 
   const Y = d3.map(data, y) as any[];
   const I = d3.range(X.length) as any[];
+  const catagories = d3.group(data, catagoryFunc);
 
   // Compute default domains.
   if (xDomain === undefined) xDomain = d3.extent(X);
@@ -45,21 +47,21 @@ function createLineGraph(data, {
 
 
   // Construct scales and axes.
-  const xScale = d3.scaleUtc(xDomain, xRange);
+  const xScale = xType(xDomain, xRange);
   const yScale = yType(yDomain, yRange);
+  const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
   const xAxis = d3.axisBottom(xScale).ticks(width / 160).tickSizeOuter(0);
   const yAxis = d3.axisLeft(yScale).ticks(height / 40, yFormat);
 
+  
   // Construct a line generator.
   const line = d3.line()
       .curve(curve)
-      .x(i => xScale(X[i]))
-      .y(i => {
-        return yScale(Y[i]);
-      });
+      .x(d => xScale(x(d)))
+      .y(d => yScale(y(d)));
 
   const svgElem = d3.select(chartRef.current);
-
+      
   const svg = svgElem
       .attr("width", width)
       .attr("height", height)
@@ -83,15 +85,30 @@ function createLineGraph(data, {
           .attr("fill", "currentColor")
           .attr("text-anchor", "start")
           .text(yLabel));
-
-  svg.append("path")
+  let i = 0;
+  catagories.forEach(function (d) {
+    i++;
+    svg.append("path")
       .attr("fill", "none")
-      .attr("stroke", color)
+      .attr("stroke", colorScale(d))
       .attr("stroke-width", strokeWidth)
       .attr("stroke-linecap", strokeLinecap)
       .attr("stroke-linejoin", strokeLinejoin)
       .attr("stroke-opacity", strokeOpacity)
-      .attr("d", line(I));
+      .attr("d", line(d));
+
+    // Add the Legend
+    svg.append("text")
+      .attr("x", width - (marginLeft ))  // space legend
+      .attr("y", (legendSpace / 2) + (i * legendSpace))
+      .style("fill", function () { // Add the colours dynamically
+        return d.color = colorScale(d);
+      })
+      .text(catagoryFunc(d[0])); 
+
+
+  })
+
 
   return svg.node();
 }
@@ -112,6 +129,13 @@ const LineGraph = (plotData) => {
     { "date": new Date("2007-04-27"), "sales": 1107.34, "menu_name": "Academic Coffee" },
     { "date": new Date("2007-04-28"), "sales": 1208.74, "menu_name": "Academic Coffee" },
     { "date": new Date("2007-04-29"), "sales": 1309.36, "menu_name": "Academic Coffee" },
+    { "date": new Date("2007-04-23"), "sales": 600.81, "menu_name": "Bilbo's Bagels" },
+    { "date": new Date("2007-04-24"), "sales": 723.92, "menu_name": "Bilbo's Bagels" },
+    { "date": new Date("2007-04-25"), "sales": 789.06, "menu_name": "Bilbo's Bagels" },
+    { "date": new Date("2007-04-26"), "sales": 560.88, "menu_name": "Bilbo's Bagels" },
+    { "date": new Date("2007-04-27"), "sales": 800.34, "menu_name": "Bilbo's Bagels" },
+    { "date": new Date("2007-04-28"), "sales": 900.74, "menu_name": "Bilbo's Bagels" },
+    { "date": new Date("2007-04-29"), "sales": 800.36, "menu_name": "Bilbo's Bagels" },
   ]
   
 
@@ -120,7 +144,8 @@ const LineGraph = (plotData) => {
       chartRef: chartRef,
       x: (entry) => entry.date,
       y: (entry) => entry.sales,
-      yLabel: "↑ Change in price ($USD)",
+      catagoryFunc: (entry) => entry.menu_name,
+      yLabel: "Price ($USD)",
       color: "steelblue",
       width: 800,
       marginTop: 40,
@@ -131,7 +156,7 @@ const LineGraph = (plotData) => {
 
   return (
     <Fragment>
-      <div class="graph">
+      <div className="graph">
         <svg ref={chartRef}></svg>
       </div>
     </Fragment >
