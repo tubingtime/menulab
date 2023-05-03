@@ -66,7 +66,7 @@ const Nav = () => {
                         </div>
                     </Link>
                 </div>
-                <form className="form-inline" >
+                <form className="nav-item form-inline" >
                     <button className="btn btn-primary" onClick={e => logout(e)}>Logout</button>
                 </form>
             </nav>
