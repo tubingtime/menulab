@@ -25,7 +25,7 @@ https://red-zodiac-874268.postman.co/workspace/New-Team-Workspace~4b467284-0573-
 8. Select GET /dashboard/menus, and click Send (Get Menu ID of new Menu)
 9. Select POST /dashboard/menus/item/:item_id
 10. Change the form so that it reads: http://localhost:5000/dashboard/menus/item/{your_item_id}
-11. In the body tab, change the value of "menu_id" to be your menu id, and click Send (to add Item to Menu)
+11. In the Body tab, change the value of "menu_id" to be your menu id, and click Send (to add Item to Menu)
 12. Select DEL /dashboard/menus/:menu_id
 13. In the Params tab, change the value of "menu_id" to be your menu id, and Click Send (to delete Menu)
 
