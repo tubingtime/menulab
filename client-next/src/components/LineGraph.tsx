@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useRef, useState } from "react";
+import React, { Fragment, useEffect, useRef } from "react";
 import * as d3 from "d3"
 
 function createLineGraph(data, {
@@ -31,7 +31,7 @@ function createLineGraph(data, {
 }: any) {
   // Compute values.
 
-  const X = d3.map(data, x) as any[]; 
+  const X = d3.map(data, x) as any[];
   const Y = d3.map(data, y) as any[];
   const I = d3.range(X.length) as any[];
   const catagories = d3.group(data, catagoryFunc);
@@ -48,38 +48,38 @@ function createLineGraph(data, {
   const xAxis = d3.axisBottom(xScale).ticks(width / 160).tickSizeOuter(0);
   const yAxis = d3.axisLeft(yScale).ticks(height / 40, yFormat);
 
-  
+
   // Construct a line generator.
   const line = d3.line()
-      .curve(curve)
-      .x(d => xScale(x(d)))
-      .y(d => yScale(y(d)));
+    .curve(curve)
+    .x(d => xScale(x(d)))
+    .y(d => yScale(y(d)));
 
   const svgElem = d3.select(chartRef.current);
-      
+
   const svg = svgElem
-      .attr("width", width)
-      .attr("height", height)
-      .attr("viewBox", [0, 0, width, height])
-      .attr("style", "max-width: 100%; height: auto; height: intrinsic;");
+    .attr("width", width)
+    .attr("height", height)
+    .attr("viewBox", [0, 0, width, height])
+    .attr("style", "max-width: 100%; height: auto; height: intrinsic;");
 
   svg.append("g")
-      .attr("transform", `translate(0,${height - marginBottom})`)
-      .call(xAxis);
+    .attr("transform", `translate(0,${height - marginBottom})`)
+    .call(xAxis);
 
   svg.append("g")
-      .attr("transform", `translate(${marginLeft},0)`)
-      .call(yAxis)
-      .call(g => g.select(".domain").remove())
-      .call(g => g.selectAll(".tick line").clone()
-          .attr("x2", width - marginLeft - marginRight)
-          .attr("stroke-opacity", 0.1))
-      .call(g => g.append("text")
-          .attr("x", -marginLeft)
-          .attr("y", marginTop - 20)
-          .attr("fill", "currentColor")
-          .attr("text-anchor", "start")
-          .text(yLabel));
+    .attr("transform", `translate(${marginLeft},0)`)
+    .call(yAxis)
+    .call(g => g.select(".domain").remove())
+    .call(g => g.selectAll(".tick line").clone()
+      .attr("x2", width - marginLeft - marginRight)
+      .attr("stroke-opacity", 0.1))
+    .call(g => g.append("text")
+      .attr("x", -marginLeft)
+      .attr("y", marginTop - 20)
+      .attr("fill", "currentColor")
+      .attr("text-anchor", "start")
+      .text(yLabel));
   let i = -1;
   catagories.forEach(function (d) {
     i++;
@@ -94,7 +94,7 @@ function createLineGraph(data, {
 
     // Add a label
     const labelX = ((i * 200) + (legendSpace));
-    const labelY = (height - (marginBottom - 30 ));
+    const labelY = (height - (marginBottom - 30));
     const label = svg.append("g")
       .attr("transform", `translate(${labelX}, ${labelY})`);
     label.append("text")
@@ -111,7 +111,7 @@ function createLineGraph(data, {
         return d.color = colorScale(d);
       })
       .text(catagoryFunc(d[0]));
-      
+
 
 
   })
@@ -121,25 +121,27 @@ function createLineGraph(data, {
 }
 
 
-const LineGraph = (plotData) => {
+export default function LineGraph(plotData) {
   const chartRef = useRef(null);
-  
+
+
+
 
   useEffect(() => {
-    createLineGraph(plotData, {
+    createLineGraph(plotData.plotData, {
       chartRef: chartRef,
       x: (entry) => entry.date,
       y: (entry) => entry.sales,
       catagoryFunc: (entry) => entry.name,
-      yLabel: "Price ($USD)",
+      yLabel: "Sales ($USD)",
       color: "steelblue",
       width: 800,
       marginTop: 40,
-      marginLeft:  50,
+      marginLeft: 60,
       marginBottom: 50
     });
   }, []);
-  
+
 
   return (
     <Fragment>
@@ -150,4 +152,3 @@ const LineGraph = (plotData) => {
   );
 };
 
-export default LineGraph;
