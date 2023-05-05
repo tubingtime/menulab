@@ -288,3 +288,13 @@ input[type=text]:focus {
   height: 200px;
   /* Adjust as needed */
 }
+
+
+/* Graph text */
+
+.graph text {
+  font-size: large
+}
+
+
+

@@ -3,6 +3,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import Nav from "@/components/Nav";
 import Link from 'next/link';
 import { useToken } from '@/lib/SessionManagement';
+import LineGraph from '@/components/LineGraph';
 
 export default function Dashboard() {
     const jwtToken = useToken();
@@ -102,9 +103,82 @@ export default function Dashboard() {
                         </div>
                     </div>
                 </div>
+                <div className="row row-cols-1 row-cols-md-2 g-4 mt-2">
+                    <div className="column">
+                        <div className="card border-primary">
+                            <div className="card-header">Top 3 Menus</div>
+                            <div className="card-body">
+                                <div className="card-text h-100">
+                                <LineGraph plotData={sampleMenuSales}/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="column">
+                        <div className="card border-primary">
+                        <div className="card-header">Top 3 Items</div>
+                            <div className="card-body">
+                                <div className="card-text h-100">
+                                <LineGraph plotData={sampleItemSales}/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section >
         </Fragment >
     );
 };
 
-Dashboard.session = "asd"
+
+
+function fakeSalesGenerator(multiplier) {
+    return (Math.random() * multiplier) + multiplier;
+}
+
+const sampleMenuSales = [
+    { "date": new Date("2007-04-23"), "sales": fakeSalesGenerator(2000), "name": "Academic Coffee" },
+    { "date": new Date("2007-04-24"), "sales": fakeSalesGenerator(2000), "name": "Academic Coffee" },
+    { "date": new Date("2007-04-25"), "sales": fakeSalesGenerator(2000), "name": "Academic Coffee" },
+    { "date": new Date("2007-04-26"), "sales": fakeSalesGenerator(2000), "name": "Academic Coffee" },
+    { "date": new Date("2007-04-27"), "sales": fakeSalesGenerator(2000), "name": "Academic Coffee" },
+    { "date": new Date("2007-04-28"), "sales": fakeSalesGenerator(2000), "name": "Academic Coffee" },
+    { "date": new Date("2007-04-29"), "sales": fakeSalesGenerator(2000), "name": "Academic Coffee" },
+    { "date": new Date("2007-04-23"), "sales": fakeSalesGenerator(1000), "name": "Bilbo's Bagels" },
+    { "date": new Date("2007-04-24"), "sales": fakeSalesGenerator(1000), "name": "Bilbo's Bagels" },
+    { "date": new Date("2007-04-25"), "sales": fakeSalesGenerator(1000), "name": "Bilbo's Bagels" },
+    { "date": new Date("2007-04-26"), "sales": fakeSalesGenerator(1000), "name": "Bilbo's Bagels" },
+    { "date": new Date("2007-04-27"), "sales": fakeSalesGenerator(1000), "name": "Bilbo's Bagels" },
+    { "date": new Date("2007-04-28"), "sales": fakeSalesGenerator(1000), "name": "Bilbo's Bagels" },
+    { "date": new Date("2007-04-29"), "sales": fakeSalesGenerator(1000), "name": "Bilbo's Bagels" },
+    { "date": new Date("2007-04-23"), "sales": fakeSalesGenerator(3000), "name": "Luxor Sushi" },
+    { "date": new Date("2007-04-24"), "sales": fakeSalesGenerator(3000), "name": "Luxor Sushi" },
+    { "date": new Date("2007-04-25"), "sales": fakeSalesGenerator(3000), "name": "Luxor Sushi" },
+    { "date": new Date("2007-04-26"), "sales": fakeSalesGenerator(3000), "name": "Luxor Sushi" },
+    { "date": new Date("2007-04-27"), "sales": fakeSalesGenerator(3000), "name": "Luxor Sushi" },
+    { "date": new Date("2007-04-28"), "sales": fakeSalesGenerator(3000), "name": "Luxor Sushi" },
+    { "date": new Date("2007-04-29"), "sales": fakeSalesGenerator(3000), "name": "Luxor Sushi" },
+]
+const sampleItemSales = [
+    { "date": new Date("2007-04-23"), "sales": fakeSalesGenerator(300), "name": "Chocolate Croissant" },
+    { "date": new Date("2007-04-24"), "sales": fakeSalesGenerator(300), "name": "Chocolate Croissant" },
+    { "date": new Date("2007-04-25"), "sales": fakeSalesGenerator(300), "name": "Chocolate Croissant" },
+    { "date": new Date("2007-04-26"), "sales": fakeSalesGenerator(300), "name": "Chocolate Croissant" },
+    { "date": new Date("2007-04-27"), "sales": fakeSalesGenerator(300), "name": "Chocolate Croissant" },
+    { "date": new Date("2007-04-28"), "sales": fakeSalesGenerator(300), "name": "Chocolate Croissant" },
+    { "date": new Date("2007-04-29"), "sales": fakeSalesGenerator(300), "name": "Chocolate Croissant" },
+    { "date": new Date("2007-04-23"), "sales": fakeSalesGenerator(600), "name": "Chicago Deep Dish" },
+    { "date": new Date("2007-04-24"), "sales": fakeSalesGenerator(600), "name": "Chicago Deep Dish" },
+    { "date": new Date("2007-04-25"), "sales": fakeSalesGenerator(600), "name": "Chicago Deep Dish" },
+    { "date": new Date("2007-04-26"), "sales": fakeSalesGenerator(600), "name": "Chicago Deep Dish" },
+    { "date": new Date("2007-04-27"), "sales": fakeSalesGenerator(600), "name": "Chicago Deep Dish" },
+    { "date": new Date("2007-04-28"), "sales": fakeSalesGenerator(600), "name": "Chicago Deep Dish" },
+    { "date": new Date("2007-04-29"), "sales": fakeSalesGenerator(600), "name": "Chicago Deep Dish" },
+    { "date": new Date("2007-04-23"), "sales": fakeSalesGenerator(100), "name": "Earl Grey Tea" },
+    { "date": new Date("2007-04-24"), "sales": fakeSalesGenerator(100), "name": "Earl Grey Tea" },
+    { "date": new Date("2007-04-25"), "sales": fakeSalesGenerator(100), "name": "Earl Grey Tea" },
+    { "date": new Date("2007-04-26"), "sales": fakeSalesGenerator(100), "name": "Earl Grey Tea" },
+    { "date": new Date("2007-04-27"), "sales": fakeSalesGenerator(100), "name": "Earl Grey Tea" },
+    { "date": new Date("2007-04-28"), "sales": fakeSalesGenerator(100), "name": "Earl Grey Tea" },
+    { "date": new Date("2007-04-29"), "sales": fakeSalesGenerator(100), "name": "Earl Grey Tea" },
+  ]
