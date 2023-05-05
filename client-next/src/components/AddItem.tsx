@@ -83,21 +83,22 @@ const AddItem = (props?: { itemsDispatch, menu_id?: any }) => {
         </Modal.Header>
         <Form onSubmit={(e) => onSubmit(e)}>
           <Modal.Body>
-            <Form.Group className="row">
-              <div className="col">
-                <Form.Label className="mb-0">Name</Form.Label>
-                <Form.Control type="text" value={name} placeholder="Enter item name." onChange={(e) => setName(e.target.value)} />
-              </div>
-              <div className="col">
-                <Form.Label className="mb-0">Price</Form.Label>
-                <Form.Control type="text" value={price} placeholder="Enter item price." onChange={(e) => setPrice(e.target.value)} />
-              </div>
-            </Form.Group>
-            <Form.Group className="row">
-              <div className="col">
-                <Form.Label>Description</Form.Label>
-                <Form.Control as="textarea" rows={2} value={description} placeholder="Optional: Enter item description." onChange={(e) => setDescription(e.target.value)} />
-              </div>
+            <div className="row">
+              <Form.Group>
+                <Form.Label>Name</Form.Label>
+                <Form.Control type="text" value={name} placeholder="Enter item name." onChange={(e) => setName(e.target.value)} required />
+              </Form.Group>
+              <Form.Group className="mt-2 mb-2">
+                <Form.Label>Price</Form.Label>
+                <Form.Control type="number" value={price} placeholder="Enter item price." onChange={(e) => setPrice(e.target.value)} required aria-describedby="priceHelpBlock" />
+                <Form.Text id="priceHelpBlock" muted>
+                  The price must be a number 0.00 or greater.
+                </Form.Text>
+              </Form.Group>
+            </div>
+            <Form.Group className="mt-2 mb-2">
+              <Form.Label>Description</Form.Label>
+              <Form.Control as="textarea" rows={3} value={description} placeholder="Optional: Enter item description." onChange={(e) => setDescription(e.target.value)} />
             </Form.Group>
 
             <Form.Group className="row">
@@ -114,22 +115,27 @@ const AddItem = (props?: { itemsDispatch, menu_id?: any }) => {
                   </div>
                 </div>
               }
+
             </Form.Group>
 
-            <Form.Group className="row">
+            <Form.Group className="mt-3 mb-2">
               <UploadImage onUpload={(data) => {
                 setPhotoReference(data.public_id);
               }} />
+              <Form.Text id="photoHelpBlock" muted>
+                Optional: Attach a png, jpeg, jpg file.
+              </Form.Text>
             </Form.Group>
 
           </Modal.Body>
           <Modal.Footer>
-            <Button type="submit" variant="primary" onClick={handleClose}>Add</Button>
+            <Button type="submit" variant="primary" onClick={handleClose} disabled={!name || !price}>Add</Button>
           </Modal.Footer>
         </Form>
       </Modal>
     </Fragment >
   );
+
 };
 
 export default AddItem;

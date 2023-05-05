@@ -56,12 +56,12 @@ const AddMenu = (props?: { menu_id?: any }) => {
                     <Modal.Body>
                         <Form.Group className="row">
                             <div className="col">
-                                <Form.Control placeholder="Enter menu name." type="text" value={name} onChange={(e) => setName(e.target.value)} />
+                                <Form.Control placeholder="Enter menu name." type="text" value={name} onChange={(e) => setName(e.target.value)} required/>
                             </div>
                         </Form.Group>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button type='submit' variant="primary" onClick={handleClose}>Add</Button>
+                        <Button type='submit' variant="primary" onClick={handleClose} disabled={!name}>Add</Button>
                     </Modal.Footer>
                 </Form>
             </Modal>

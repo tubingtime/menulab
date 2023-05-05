@@ -1,13 +1,13 @@
 import Link from "next/link";
 import { Fragment } from "react";
-import { Silkscreen } from 'next/font/google'
 import '@/app/globals.css';
 
+import { Silkscreen } from 'next/font/google'
 const silkscreen = Silkscreen({
     weight: ['400'],
-    subsets: ['latin']
+    subsets: ['latin'],
+    display: "auto"
 })
-
 export default function HomeNav() {
     return (
         <Fragment>
@@ -16,11 +16,11 @@ export default function HomeNav() {
                     <Link href="/register" className="btn btn-primary">Register</Link>
                 </div>
                 <div className="mx-auto order-0">
-                    <div className="navbar-brand">
+                    <Link className="navbar-brand" href="/dashboard">
                         <div className={silkscreen.className}>
                             MenuLab
                         </div>
-                    </div>
+                    </Link>
                 </div>
                 <div className="nav-item" >
                     <Link href="/login" className="btn btn-primary">Login</Link>

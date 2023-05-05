@@ -63,7 +63,7 @@ const EditMenuName = ({ menu }) => {
                         </Form.Group>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button variant="outline-info" type="submit" onClick={handleClose}> Edit</Button>
+                        <Button variant="outline-info" type="submit" onClick={handleClose}>Save Changes</Button>
                         <Button variant="outline-danger" type="reset" onClick={handleClose}>Close</Button>
                     </Modal.Footer>
                 </Form>

@@ -1,7 +1,9 @@
 import { useToken } from "@/lib/SessionManagement";
+import { useState } from "react";
 
 const AddSection = ({ menu_id, sectionsDispatch }) => {
     const jwtToken = useToken();
+    const [formValid, setFormValid] = useState(false);
 
     async function handleAddSection(formData: FormData) {
         const sectionName = formData.get("name")?.toString() || "null";
@@ -24,10 +26,16 @@ const AddSection = ({ menu_id, sectionsDispatch }) => {
     }
 
     const onSubmit = async (e) => {
-        e.preventDefault(); // not working :[
+        e.preventDefault();
         const formData = new FormData(e.target);
         handleAddSection(formData);
-        e.target.reset(); // clear form inputs
+        e.target.reset();
+        setFormValid(false);
+    };
+
+    const handleChange = (e) => {
+        const form = e.target.form;
+        setFormValid(form.checkValidity());
     };
 
     return (
@@ -62,11 +70,11 @@ const AddSection = ({ menu_id, sectionsDispatch }) => {
                         <form onSubmit={onSubmit}>
                             <div className="modal-body">
                                 <div className="row">
-                                    <Field name="name" />
+                                    <Field name="name" onChange={handleChange} />
                                 </div>
                             </div>
                             <div className="modal-footer">
-                                <button className="btn btn-primary">Add</button>
+                                <button className="btn btn-primary" disabled={!formValid}>Add</button>
                             </div>
                         </form>
                     </div>
@@ -76,7 +84,7 @@ const AddSection = ({ menu_id, sectionsDispatch }) => {
     );
 };
 
-const Field = (props: { name: string }) => {
+const Field = (props: { name: string, onChange: (e: React.ChangeEvent<HTMLInputElement>) => void }) => {
     return (
         <>
             <div className="col">
@@ -85,6 +93,8 @@ const Field = (props: { name: string }) => {
                     name={props.name}
                     placeholder={`Enter section ${props.name}.`}
                     className="form-control"
+                    required
+                    onChange={props.onChange}
                 />
             </div>
         </>
