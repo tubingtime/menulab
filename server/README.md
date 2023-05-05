@@ -13,9 +13,9 @@ https://red-zodiac-874268.postman.co/workspace/New-Team-Workspace~4b467284-0573-
 7. Copy and paste the newly-generated 'token' into the value parameter within the Header Tab to execute any of the API calls
 ![image](https://user-images.githubusercontent.com/40531928/236561032-13eac424-e2ba-4fe9-ac82-fee8edd83c13.png)
 
-Now you should be able to test all of the backend functionality of MenuLab!
+*Now you should be able to test all of the backend functionality of MenuLab!*
 
-Example Test (create a menu, add item to menu, delete menu):
+# Example Test (create a menu, add item to menu, delete menu):
 1. Select POST /auth/login, and click Send (to create a new Token)
 3. Copy the generated Token (Starting now, for all API Calls, paste the generated Token in the Header Tab)
 4. Select POST /dashboard/menus 
@@ -30,4 +30,4 @@ Example Test (create a menu, add item to menu, delete menu):
 14. In the Params tab, change the value of "menu_id" to be your menu id, and Click Send (to delete Menu)
 
 
-For further exposition on all API calls, see comments in server/routes/dashboard.js
+*For further exposition on all API calls, see comments in server/routes/dashboard.js*
