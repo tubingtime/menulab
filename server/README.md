@@ -20,7 +20,7 @@ https://red-zodiac-874268.postman.co/workspace/New-Team-Workspace~4b467284-0573-
 3. Copy the generated Token (Starting now, for all API Calls, paste the generated Token in the Header Tab)
 4. Select POST /dashboard/menus 
 5. Edit the 'name' value in the Body tab to any menu name, and click Send (to create a new Menu)
-6. Follow step 5 for POST /dashboard/item (to create a new Item)
+6. Follow step 4 for POST /dashboard/item (to create a new Item)
 7. Select GET /dashboard/items, and click Send (to get Item ID of new Item)
 8. Select GET /dashboard/menus, and click Send (Get Menu ID of new Menu)
 9. Select POST /dashboard/menus/item/:item_id
