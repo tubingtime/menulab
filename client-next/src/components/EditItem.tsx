@@ -74,21 +74,18 @@ const EditItem = ({ item, itemsDispatch }) => {
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
-                        <Form.Group className="row">
-                            <div className="col">
-                                <Form.Label className="mb-0">Name</Form.Label>
-                                <Form.Control type="text" value={name} onChange={(e) => setName(e.target.value)} />
-                            </div>
-                            <div className="col">
-                                <Form.Label className="mb-0">Price</Form.Label>
-                                <Form.Control type="text" value={price} onChange={(e) => setPrice(e.target.value)} />
-                            </div>
+                        <Form.Group>
+                            <Form.Label className="mb-0">Name</Form.Label>
+                            <Form.Control type="text" value={name} onChange={(e) => setName(e.target.value)} />
                         </Form.Group>
-                        <Form.Group className="row" style={{ marginBottom: "10px" }}>
-                            <div className="col">
-                                <Form.Label>Description</Form.Label>
-                                <Form.Control as="textarea" rows={2} value={description} onChange={(e) => setDescription(e.target.value)} />
-                            </div>
+                        <Form.Group className="mt-2 mb-2">
+                            <Form.Label>Price</Form.Label>
+                            <Form.Control type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
+                        </Form.Group >
+                        <Form.Group className="mt-2 mb-2">
+                            <Form.Label>Description</Form.Label>
+                            <Form.Control as="textarea" rows={3} value={description} placeholder="Optional: Enter item description." onChange={(e) => setDescription(e.target.value)} />
+
                         </Form.Group>
 
                         <Form.Group className="row" style={{ marginBottom: "8px" }}>
@@ -113,14 +110,15 @@ const EditItem = ({ item, itemsDispatch }) => {
                                             objectFit: "cover",
                                             objectPosition: "center"
                                         }} />
+
                                     </div>
                                 </div>
                             )}
                         </Form.Group>
                         <Form.Group className="row" style={{ marginBottom: "8px" }}>
                             <DeleteFile item={item}
-                            itemsDispatch={itemsDispatch}
-                        /></Form.Group>
+                                itemsDispatch={itemsDispatch}
+                            /></Form.Group>
                         <Form.Group className="row">
                             <UploadImage onUpload={(data) => {
                                 setPhotoReference(data.public_id);
@@ -133,12 +131,15 @@ const EditItem = ({ item, itemsDispatch }) => {
                                 });
 
                             }} />
+                            <Form.Text id="photoHelpBlock" muted>
+                                Optional: Attach a png, jpeg, jpg file.
+                            </Form.Text>
                         </Form.Group>
                     </Form>
 
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="outline-info" onClick={(e) => updateItem(e)}>Edit</Button>
+                    <Button variant="outline-info" onClick={(e) => updateItem(e)}>Save Changes</Button>
                     <Button variant="outline-danger" onClick={() => { handleClose(); setDescription(item.description); }}>Close</Button>
                 </Modal.Footer>
             </Modal>
