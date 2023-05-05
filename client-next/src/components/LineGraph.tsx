@@ -1,10 +1,5 @@
-import { useToken } from "@/lib/SessionManagement";
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import * as d3 from "d3"
-
-interface PlotData {
-
-}
 
 function createLineGraph(data, {
   chartRef,
@@ -85,7 +80,7 @@ function createLineGraph(data, {
           .attr("fill", "currentColor")
           .attr("text-anchor", "start")
           .text(yLabel));
-  let i = 0;
+  let i = -1;
   catagories.forEach(function (d) {
     i++;
     svg.append("path")
@@ -97,14 +92,26 @@ function createLineGraph(data, {
       .attr("stroke-opacity", strokeOpacity)
       .attr("d", line(d));
 
-    // Add the Legend
-    svg.append("text")
-      .attr("x", width - (marginLeft ))  // space legend
-      .attr("y", (legendSpace / 2) + (i * legendSpace))
+    // Add a label
+    const labelX = ((i * 200) + (legendSpace));
+    const labelY = (height - (marginBottom - 30 ));
+    const label = svg.append("g")
+      .attr("transform", `translate(${labelX}, ${labelY})`);
+    label.append("text")
+      .attr("x", legendSpace + 5)
+      .attr("y", legendSpace / 1.25)
       .style("fill", function () { // Add the colours dynamically
         return d.color = colorScale(d);
       })
-      .text(catagoryFunc(d[0])); 
+      .text(catagoryFunc(d[0]));
+    label.append("rect")
+      .attr('width', legendSpace)
+      .attr('height', legendSpace)
+      .style("fill", function () { // Add the colours dynamically
+        return d.color = colorScale(d);
+      })
+      .text(catagoryFunc(d[0]));
+      
 
 
   })
@@ -116,40 +123,20 @@ function createLineGraph(data, {
 
 const LineGraph = (plotData) => {
   const chartRef = useRef(null);
-
-  const jwtToken = useToken();
-
-
-
-  const sampleData = [
-    { "date": new Date("2007-04-23"), "sales": 1286.81, "menu_name": "Academic Coffee" },
-    { "date": new Date("2007-04-24"), "sales": 1153.92, "menu_name": "Academic Coffee" },
-    { "date": new Date("2007-04-25"), "sales": 1255.06, "menu_name": "Academic Coffee" },
-    { "date": new Date("2007-04-26"), "sales": 1106.88, "menu_name": "Academic Coffee" },
-    { "date": new Date("2007-04-27"), "sales": 1107.34, "menu_name": "Academic Coffee" },
-    { "date": new Date("2007-04-28"), "sales": 1208.74, "menu_name": "Academic Coffee" },
-    { "date": new Date("2007-04-29"), "sales": 1309.36, "menu_name": "Academic Coffee" },
-    { "date": new Date("2007-04-23"), "sales": 600.81, "menu_name": "Bilbo's Bagels" },
-    { "date": new Date("2007-04-24"), "sales": 723.92, "menu_name": "Bilbo's Bagels" },
-    { "date": new Date("2007-04-25"), "sales": 789.06, "menu_name": "Bilbo's Bagels" },
-    { "date": new Date("2007-04-26"), "sales": 560.88, "menu_name": "Bilbo's Bagels" },
-    { "date": new Date("2007-04-27"), "sales": 800.34, "menu_name": "Bilbo's Bagels" },
-    { "date": new Date("2007-04-28"), "sales": 900.74, "menu_name": "Bilbo's Bagels" },
-    { "date": new Date("2007-04-29"), "sales": 800.36, "menu_name": "Bilbo's Bagels" },
-  ]
   
 
   useEffect(() => {
-    createLineGraph(sampleData, {
+    createLineGraph(plotData, {
       chartRef: chartRef,
       x: (entry) => entry.date,
       y: (entry) => entry.sales,
-      catagoryFunc: (entry) => entry.menu_name,
+      catagoryFunc: (entry) => entry.name,
       yLabel: "Price ($USD)",
       color: "steelblue",
       width: 800,
       marginTop: 40,
-      marginLeft:  70
+      marginLeft:  50,
+      marginBottom: 50
     });
   }, []);
   

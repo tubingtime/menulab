@@ -109,7 +109,7 @@ export default function Dashboard() {
                             <div className="card-header">Menu Stats</div>
                             <div className="card-body">
                                 <div className="card-text h-100">
-                                <LineGraph />
+                                <LineGraph plotData={} />
                                 </div>
                             </div>
                         </div>
@@ -132,4 +132,31 @@ export default function Dashboard() {
     );
 };
 
-Dashboard.session = "asd"
+
+function fakeSalesGenerator(multiplier){
+    return Math.random() * multiplier;
+}
+
+const sampleMenuData = [
+    { "date": new Date("2007-04-23"), "sales": fakeSalesGenerator(1000), "name": "Academic Coffee" },
+    { "date": new Date("2007-04-24"), "sales": fakeSalesGenerator(1000), "name": "Academic Coffee" },
+    { "date": new Date("2007-04-25"), "sales": fakeSalesGenerator(1000), "name": "Academic Coffee" },
+    { "date": new Date("2007-04-26"), "sales": fakeSalesGenerator(1000), "name": "Academic Coffee" },
+    { "date": new Date("2007-04-27"), "sales": fakeSalesGenerator(1000), "name": "Academic Coffee" },
+    { "date": new Date("2007-04-28"), "sales": fakeSalesGenerator(1000), "name": "Academic Coffee" },
+    { "date": new Date("2007-04-29"), "sales": fakeSalesGenerator(1000), "name": "Academic Coffee" },
+    { "date": new Date("2007-04-23"), "sales": fakeSalesGenerator(1000), "name": "Bilbo's Bagels" },
+    { "date": new Date("2007-04-24"), "sales": fakeSalesGenerator(1000), "name": "Bilbo's Bagels" },
+    { "date": new Date("2007-04-25"), "sales": fakeSalesGenerator(1000), "name": "Bilbo's Bagels" },
+    { "date": new Date("2007-04-26"), "sales": fakeSalesGenerator(1000), "name": "Bilbo's Bagels" },
+    { "date": new Date("2007-04-27"), "sales": fakeSalesGenerator(1000), "name": "Bilbo's Bagels" },
+    { "date": new Date("2007-04-28"), "sales": fakeSalesGenerator(1000), "name": "Bilbo's Bagels" },
+    { "date": new Date("2007-04-29"), "sales": fakeSalesGenerator(1000), "name": "Bilbo's Bagels" },
+    { "date": new Date("2007-04-23"), "sales": fakeSalesGenerator(1000), "name": "Luxor Sushi" },
+    { "date": new Date("2007-04-24"), "sales": fakeSalesGenerator(1000), "name": "Luxor Sushi" },
+    { "date": new Date("2007-04-25"), "sales": fakeSalesGenerator(1000), "name": "Luxor Sushi" },
+    { "date": new Date("2007-04-26"), "sales": fakeSalesGenerator(1000), "name": "Luxor Sushi" },
+    { "date": new Date("2007-04-27"), "sales": fakeSalesGenerator(1000), "name": "Luxor Sushi" },
+    { "date": new Date("2007-04-28"), "sales": fakeSalesGenerator(1000), "name": "Luxor Sushi" },
+    { "date": new Date("2007-04-29"), "sales": fakeSalesGenerator(1000), "name": "Luxor Sushi" },
+]
