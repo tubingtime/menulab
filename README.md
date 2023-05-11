@@ -77,9 +77,11 @@ Check that tables are correctly installed:
 
 4. Clone this repository and go to ```menu-ab-api/server```.
 
-5. Install dependencies: ```npm install``` OR ```npm i express cors pg jsonwebtoken bcrypt dotenv```. 
+5. Install Postman for the purpose of testing backend.
 
-6. Create a file called `.env` in ```menu-ab-api/server``` with the following: 
+6. Install dependencies: ```npm install``` OR ```npm i express cors pg jsonwebtoken bcrypt dotenv```. 
+
+7. Create a file called `.env` in ```menu-ab-api/server``` with the following: 
     ```
     jwtSecret=YOUR_JWT_SECRET_HERE
     user=postgres
@@ -92,7 +94,7 @@ Check that tables are correctly installed:
     api_key=YOUR_CLOUDINARY_KEY
     api_secret=YOUR_CLOUDINARY_SECRET
     ```
-7. Run.
+8. Run.
     - Option 1: Run ```node index.js```.
     - Option 2: Install nodemon ```npm install -g nodemon``` and then run nodemon ```nodemon```.
 
@@ -107,6 +109,7 @@ Test User:
 - UUID: ```9aafde03-6b1b-44a7-aa41-55339f5a1d3b```
 
 1. Login with test credentials using Postman and get the user token (see jwtAuth.js for Login route).
+<img width="793" alt="Screen Shot 2023-05-11 at 10 33 24 AM" src="https://github.com/sfdevshop/menu-ab-api/assets/71528749/cb39d766-416b-41c1-ae08-18f35553ba4a">
 
 2. Test any of the routes by going to jwtAuth.js or dashboard.js.
 
