@@ -16,6 +16,7 @@ This repository contains the backend for our senior team project, MenuLab, a men
 ## Background
 
 MenuLab consists of two repositories:
+
 1. Backend - menu-ab-api
 2. Frontend - menu-ab-web
 
@@ -27,22 +28,22 @@ It contains the user authentication and authorization logic, CRUD APIs for creat
 1. Register and login users
 
 2. Create and manage a menu 
-- Create a new menu
-- Read a menu
-- Update a menu
-- Delete a menu
+    - Create a new menu
+    - Read a menu
+    - Update a menu
+    - Delete a menu
 
 3. Create and manage a menu section
-- Create a new menu section
-- Read a menu section
-- Update a menu section
-- Delete a menu section
+    - Create a new menu section
+    - Read a menu section
+    - Update a menu section
+    - Delete a menu section
 
 4. Create and manage a menu item
-- Create a new menu item
-- Read a menu item
-- Update a menu item
-- Delete a menu item
+    - Create a new menu item
+    - Read a menu item
+    - Update a menu item
+    - Delete a menu item
 
 5. Upload/delete a photo
 
@@ -55,6 +56,7 @@ It contains the user authentication and authorization logic, CRUD APIs for creat
 ## Install
 
 1. Install postgreSQL.
+
 2. Set up postgres database using the schema in database.sql. Not your username, password, host, postgres port, and database name.
 
 Check that tables are correctly installed:
@@ -72,8 +74,11 @@ Check that tables are correctly installed:
 ```
 
 3. Set up an Cloudinary account. Note your cloud_name, api_key, and api_secret.
+
 4. Clone this repository and go to ```menu-ab-api/server```.
+
 5. Install dependencies: ```npm install``` OR ```npm i express cors pg jsonwebtoken bcrypt dotenv```. 
+
 6. Create a file called `.env` in ```menu-ab-api/server``` with the following: 
     ```
     jwtSecret=YOUR_JWT_SECRET_HERE
@@ -115,9 +120,12 @@ Test User:
 
 - **pern_stack.md** - Contains links to the official documentation for different
 parts of the PERN stack including postgreSQL, Express, React, Node.js, npm, nodemon, Postman.
+
 - **jwt_summary.md** - Contains a summary about JWT tokens, authentication v. authorization,
 and an explanation of the routes and middleware.
+
 - **common_postgres.md** - Contains a list of common SQL and psql commands.
+
 - **git-worflow.md** - Describes how to work on the project. 
 
 <br />
