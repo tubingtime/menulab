@@ -79,7 +79,9 @@ Test User:
 
 2. Login using the test user credentials
 
-3. You will be redriected to the dashboard where you can use the menu editor.
+3. You will be redriected to the dashboard where you can navigate to the different pages, like the menu editor:
+
+![MenuLab Editor Page](https://github.com/sfdevshop/menu-ab-web/assets/60046785/c1a86571-6b0b-4bfb-a748-e4495f1c62b4)
 
 <br />
 
@@ -88,13 +90,16 @@ Test User:
 
 ## Sources
 
+- We used this todo-list app tutorial to as a foundation for our frontend: 
 
-- Since this project is using NextJS 13, we followed [this note taking app](https://github.com/shadcn/taxonomy) as an example.
+    - Title: [Learn JWT with the PERN stack by building a Registration/Login system](https://www.youtube.com/watch?v=5vF0FGfa0RQ)
+
+
+- Since this project is using NextJS 13, we followed [Taxonomy](https://github.com/shadcn/taxonomy), a notetaking app built using Next and React, as an example.
 
 
 
 - For avoiding full page reloads, we followed React's official [state management documentation](https://react.dev/learn/managing-state).
-
 
 
 <br />
