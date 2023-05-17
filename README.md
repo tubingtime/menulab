@@ -8,6 +8,7 @@ This repository contains the **backend** for our senior team project, MenuLab, a
 - [Background](#background)
 - [Install](#install)
 - [Usage](#usage)
+- [Testing](#testing)
 - [Database](#database)
 - [Known Bugs](#known-bugs)
 - [Documentation](#documentation)
@@ -141,6 +142,12 @@ Test User:
 4. Optional: Set up the menu-ab-web repository.
 
 <br />
+
+## Testing
+
+For testing, see ```/server/README.md.```
+
+<br /> 
 
 ## Documentation
 
