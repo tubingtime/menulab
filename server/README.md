@@ -1,6 +1,6 @@
 # menu-ab-api
 
-# To test api calls
+## To test api calls
 
 1. Create a Postman Account
 2. Visit MenuLab's Integration Tests using the following link:
@@ -15,7 +15,7 @@ https://red-zodiac-874268.postman.co/workspace/New-Team-Workspace~4b467284-0573-
 
 *Now you should be able to test all of the backend functionality of MenuLab!*
 
-# Example Test (create a menu, add item to menu, delete menu):
+## Example Test (create a menu, add item to menu, delete menu):
 1. Select POST /auth/login, and click Send (to create a new Token)
 3. Copy the generated Token (Starting now, for all API Calls, paste the generated Token in the Header Tab)
 4. Select POST /dashboard/menus 
