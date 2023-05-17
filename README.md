@@ -1,6 +1,6 @@
 # menu-ab-api
 
-This repository contains the backend for our senior team project, MenuLab, a menu editor and tester. 
+This repository contains the **backend** for our senior team project, MenuLab, a menu editor and tester. 
 
 <br />
 
@@ -8,8 +8,11 @@ This repository contains the backend for our senior team project, MenuLab, a men
 - [Background](#background)
 - [Install](#install)
 - [Usage](#usage)
+- [Database](#database)
+- [Known Bugs](#known-bugs)
 - [Documentation](#documentation)
 - [Contributing](#contributing)
+- [Future Work](#future-work)
 
 <br />
 
@@ -100,6 +103,26 @@ Check that tables are correctly installed:
 
 <br />
 
+## Database
+
+This project uses a PostgreSQL database hosted on Amazon RDS (Relational Database Service). 
+
+The database schema is located at ```/server/database.sql```. 
+
+Here is an overview of the database schema:
+
+![LogicalDataModel2](https://github.com/sfdevshop/menu-ab-api/assets/71528749/00ff2ec2-91a6-4afc-adeb-895ee72f85b9)
+
+<br />
+
+## Known Bugs
+- Backend validates most inputs. Frontend does not perform sufficient validation.
+- JWTSecret should be a more complex token that changes more frequently.
+- User tokens are complex but are currently set to change every X days instead of every time the user logs in. 
+- There are possible security vulnerabilities in terms of our Amazon RDS server.
+
+<br />
+
 ## Usage
 To experiment as a test user (if using Amazon RDS database)
 Test User:
@@ -147,4 +170,23 @@ YouTubeChannel: The Stoic Programmers on YouTube
 
 ## Contributing
 
-No contributions accepted at this time. 
+No contributions are accepted at this time.
+
+Adding new components to the backend is simple.
+1. Create a new branch such as ```feat/get_section_ids```.
+2. Navigate to ```/server/routes/dashboard.js```.
+3. Write a new API for the component that you would like to add ex. GET request for getting all the section ids.
+4. Test the component in Postman.
+5. Push your work to the repository and wait for review.
+6. Once your code passes review, it can be merged into main.
+
+<br />
+
+## Future Work
+- Create a backend API that allows the user to upload POS (Point of Sale data).
+- Process POS data.
+- Generate insights and recommendations based on POS data.
+- Use DoorDash or UberEats APIs to connect menus created on these apps to menus created on MenuLab.
+
+
+
