@@ -8,8 +8,10 @@ This repository contains the frontend for our senior team project, MenuLab, a me
 - [Background](#background)
 - [Install](#install)
 - [Usage](#usage)
+- [Known Bugs](#known-bugs)
 - [Sources](#sources)
 - [Contributing](#contributing)
+- [Future Work](#future-work)
 
 <br />
 
@@ -85,6 +87,10 @@ Test User:
 
 <br />
 
+## Known Bugs
+- Frontend does not perform sufficient validation.
+- AssignTo requires a manual refresh.
+
 
 <br />
 
@@ -107,3 +113,21 @@ Test User:
 ## Contributing
 
 No contributions accepted at this time. 
+
+To add a new component to the frontend
+1. Create a new branch such as ```feat/add-menus```.
+2. Create a new file in the componenents directory ```/client-next/src/components/AddMenus.tsx```.
+3. Write the React code for your component. If there's a similar component, copy that one and base your new one off of it. If your component needs to make API calls, you will need to get the user's JWT with `useToken()`.  If your component is making updates to shared state, such as the list of menus, you will need to use the dispatch function to tell React to update the state. See `AddMenu.tsx` for an example of how to do this.
+4. Add your component to the page you want it on. If you wanted your component on the main dashboard page, navigate to ```/client-next/src/app/dashboard/page.tsx``` and add `<AddMenus />` in the return statement of the Dashboard function. If you want your component on a new page, add a new directory in the `/app` directory with your page's name. In youe new directory, add a `page.tsx` file with your React code. For more information on the `/app` directory, see the [NextJS documentation](https://nextjs.org/docs/app/building-your-application/routing#the-app-directory)
+6. Run the app and test your component.
+7. Create a pull request for your changes and wait for review.
+8. Once your code passes review, it can be merged into main.
+
+## Future Work
+- Use drag and drop for moving menu items around to different sections and positions
+- Have data visualization graphs reflect real POS data
+- Choose what items you want to make a visualization for
+- Use DoorDash or UberEats APIs to connect menus created on these apps to menus created on MenuLab.
+- More custom styling
+
+
