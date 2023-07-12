@@ -27,7 +27,7 @@ This repository is the frontend.
 It mostly consists of react components for the user interface. There is some code to handle the checking of user authentication and storing the JWT.
 
 This diagram gives an overview of our technical architecture:
-![MenuLab Design Overview](https://github.com/tubingtime/menu-ab-web/assets/60046785/4db79e50-5800-4a82-be7d-db214ba77dfc)
+![MenuLab Design Overview](https://github.com/sfdevshop/menu-ab-web/assets/60046785/4db79e50-5800-4a82-be7d-db214ba77dfc)
 
 
 ### Core Features
