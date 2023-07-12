@@ -19,15 +19,15 @@ This repository contains the frontend for our senior team project, MenuLab, a me
 
 MenuLab consists of two repositories:
 
-1. Backend - [menu-ab-api](https://github.com/sfdevshop/menu-ab-api)
-2. Frontend - [menu-ab-web](https://github.com/sfdevshop/menu-ab-web)
+1. Backend - [menu-ab-api](https://github.com/tubingtime/menu-ab-api)
+2. Frontend - [menu-ab-web](https://github.com/tubingtime/menu-ab-web)
 
 This repository is the frontend. 
 
 It mostly consists of react components for the user interface. There is some code to handle the checking of user authentication and storing the JWT.
 
 This diagram gives an overview of our technical architecture:
-![MenuLab Design Overview](https://github.com/sfdevshop/menu-ab-web/assets/60046785/4db79e50-5800-4a82-be7d-db214ba77dfc)
+![MenuLab Design Overview](https://github.com/tubingtime/menu-ab-web/assets/60046785/4db79e50-5800-4a82-be7d-db214ba77dfc)
 
 
 ### Core Features
